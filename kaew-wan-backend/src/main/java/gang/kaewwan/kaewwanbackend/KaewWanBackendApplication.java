@@ -1,4 +1,4 @@
-package project2.kaewwan.kaewwanbackend;
+package gang.kaewwan.kaewwanbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
