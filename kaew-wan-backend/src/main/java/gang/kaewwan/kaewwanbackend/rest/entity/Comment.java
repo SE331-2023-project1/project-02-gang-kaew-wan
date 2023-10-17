@@ -26,7 +26,7 @@ public class Comment extends Reactable {
     @ManyToOne
     Comment parent;
 
-    @OneToMany
+    @OneToMany(mappedBy = "parent")
     List<Comment> children;
 
     @ManyToOne

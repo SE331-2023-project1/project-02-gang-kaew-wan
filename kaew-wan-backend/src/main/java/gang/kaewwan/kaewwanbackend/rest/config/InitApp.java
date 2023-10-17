@@ -2,8 +2,10 @@ package gang.kaewwan.kaewwanbackend.rest.config;
 
 import gang.kaewwan.kaewwanbackend.rest.entity.Department;
 import gang.kaewwan.kaewwanbackend.rest.entity.Student;
+import gang.kaewwan.kaewwanbackend.rest.entity.Teacher;
 import gang.kaewwan.kaewwanbackend.rest.repository.DepartmentRepository;
 import gang.kaewwan.kaewwanbackend.rest.repository.StudentRepository;
+import gang.kaewwan.kaewwanbackend.rest.repository.TeacherRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -18,6 +20,7 @@ import java.util.List;
 public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     final DepartmentRepository departmentRepository;
     final StudentRepository studentRepository;
+    final TeacherRepository teacherRepository;
 
     @Override
     @Transactional
@@ -35,13 +38,12 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         departments.add(Department.builder().name("Department of Engineering").build());
         departments.forEach(dep -> departmentRepository.save(dep));
 
-        Department dep = Department.builder().id(1L).name("Test").build();
-        departmentRepository.save(dep);
-
-        Student student = Student.builder().studentId("642115003").department(dep).fname("Kan").lname("Katpark").image("123")
+        Teacher teacher = Teacher.builder().position("Manager-san").department(departments.get(0)).fname("Chartchai")
+                .lname("Doungsa-ard").image("456").build();
+        Student student = Student.builder().studentId("642115003").department(departments.get(0)).fname("Kan")
+                .lname("Katpark").image("123").teacher(teacher)
                 .build();
-
-        dep.getStudents().add(student);
+        teacherRepository.save(teacher);
         studentRepository.save(student);
 
     }

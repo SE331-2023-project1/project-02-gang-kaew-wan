@@ -6,7 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -24,6 +23,9 @@ public class Student extends Person {
     @ManyToOne
     Department department;
 
-    @OneToMany
+    @OneToMany(mappedBy = "student")
     List<Review> reviews;
+
+    @ManyToOne
+    Teacher teacher;
 }

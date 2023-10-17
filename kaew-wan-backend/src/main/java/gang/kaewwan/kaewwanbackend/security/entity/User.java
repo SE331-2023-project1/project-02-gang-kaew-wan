@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 @Data
 @Entity
-@Table(name = "kaewwan_user")
+@Table(name = "_user")
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
