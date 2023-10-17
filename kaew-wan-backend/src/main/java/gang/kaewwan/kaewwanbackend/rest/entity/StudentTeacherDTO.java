@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 public class StudentTeacherDTO extends PersonDTO {
     String position;
 
-    List<AnnoucementDTO> annoucements;
+    List<AnnouncementDTO> annoucements;
 
     DepartmentDTO department;
 
