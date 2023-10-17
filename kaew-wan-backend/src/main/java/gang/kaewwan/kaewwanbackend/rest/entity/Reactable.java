@@ -22,6 +22,6 @@ public abstract class Reactable {
     @EqualsAndHashCode.Exclude
     Long id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "reactable")
     List<Reaction> reactions;
 }

@@ -23,6 +23,9 @@ public class Student extends Person {
     @ManyToOne
     Department department;
 
-    @OneToMany
+    @OneToMany(mappedBy = "student")
     List<Review> reviews;
+
+    @ManyToOne
+    Teacher teacher;
 }

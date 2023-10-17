@@ -1,6 +1,5 @@
 package gang.kaewwan.kaewwanbackend.rest.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -27,10 +26,9 @@ public class Department {
 
     String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "department")
     List<Teacher> teachers;
 
-    @OneToMany
-    @Builder.Default
-    List<Student> students = new ArrayList<>();
+    @OneToMany(mappedBy = "department")
+    List<Student> students;
 }

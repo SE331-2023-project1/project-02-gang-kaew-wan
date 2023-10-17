@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "kaewwan_user")
+@Table(name = "\"user\"")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

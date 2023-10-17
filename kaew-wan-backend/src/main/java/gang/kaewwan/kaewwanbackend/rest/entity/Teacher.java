@@ -20,12 +20,15 @@ import lombok.experimental.SuperBuilder;
 public class Teacher extends Person {
     String position;
 
-    @OneToMany
+    @OneToMany(mappedBy = "teacher")
     List<Annoucement> annoucements;
 
     @ManyToOne
     Department department;
 
-    @OneToMany
+    @OneToMany(mappedBy = "teacher")
     List<Review> reviews;
+
+    @OneToMany(mappedBy = "teacher")
+    List<Student> students;
 }

@@ -38,13 +38,13 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         departments.add(Department.builder().name("Department of Engineering").build());
         departments.forEach(dep -> departmentRepository.save(dep));
 
-        Student student = Student.builder().studentId("642115003").department(departments.get(0)).fname("Kan")
-                .lname("Katpark").image("123")
-                .build();
         Teacher teacher = Teacher.builder().position("Manager-san").department(departments.get(0)).fname("Chartchai")
                 .lname("Doungsa-ard").image("456").build();
-        studentRepository.save(student);
+        Student student = Student.builder().studentId("642115003").department(departments.get(0)).fname("Kan")
+                .lname("Katpark").image("123").teacher(teacher)
+                .build();
         teacherRepository.save(teacher);
+        studentRepository.save(student);
 
     }
 
