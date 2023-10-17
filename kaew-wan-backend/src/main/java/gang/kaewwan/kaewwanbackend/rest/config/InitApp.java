@@ -1,19 +1,26 @@
 package gang.kaewwan.kaewwanbackend.rest.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+import gang.kaewwan.kaewwanbackend.rest.entity.Comment;
 import gang.kaewwan.kaewwanbackend.rest.entity.Department;
 import gang.kaewwan.kaewwanbackend.rest.entity.Student;
 import gang.kaewwan.kaewwanbackend.rest.entity.Teacher;
+import gang.kaewwan.kaewwanbackend.rest.repository.CommentRepository;
 import gang.kaewwan.kaewwanbackend.rest.repository.DepartmentRepository;
 import gang.kaewwan.kaewwanbackend.rest.repository.StudentRepository;
 import gang.kaewwan.kaewwanbackend.rest.repository.TeacherRepository;
+import gang.kaewwan.kaewwanbackend.security.entity.Role;
+import gang.kaewwan.kaewwanbackend.security.entity.User;
+import gang.kaewwan.kaewwanbackend.security.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -21,6 +28,9 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     final DepartmentRepository departmentRepository;
     final StudentRepository studentRepository;
     final TeacherRepository teacherRepository;
+    final CommentRepository commentRepository;
+    final UserRepository userRepository;
+    final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -43,9 +53,27 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         Student student = Student.builder().studentId("642115003").department(departments.get(0)).fname("Kan")
                 .lname("Katpark").image("123").teacher(teacher)
                 .build();
+        User user1 = User.builder().email("test@test")
+                .username(student.getStudentId())
+                .password(passwordEncoder.encode("test"))
+                .role(Role.ROLE_STUDENT)
+                .build();
+        User user2 = User.builder().email("test2@test2")
+                .username(teacher.getFname())
+                .password(passwordEncoder.encode("test"))
+                .role(Role.ROLE_TEACHER)
+                .build();
+        userRepository.save(user1);
+        userRepository.save(user2);
+        student.setUser(user1);
+        teacher.setUser(user2);
         teacherRepository.save(teacher);
         studentRepository.save(student);
-
+        Comment comment1 = Comment.builder().message("Hello").teacher(teacher).student(student).edited(false).build();
+        commentRepository.save(comment1);
+        Comment comment2 = Comment.builder().message("Hello2").parent(comment1).teacher(teacher).student(student)
+                .edited(false).build();
+        commentRepository.save(comment2);
     }
 
 }
