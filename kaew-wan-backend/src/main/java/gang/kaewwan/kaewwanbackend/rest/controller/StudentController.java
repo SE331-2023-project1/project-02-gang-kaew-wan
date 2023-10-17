@@ -52,7 +52,7 @@ public class StudentController {
     }
 
     @PutMapping("students/{id}")
-    public Student updateStudent(@PathVariable("id") Long id, @RequestBody Student student) {
-        return studentService.updateStudent(id, student);
+    public StudentDTO updateStudent(@PathVariable("id") Long id, @RequestBody Student student) {
+        return RestMapper.INSTANCE.getStudentDto(studentService.updateStudent(id, student));
     }
 }
