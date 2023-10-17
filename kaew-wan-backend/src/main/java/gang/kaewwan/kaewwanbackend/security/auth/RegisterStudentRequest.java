@@ -1,5 +1,6 @@
 package gang.kaewwan.kaewwanbackend.security.auth;
 
+import gang.kaewwan.kaewwanbackend.rest.entity.Department;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,9 +10,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class RegisterStudentRequest {
 
   private String studentId;
+  private Long departmentId;
   private String image;
   private String firstname;
   private String lastname;

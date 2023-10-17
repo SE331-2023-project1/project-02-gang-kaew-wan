@@ -2,9 +2,12 @@ package gang.kaewwan.kaewwanbackend.security.auth;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gang.kaewwan.kaewwanbackend.rest.entity.Person;
+import gang.kaewwan.kaewwanbackend.rest.entity.Department;
 import gang.kaewwan.kaewwanbackend.rest.entity.Student;
+import gang.kaewwan.kaewwanbackend.rest.entity.Teacher;
+import gang.kaewwan.kaewwanbackend.rest.repository.DepartmentRepository;
 import gang.kaewwan.kaewwanbackend.rest.repository.StudentRepository;
+import gang.kaewwan.kaewwanbackend.rest.repository.TeacherRepository;
 import gang.kaewwan.kaewwanbackend.security.config.JwtService;
 import gang.kaewwan.kaewwanbackend.security.entity.Role;
 import gang.kaewwan.kaewwanbackend.security.entity.User;
@@ -12,7 +15,7 @@ import gang.kaewwan.kaewwanbackend.security.repository.UserRepository;
 import gang.kaewwan.kaewwanbackend.security.token.Token;
 import gang.kaewwan.kaewwanbackend.security.token.TokenRepository;
 import gang.kaewwan.kaewwanbackend.security.token.TokenType;
-import gang.kaewwan.kaewwanbackend.security.util.LabMapper;
+import gang.kaewwan.kaewwanbackend.security.util.SecurityMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -34,13 +37,19 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final StudentRepository studentRepository;
+    private final DepartmentRepository departmentRepository;
+    private final TeacherRepository teacherRepository;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterStudentRequest request) {
+
+        Department department = departmentRepository.findById(request.getDepartmentId()).orElse(null);
+
         Student person = Student.builder()
                 .studentId(request.getStudentId())
                 .fname(request.getFirstname())
                 .lname(request.getLastname())
                 .image(request.getImage())
+                .department(department)
                 .build();
         studentRepository.save(person);
 
@@ -59,7 +68,40 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
-                .user(user)
+                .user(SecurityMapper.INSTANCE.getUserDto(user))
+                .build();
+    }
+
+    public AuthenticationResponse addTeacher(RegisterTeacherRequest request) {
+        Department department = departmentRepository.findById(request.getDepartmentId()).orElse(null);
+
+        Teacher person = Teacher.builder()
+                .position(request.getPosition())
+                .fname(request.getFirstname())
+                .lname(request.getLastname())
+                .image(request.getImage())
+                .department(department)
+                .build();
+        teacherRepository.save(person);
+
+        User user = User.builder()
+                .person(person)
+                .email(request.getEmail())
+                .username(request.getUsername())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.ROLE_TEACHER)
+                .build();
+        var savedUser = repository.save(user);
+        person.setUser(savedUser);
+        teacherRepository.save(person);
+
+        var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        saveUserToken(savedUser, jwtToken);
+        return AuthenticationResponse.builder()
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .user(SecurityMapper.INSTANCE.getUserDto(user))
                 .build();
     }
 
@@ -80,7 +122,7 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
-                .user(user)
+                .user(SecurityMapper.INSTANCE.getUserDto(user))
                 .build();
     }
 
