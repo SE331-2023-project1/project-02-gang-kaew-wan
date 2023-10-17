@@ -4,7 +4,13 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,5 +39,20 @@ public class StudentController {
         }
         responseHeader.set("x-total-count", String.valueOf(pageOut.getTotalElements()));
         return RestMapper.INSTANCE.getStudentDto(pageOut.getContent());
+    }
+
+    @GetMapping("students/{id}")
+    public Student getEvent(@PathVariable("id") Long id) {
+        return studentService.getStudent(id);
+    }
+
+    @PostMapping("students")
+    public Student addStudent(@RequestBody Student student) {
+        return studentService.save(student);
+    }
+
+    @PutMapping("students/{id}")
+    public Student updateStudent(@PathVariable("id") Long id, @RequestBody Student student) {
+        return studentService.updateStudent(id, student);
     }
 }
