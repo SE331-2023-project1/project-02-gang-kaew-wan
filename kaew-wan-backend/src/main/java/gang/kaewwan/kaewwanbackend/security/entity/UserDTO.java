@@ -1,5 +1,6 @@
 package gang.kaewwan.kaewwanbackend.security.entity;
 
+import gang.kaewwan.kaewwanbackend.rest.entity.PersonDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,9 +10,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonDto {
+public class UserDTO {
     Long id;
-    String fname;
-    String lname;
-    String image;
+    String username;
+    String email;
+    Role role;
+    PersonDTO person;
+
 }

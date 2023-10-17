@@ -1,8 +1,7 @@
 package gang.kaewwan.kaewwanbackend.security.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import gang.kaewwan.kaewwanbackend.security.entity.User;
-import gang.kaewwan.kaewwanbackend.security.entity.UserDto;
+import gang.kaewwan.kaewwanbackend.security.entity.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,5 +18,5 @@ public class AuthenticationResponse {
   private String accessToken;
   @JsonProperty("refresh_token")
   private String refreshToken;
-  private UserDto user;
+  private UserDTO user;
 }
