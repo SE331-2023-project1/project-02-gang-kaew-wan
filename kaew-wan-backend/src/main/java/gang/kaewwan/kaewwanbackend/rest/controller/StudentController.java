@@ -40,17 +40,17 @@ public class StudentController {
     }
 
     @GetMapping("students/{id}")
-    public Student getEvent(@PathVariable("id") Long id) {
-        return studentService.getStudent(id);
+    public StudentDTO getEvent(@PathVariable("id") Long id) {
+        return RestMapper.INSTANCE.getStudentDto(studentService.getStudent(id));
     }
 
     @PostMapping("students")
-    public Student addStudent(@RequestBody Student student) {
-        return studentService.save(student);
+    public StudentDTO addStudent(@RequestBody Student student) {
+        return RestMapper.INSTANCE.getStudentDto(studentService.save(student));
     }
 
     @PutMapping("students/{id}")
-    public Student updateStudent(@PathVariable("id") Long id, @RequestBody Student student) {
-        return studentService.updateStudent(id, student);
+    public StudentDTO updateStudent(@PathVariable("id") Long id, @RequestBody Student student) {
+        return RestMapper.INSTANCE.getStudentDto(studentService.updateStudent(id, student));
     }
 }
