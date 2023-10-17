@@ -1,13 +1,13 @@
 package gang.kaewwan.kaewwanbackend.rest.dao;
 
+import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+
 import gang.kaewwan.kaewwanbackend.rest.entity.Comment;
 import gang.kaewwan.kaewwanbackend.rest.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Profile;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
 
 
 @Repository

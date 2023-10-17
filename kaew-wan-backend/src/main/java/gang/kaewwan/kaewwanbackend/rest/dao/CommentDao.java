@@ -1,9 +1,8 @@
 package gang.kaewwan.kaewwanbackend.rest.dao;
 
-import gang.kaewwan.kaewwanbackend.rest.entity.Comment;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
+import gang.kaewwan.kaewwanbackend.rest.entity.Comment;
 
 public interface CommentDao {
     Integer getCommentsCount();
