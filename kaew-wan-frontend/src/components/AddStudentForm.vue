@@ -9,8 +9,8 @@ const courses = ref<Course[]>([])
 RegistryService.getCourses(-1).then((res) => courses.value = res.data)
 const searchWord = ref<string>('')
 const student = ref<Student>({
-  first_name: '',
-  last_name: '',
+  fname: '',
+  lname: '',
   image: '',
   courseId: [],
   advisorId: -1,
@@ -45,8 +45,8 @@ function removeCourseFromStudent(id: number) {
 function submitForm() {
   RegistryService.insertStudent(student.value).then((res) => {
     student.value = {
-      first_name: '',
-      last_name: '',
+      fname: '',
+      lname: '',
       image: '',
       courseId: [],
       advisorId: -1,

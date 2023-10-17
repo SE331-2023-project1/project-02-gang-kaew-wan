@@ -4,8 +4,8 @@ import { useMessageStore } from "@/stores/message";
 import { type Advisor } from "@/types";
 import { ref } from "vue";
 const advisor = ref<Advisor>({
-  first_name: '',
-  last_name: '',
+  fname: '',
+  lname: '',
   image: '',
   prefix: '',
   faculty: '',
@@ -13,8 +13,8 @@ const advisor = ref<Advisor>({
 function submitForm() {
   RegistryService.insertAdvisor(advisor.value).then((res) => {
     advisor.value = {
-      first_name: '',
-      last_name: '',
+      fname: '',
+      lname: '',
       image: '',
       prefix: '',
       faculty: '',

@@ -1,20 +1,14 @@
 export interface Student {
   id?: number
-  advisorId: number
-  address: string
-  nationality: string
-  birthday: number
-  first_name: string
-  last_name: string
+  fname: string
+  lname: string
   image: string
-  courseId: Array<number>
-  comments: Array<string>
 }
 
 export interface Advisor {
   id?: number
-  first_name: string
-  last_name: string
+  fname: string
+  lname: string
   image: string
   prefix: string
   faculty: string
