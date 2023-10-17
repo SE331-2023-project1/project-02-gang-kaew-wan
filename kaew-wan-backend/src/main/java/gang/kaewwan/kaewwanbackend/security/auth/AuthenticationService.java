@@ -61,6 +61,8 @@ public class AuthenticationService {
                 .role(Role.ROLE_STUDENT)
                 .build();
         var savedUser = repository.save(user);
+        person.setUser(savedUser);
+        studentRepository.save(person);
 
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
@@ -114,6 +116,7 @@ public class AuthenticationService {
         );
         User user = repository.findByUsername(request.getUsername())
                 .orElseThrow();
+//        System.out.println(user);
 
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);

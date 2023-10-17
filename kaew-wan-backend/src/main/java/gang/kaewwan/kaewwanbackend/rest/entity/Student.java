@@ -28,4 +28,7 @@ public class Student extends Person {
 
     @ManyToOne
     Teacher teacher;
+
+    @OneToMany(mappedBy = "student")
+    List<Comment> comments;
 }

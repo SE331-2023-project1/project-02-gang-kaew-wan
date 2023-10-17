@@ -1,16 +1,17 @@
-package gang.kaewwan.kaewwanbackend.security.entity;
+package gang.kaewwan.kaewwanbackend.rest.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonDto {
+public class PersonDTO {
     Long id;
+    // User user;
     String fname;
     String lname;
     String image;
