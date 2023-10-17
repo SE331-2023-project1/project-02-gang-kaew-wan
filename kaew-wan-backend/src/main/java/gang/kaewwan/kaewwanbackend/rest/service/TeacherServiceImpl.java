@@ -1,5 +1,6 @@
 package gang.kaewwan.kaewwanbackend.rest.service;
 
+import gang.kaewwan.kaewwanbackend.rest.entity.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +8,8 @@ import gang.kaewwan.kaewwanbackend.rest.dao.TeacherDao;
 import gang.kaewwan.kaewwanbackend.rest.entity.Teacher;
 import gang.kaewwan.kaewwanbackend.rest.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -42,4 +45,10 @@ public class TeacherServiceImpl implements TeacherService {
         }
         return null;
     }
+
+    @Override
+    public Teacher assignStudent(Long id, List<Student> students) {
+        return teacherDao.assignStudent(id, students);
+    }
+
 }

@@ -1,8 +1,11 @@
 package gang.kaewwan.kaewwanbackend.rest.dao;
 
+import gang.kaewwan.kaewwanbackend.rest.entity.Student;
 import org.springframework.data.domain.Page;
 
 import gang.kaewwan.kaewwanbackend.rest.entity.Teacher;
+
+import java.util.List;
 
 public interface TeacherDao {
     Integer getTeacherSize();
@@ -12,4 +15,5 @@ public interface TeacherDao {
     Teacher getTeacher(Long id);
 
     Teacher save(Teacher teacher);
+    Teacher assignStudent(Long id ,List<Student> students);
 }

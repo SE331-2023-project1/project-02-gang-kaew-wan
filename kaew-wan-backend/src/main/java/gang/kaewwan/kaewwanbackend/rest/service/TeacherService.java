@@ -1,8 +1,11 @@
 package gang.kaewwan.kaewwanbackend.rest.service;
 
+import gang.kaewwan.kaewwanbackend.rest.entity.Student;
 import org.springframework.data.domain.Page;
 
 import gang.kaewwan.kaewwanbackend.rest.entity.Teacher;
+
+import java.util.List;
 
 public interface TeacherService {
     Integer getTeacherSize();
@@ -14,4 +17,6 @@ public interface TeacherService {
     Teacher save(Teacher teacher);
 
     Teacher updateTeacher(Long id, Teacher teacher);
+
+    Teacher assignStudent(Long id , List<Student> students);
 }
