@@ -40,4 +40,9 @@ public class CommentDaoImpl implements CommentDao{
     public Page<Comment> getCommentByTeacherId(Long id) {
         return commentRepository.findByTeacher_Id(id, Pageable.unpaged());
     }
+
+    @Override
+    public Comment addComment(Comment comment) {
+        return commentRepository.save(comment);
+    }
 }

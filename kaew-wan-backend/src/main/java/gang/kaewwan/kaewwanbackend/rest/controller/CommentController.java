@@ -7,9 +7,7 @@ import gang.kaewwan.kaewwanbackend.rest.service.CommentService;
 import gang.kaewwan.kaewwanbackend.rest.util.RestMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,9 +28,14 @@ public class CommentController {
     }
 
     @GetMapping("comments/{personId}")
-    public List<CommentDTO> getCommentByStudentID(@PathVariable("id") Long id){
+    public List<CommentDTO> getCommentByStudentID(@PathVariable("personId") Long id){
         Page<Comment> result = commentService.getCommentByStudentId(id);
         return RestMapper.INSTANCE.getCommentDto(result.getContent());
     }
 
+    @PostMapping("comments")
+    public CommentDTO addCommentToPerson(@RequestBody Comment comment){
+        Comment result = commentService.addComment(comment);
+        return RestMapper.INSTANCE.getCommentDto(result);
+    }
 }

@@ -29,4 +29,9 @@ public class CommentServiceImpl implements CommentService{
     public Page<Comment> getCommentByTeacherId(Long id) {
         return commentDao.getCommentByTeacherId(id);
     }
+
+    @Override
+    public Comment addComment(Comment id){
+        return commentDao.addComment(id);
+    }
 }

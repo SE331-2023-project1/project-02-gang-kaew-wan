@@ -8,4 +8,6 @@ public interface CommentService {
     Comment getCommentById(Long id);
     Page<Comment> getCommentByStudentId(Long id);
     Page<Comment> getCommentByTeacherId(Long id);
+
+    Comment addComment(Comment id);
 }

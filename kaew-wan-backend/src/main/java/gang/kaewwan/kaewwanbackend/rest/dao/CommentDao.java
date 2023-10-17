@@ -16,4 +16,6 @@ public interface CommentDao {
 
     Page<Comment> getCommentByTeacherId(Long id);
 
+    Comment addComment(Comment comment);
+
 }

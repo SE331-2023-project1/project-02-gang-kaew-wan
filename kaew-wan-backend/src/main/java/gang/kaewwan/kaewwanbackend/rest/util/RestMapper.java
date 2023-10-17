@@ -19,10 +19,9 @@ public interface RestMapper {
     StudentDTO getStudentDto(Student student);
 
     List<StudentDTO> getStudentDto(List<Student> students);
-    
+
     List<CommentDTO> getCommentDto(List<Comment> comments);
     CommentDTO getCommentDto(Comment comment);
-
     TeacherDTO getTeacherDto(Teacher teacher);
 
     List<TeacherDTO> getTeacherDto(List<Teacher> teachers);

@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 public class CommentDTO {
     String message;
     Boolean edited;
-    CommentDTO parent;
-    PersonDTO student;
-    PersonDTO teacher;
+    CommentStrippedDTO parent;
+    StudentStrippedDTO student;
+    TeacherStrippedDTO teacher;
 }
