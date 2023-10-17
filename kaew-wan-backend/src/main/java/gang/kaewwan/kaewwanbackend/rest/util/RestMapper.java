@@ -7,6 +7,8 @@ import org.mapstruct.factory.Mappers;
 
 import gang.kaewwan.kaewwanbackend.rest.entity.Student;
 import gang.kaewwan.kaewwanbackend.rest.entity.StudentDTO;
+import gang.kaewwan.kaewwanbackend.rest.entity.Teacher;
+import gang.kaewwan.kaewwanbackend.rest.entity.TeacherDTO;
 
 @Mapper
 public interface RestMapper {
@@ -15,4 +17,8 @@ public interface RestMapper {
     StudentDTO getStudentDto(Student student);
 
     List<StudentDTO> getStudentDto(List<Student> students);
+
+    TeacherDTO getTeacherDto(Teacher teacher);
+
+    List<TeacherDTO> getTeacherDto(List<Teacher> teachers);
 }

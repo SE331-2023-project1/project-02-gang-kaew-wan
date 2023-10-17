@@ -24,7 +24,7 @@ public class StudentController {
     final StudentService studentService;
 
     @GetMapping("students")
-    public List<StudentDTO> getEventLists(
+    public List<StudentDTO> getStudentList(
             @RequestParam(value = "_limit", required = false) Integer pageSize,
             @RequestParam(value = "_page", required = false) Integer page,
             @RequestParam(value = "keyword", required = false) String keyword) {
@@ -40,7 +40,7 @@ public class StudentController {
     }
 
     @GetMapping("students/{id}")
-    public StudentDTO getEvent(@PathVariable("id") Long id) {
+    public StudentDTO getStudent(@PathVariable("id") Long id) {
         return RestMapper.INSTANCE.getStudentDto(studentService.getStudent(id));
     }
 

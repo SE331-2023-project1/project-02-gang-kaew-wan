@@ -1,18 +1,18 @@
 package gang.kaewwan.kaewwanbackend.rest.entity;
 
+import gang.kaewwan.kaewwanbackend.security.entity.Role;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Data
-@SuperBuilder
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonDTO {
+public class PersonUserDTO {
     Long id;
-    PersonUserDTO user;
-    String fname;
-    String lname;
-    String image;
+    String username;
+    String email;
+    Role role;
 }
