@@ -42,6 +42,14 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student updateStudent(Long id, Student student) {
         if (studentRepository.existsById(id)) {
+            Student studentData = this.getStudent(id);
+            if(student.getFname() == null) student.setFname(studentData.getFname());
+            if(student.getLname() == null) student.setLname(studentData.getLname());
+            if(student.getImage() == null) student.setImage(studentData.getImage());
+            if(student.getDepartment() == null) student.setDepartment(studentData.getDepartment());
+            if(student.getTeacher() == null ) student.setTeacher(studentData.getTeacher());
+            if(student.getReviews() == null) student.setReviews(studentData.getReviews());
+            if(student.getUser() == null) student.setUser(studentData.getUser());
             student.setId(id);
             return studentDao.save(student);
         }
