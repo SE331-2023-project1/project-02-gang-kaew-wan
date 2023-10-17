@@ -5,12 +5,14 @@ import org.springframework.stereotype.Service;
 
 import gang.kaewwan.kaewwanbackend.rest.dao.StudentDao;
 import gang.kaewwan.kaewwanbackend.rest.entity.Student;
+import gang.kaewwan.kaewwanbackend.rest.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
     final StudentDao studentDao;
+    final StudentRepository studentRepository;
 
     @Override
     public Integer getStudentSize() {
@@ -35,6 +37,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student save(Student student) {
         return studentDao.save(student);
+    }
+
+    @Override
+    public Student updateStudent(Long id, Student student) {
+        if (studentRepository.existsById(id)) {
+            student.setId(id);
+            return studentDao.save(student);
+        }
+        return null;
     }
 
 }
