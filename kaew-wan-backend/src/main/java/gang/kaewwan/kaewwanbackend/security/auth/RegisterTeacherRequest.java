@@ -14,8 +14,8 @@ public class RegisterTeacherRequest {
     private String position;
     private Long departmentId;
     private String image;
-    private String firstname;
-    private String lastname;
+    private String fname;
+    private String lname;
     private String username;
     private String email;
     private String password;

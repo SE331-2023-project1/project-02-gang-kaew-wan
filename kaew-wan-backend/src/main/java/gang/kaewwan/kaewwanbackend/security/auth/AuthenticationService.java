@@ -46,8 +46,8 @@ public class AuthenticationService {
 
         Student person = Student.builder()
                 .studentId(request.getStudentId())
-                .fname(request.getFirstname())
-                .lname(request.getLastname())
+                .fname(request.getFname())
+                .lname(request.getLname())
                 .image(request.getImage())
                 .department(department)
                 .build();
@@ -79,8 +79,8 @@ public class AuthenticationService {
 
         Teacher person = Teacher.builder()
                 .position(request.getPosition())
-                .fname(request.getFirstname())
-                .lname(request.getLastname())
+                .fname(request.getFname())
+                .lname(request.getLname())
                 .image(request.getImage())
                 .department(department)
                 .build();
