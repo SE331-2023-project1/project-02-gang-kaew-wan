@@ -10,8 +10,11 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class TeacherStrippedDTO extends PersonDTO {
-    String position;
-    DepartmentDTO department;
+@EqualsAndHashCode(callSuper = false)
+public class CommentDTO {
+    String message;
+    Boolean edited;
+    CommentStrippedDTO parent;
+    StudentStrippedDTO student;
+    TeacherStrippedDTO teacher;
 }

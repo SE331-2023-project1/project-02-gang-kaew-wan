@@ -11,7 +11,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class TeacherStrippedDTO extends PersonDTO {
+public class CommentTeacherDTO extends PersonDTO {
     String position;
-    DepartmentDTO department;
 }
