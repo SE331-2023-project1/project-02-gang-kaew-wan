@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class CommentDTO {
+public class CommentDTO extends ReactableDTO {
     String message;
     Boolean edited;
     CommentStrippedDTO parent;

@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-public class AnnoucementDTO extends ReactableDTO {
+public class AnnouncementDTO extends ReactableDTO {
     String message;
     String file;
 }

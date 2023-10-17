@@ -21,7 +21,7 @@ public class Teacher extends Person {
     String position;
 
     @OneToMany(mappedBy = "teacher")
-    List<Annoucement> annoucements;
+    List<Announcement> announcements;
 
     @ManyToOne
     Department department;

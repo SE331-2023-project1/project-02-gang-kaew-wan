@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Annoucement extends Reactable {
+public class Announcement extends Reactable {
     String message;
     String file;
 
