@@ -2,6 +2,8 @@ package gang.kaewwan.kaewwanbackend.rest.controller;
 
 import java.util.List;
 
+import gang.kaewwan.kaewwanbackend.rest.entity.Student;
+import gang.kaewwan.kaewwanbackend.rest.entity.StudentListRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,4 +50,11 @@ public class TeacherController {
     public TeacherDTO updateTeacher(@PathVariable("id") Long id, @RequestBody Teacher teacher) {
         return RestMapper.INSTANCE.getTeacherDto(teacherService.updateTeacher(id, teacher));
     }
+
+    @PutMapping("teachers/{id}/assign")
+    public TeacherDTO assignAdvisee(@PathVariable("id") Long id, @RequestBody StudentListRequest studentListRequest){
+        List<Student> students = studentListRequest.getStudents();
+        return RestMapper.INSTANCE.getTeacherDto(teacherService.assignStudent(id, students));
+    }
+
 }
