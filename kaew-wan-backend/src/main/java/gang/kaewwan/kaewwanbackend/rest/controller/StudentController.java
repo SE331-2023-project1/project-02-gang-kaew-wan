@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,13 +40,13 @@ public class StudentController {
     }
 
     @GetMapping("students/{id}")
-    public Student getEvent(@PathVariable("id") Long id) {
-        return studentService.getStudent(id);
+    public StudentDTO getEvent(@PathVariable("id") Long id) {
+        return RestMapper.INSTANCE.getStudentDto(studentService.getStudent(id));
     }
 
     @PostMapping("students")
-    public Student addStudent(@RequestBody Student student) {
-        return studentService.save(student);
+    public StudentDTO addStudent(@RequestBody Student student) {
+        return RestMapper.INSTANCE.getStudentDto(studentService.save(student));
     }
 
     @PutMapping("students/{id}")
