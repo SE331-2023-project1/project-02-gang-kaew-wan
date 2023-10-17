@@ -1,5 +1,6 @@
 package gang.kaewwan.kaewwanbackend.rest.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -30,5 +31,6 @@ public class Department {
     List<Teacher> teachers;
 
     @OneToMany
-    List<Student> students;
+    @Builder.Default
+    List<Student> students = new ArrayList<>();
 }
