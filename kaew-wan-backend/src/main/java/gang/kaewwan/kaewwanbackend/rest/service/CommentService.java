@@ -10,4 +10,6 @@ public interface CommentService {
     Page<Comment> getCommentByTeacherId(Long id);
 
     Comment addComment(Comment id);
+    Comment updateComment(Long id, Comment comment);
+    Comment deleteComment(Long id);
 }

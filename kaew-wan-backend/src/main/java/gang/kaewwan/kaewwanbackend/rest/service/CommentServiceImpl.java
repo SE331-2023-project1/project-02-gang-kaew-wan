@@ -34,4 +34,16 @@ public class CommentServiceImpl implements CommentService{
     public Comment addComment(Comment id){
         return commentDao.addComment(id);
     }
+
+    @Override
+    public Comment updateComment(Long id, Comment comment) {
+        return commentDao.updateComment(id, comment);
+    }
+
+    @Override
+    public Comment deleteComment(Long id) {
+        Comment comment = this.getCommentById(id);
+        comment.setMessage("This comment has been deleted");
+        return commentDao.updateComment(id, comment);
+    }
 }
