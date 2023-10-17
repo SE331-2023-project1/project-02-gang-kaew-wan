@@ -26,9 +26,9 @@ public class Department {
 
     String name;
 
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany
     List<Teacher> teachers;
-    
-    @OneToMany(mappedBy = "student")
+
+    @OneToMany
     List<Student> students;
 }
