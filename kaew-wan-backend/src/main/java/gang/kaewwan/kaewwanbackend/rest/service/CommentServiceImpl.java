@@ -46,4 +46,9 @@ public class CommentServiceImpl implements CommentService{
         comment.setMessage("This comment has been deleted");
         return commentDao.updateComment(id, comment);
     }
+
+    @Override
+    public Comment replyComment(Long id, Comment comment) {
+        return commentDao.replyComment(id, comment);
+    }
 }

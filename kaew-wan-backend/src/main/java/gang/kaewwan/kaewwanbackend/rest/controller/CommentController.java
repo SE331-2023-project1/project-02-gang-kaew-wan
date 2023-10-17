@@ -22,17 +22,13 @@ public class CommentController {
         return RestMapper.INSTANCE.getCommentDto(result.getContent());
     }
 
-//    @GetMapping("comments/{id}")
-//    public CommentDTO getCommentById(@PathVariable("id") Long id){
-//        return RestMapper.INSTANCE.getCommentDto(commentService.getCommentById(id));
-//    }
-
     @GetMapping("comments/{personId}")
     public List<CommentDTO> getCommentByStudentID(@PathVariable("personId") Long id) {
         Page<Comment> result = commentService.getCommentByStudentId(id);
         return RestMapper.INSTANCE.getCommentDto(result.getContent());
     }
 
+    //Get comment by Comment Id
     @GetMapping("comment/{id}")
     public CommentDTO getCommentByCommentId(@PathVariable("id") Long id) {
         return RestMapper.INSTANCE.getCommentDto(commentService.getCommentById(id));
@@ -53,6 +49,12 @@ public class CommentController {
     @DeleteMapping("comment/{id}")
     public CommentDTO deleteComment(@PathVariable("id") Long id) {
         Comment result = commentService.deleteComment(id);
+        return RestMapper.INSTANCE.getCommentDto(result);
+    }
+
+    @PostMapping("reply/{CommentParentId}")
+    public CommentDTO addReplyComment(@RequestBody Comment comment, @PathVariable("CommentParentId") Long id) {
+        Comment result = commentService.replyComment(id, comment);
         return RestMapper.INSTANCE.getCommentDto(result);
     }
 }

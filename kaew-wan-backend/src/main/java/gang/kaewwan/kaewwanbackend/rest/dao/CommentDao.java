@@ -18,5 +18,6 @@ public interface CommentDao {
 
     Comment addComment(Comment comment);
     Comment updateComment(Long id, Comment comment);
+    Comment replyComment(Long id, Comment comment);
 
 }

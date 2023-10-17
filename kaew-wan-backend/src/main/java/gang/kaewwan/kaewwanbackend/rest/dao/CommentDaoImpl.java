@@ -55,4 +55,14 @@ public class CommentDaoImpl implements CommentDao{
         }
         return null;
     }
+
+    @Override
+    public Comment replyComment(Long id, Comment comment){
+        //Check Parent Exist
+        if(commentRepository.existsById(id)){
+            comment.setParent(this.getCommentById(id));
+            return commentRepository.save(comment);
+        }
+        return null;
+    }
 }
