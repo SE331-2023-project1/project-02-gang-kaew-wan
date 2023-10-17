@@ -1,6 +1,5 @@
 package gang.kaewwan.kaewwanbackend.security.auth;
 
-import gang.kaewwan.kaewwanbackend.rest.entity.Department;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
