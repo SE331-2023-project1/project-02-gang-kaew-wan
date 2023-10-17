@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "application.security.jwt.expiration",
+      "type": "java.lang.Long",
+      "description": "JWT expiration Timespan"
+    },
+    {
+      "name": "application.security.jwt.refresh-token.expiration",
+      "type": "java.lang.Long",
+      "description": "JWT refreshed token expiration Timespan"
+    }
+  ]
+}
