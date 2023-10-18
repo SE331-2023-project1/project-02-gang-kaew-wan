@@ -48,9 +48,11 @@ public class CommentDaoImpl implements CommentDao{
     @Override
     public Comment updateComment(Long id, Comment comment) {
         if(commentRepository.existsById(id)){
-            comment.setId(id);
-            comment.setEdited(true);
-            return commentRepository.save(comment);
+            Comment commentData = this.getCommentById(id);
+            commentData.setId(id);
+            commentData.setEdited(true);
+            commentData.setMessage(comment.getMessage());
+            return commentRepository.save(commentData);
         }
         return null;
     }
