@@ -10,8 +10,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper=false)
-public class AnnoucementDTO extends ReactableDTO {
-    String message;
-    String file;
+@EqualsAndHashCode(callSuper = true)
+public class CommentTeacherDTO extends PersonDTO {
+    String position;
 }

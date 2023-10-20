@@ -2,13 +2,9 @@ package gang.kaewwan.kaewwanbackend.rest.util;
 
 import java.util.List;
 
+import gang.kaewwan.kaewwanbackend.rest.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-
-import gang.kaewwan.kaewwanbackend.rest.entity.Student;
-import gang.kaewwan.kaewwanbackend.rest.entity.StudentDTO;
-import gang.kaewwan.kaewwanbackend.rest.entity.Teacher;
-import gang.kaewwan.kaewwanbackend.rest.entity.TeacherDTO;
 
 @Mapper
 public interface RestMapper {
@@ -18,7 +14,13 @@ public interface RestMapper {
 
     List<StudentDTO> getStudentDto(List<Student> students);
 
+    List<CommentDTO> getCommentDto(List<Comment> comments);
+    CommentDTO getCommentDto(Comment comment);
     TeacherDTO getTeacherDto(Teacher teacher);
 
     List<TeacherDTO> getTeacherDto(List<Teacher> teachers);
+
+    List<AnnouncementDTO> getAnnouncementDTO(List<Announcement> announcements);
+    AnnouncementDTO getAnnouncementDTO(Announcement announcement);
+
 }

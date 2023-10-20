@@ -1,7 +1,7 @@
 package gang.kaewwan.kaewwanbackend.rest.entity;
 
-import java.util.List;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,15 +10,14 @@ import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class StudentTeacherDTO extends PersonDTO {
-    String position;
+@EqualsAndHashCode(callSuper = false)
+public class Announcement extends Reactable {
+    String message;
+    String file;
 
-    List<AnnouncementDTO> annoucements;
-
-    DepartmentDTO department;
-
-    List<ReviewDTO> reviews;
+    @ManyToOne
+    Teacher teacher;
 }
