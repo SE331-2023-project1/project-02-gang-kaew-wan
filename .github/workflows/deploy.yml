@@ -2,8 +2,8 @@ name: Deployment to aws
 on: 
     push:
         branches:
-            - dev
-            - deploy
+            - main
+
 
 jobs: 
     build-frontend:
