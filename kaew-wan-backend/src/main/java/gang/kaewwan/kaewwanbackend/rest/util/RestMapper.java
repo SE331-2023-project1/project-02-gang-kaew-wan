@@ -22,13 +22,16 @@ public interface RestMapper {
 
     List<StudentDTO> getStudentDto(List<Student> students);
 
-    List<CommentDTO> getCommentDto(List<Comment> comments);
     CommentDTO getCommentDto(Comment comment);
+
+    List<CommentDTO> getCommentDto(List<Comment> comments);
+
     TeacherDTO getTeacherDto(Teacher teacher);
 
     List<TeacherDTO> getTeacherDto(List<Teacher> teachers);
 
-    List<AnnouncementDTO> getAnnouncementDTO(List<Announcement> announcements);
     AnnouncementDTO getAnnouncementDTO(Announcement announcement);
+
+    List<AnnouncementDTO> getAnnouncementDTO(List<Announcement> announcements);
 
 }
