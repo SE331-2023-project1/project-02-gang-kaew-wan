@@ -70,7 +70,7 @@ jobs:
               uses: docker/build-push-action@v4
               with:
                 push: true
-                tags: ${{ secrets.DOCKER_HUB_USERNAME }}/student-connect-fe:latest
+                tags: ${{ secrets.DOCKER_HUB_USERNAME }}/student-connect-be:latest
                 context: ./kaew-wan-backend
 
 
