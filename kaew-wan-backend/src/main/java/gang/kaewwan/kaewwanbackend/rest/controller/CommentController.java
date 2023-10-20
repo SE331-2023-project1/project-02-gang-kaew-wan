@@ -40,19 +40,19 @@ public class CommentController {
         return RestMapper.INSTANCE.getCommentDto(result);
     }
 
-    @PutMapping("comment/{id}")
+    @PutMapping("comments/{id}")
     public CommentDTO editComment(@RequestBody Comment comment, @PathVariable("id") Long id) {
         Comment result = commentService.updateComment(id, comment);
         return RestMapper.INSTANCE.getCommentDto(result);
     }
 
-    @DeleteMapping("comment/{id}")
+    @DeleteMapping("comments/{id}")
     public CommentDTO deleteComment(@PathVariable("id") Long id) {
         Comment result = commentService.deleteComment(id);
         return RestMapper.INSTANCE.getCommentDto(result);
     }
 
-    @PostMapping("reply/{CommentParentId}")
+    @PostMapping("comments/reply/{CommentParentId}")
     public CommentDTO addReplyComment(@RequestBody Comment comment, @PathVariable("CommentParentId") Long id) {
         Comment result = commentService.replyComment(id, comment);
         return RestMapper.INSTANCE.getCommentDto(result);
