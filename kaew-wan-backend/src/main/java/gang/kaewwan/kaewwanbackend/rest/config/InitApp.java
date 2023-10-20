@@ -50,10 +50,10 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
 
                 Teacher teacher = Teacher.builder().id(1L).position("Manager-san").department(departments.get(0))
                                 .fname("Chartchai")
-                                .lname("Doungsa-ard").image("456").build();
+                                .lname("Doungsa-ard").image("https://i1.rgstatic.net/ii/profile.image/280166027808778-1443808194990_Q512/Chartchai-Doungsa-Ard.jpg").build();
                 Student student = Student.builder().id(2L).studentId("642115003").department(departments.get(0))
                                 .fname("Kan")
-                                .lname("Katpark").image("123").teacher(teacher)
+                                .lname("Katpark").image("https://media.discordapp.net/attachments/950106830892331088/1132700631036080229/image.png?ex=653e7eaa&is=652c09aa&hm=37eb90b218ef2f20cef945aa2c287dfe24d9ab4d2fb2033211bfe622af30caa2&=&width=505&height=673").teacher(teacher)
                                 .build();
                 User user1 = User.builder().id(1L).email("test@test")
                                 .username(student.getStudentId())

@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -21,8 +20,13 @@ import io.github.jan.supabase.storage.BucketApi;
 import io.github.jan.supabase.storage.Storage;
 import io.github.jan.supabase.storage.StorageKt;
 import jakarta.annotation.PostConstruct;
+import kotlin.coroutines.Continuation;
+import kotlin.coroutines.EmptyCoroutineContext;
+import kotlinx.coroutines.BuildersKt;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class StorageHelper {
     SupabaseClient supabaseClient;
     BucketApi bucket;
@@ -43,7 +47,7 @@ public class StorageHelper {
     }
 
     public String uploadFile(MultipartFile file) throws IOException, InterruptedException, ExecutionException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HHmmssSSS");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String dtString = sdf.format(new Date());
         final String fileName = URLEncoder.encode(String.format("%s-%s", dtString, file.getOriginalFilename()),
                 "UTF-8");
@@ -54,17 +58,22 @@ public class StorageHelper {
             int bytesRead = inputStream.read(readBuf);
             byteArrayOutputStream.write(readBuf, 0, bytesRead);
         }
-        CompletableFuture<String> dummy = new CompletableFuture<>();
-        bucket.upload(fileName, byteArrayOutputStream.toByteArray(), false, new CustomContinuation<>(dummy));
-        return dummy.get();
+        log.info(String.format("Starting Upload. %d bytes", byteArrayOutputStream.toByteArray().length));
+        String upload = BuildersKt.runBlocking(EmptyCoroutineContext.INSTANCE, (scope, continuation) -> {
+            return bucket.upload(fileName, byteArrayOutputStream.toByteArray(), true,
+                    (Continuation<String>) continuation);
+        });
+        log.info(String.format("Finished Uploading to %s", upload));
+        return bucket.publicUrl(fileName);
     }
 
     public StorageFileDTO getStorageFileDTO(MultipartFile file)
             throws IOException, InterruptedException, ExecutionException {
         String fileName = URLEncoder.encode(file.getOriginalFilename(), "UTF-8");
+        log.info(fileName);
         if (fileName != null && !fileName.isEmpty() && fileName.contains(".")) {
             String urlString = uploadFile(file);
-            return StorageFileDTO.builder().fileName(fileName).url(urlString).build();
+            return StorageFileDTO.builder().url(urlString).build();
         }
         return null;
     }

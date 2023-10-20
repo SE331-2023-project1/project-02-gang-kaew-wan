@@ -1,14 +1,6 @@
-import type { Student, Advisor, Course } from '@/types'
-import axios, { type AxiosResponse } from 'axios'
-
-const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL,
-  withCredentials: false,
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json'
-  }
-})
+import type { Advisor, Course, Student } from '@/types'
+import { type AxiosResponse } from 'axios'
+import apiClient from './AxiosClient'
 
 export default {
   getStudents(pgSize: number, pgN: number = 1): Promise<AxiosResponse<Student[]>> {
@@ -21,11 +13,8 @@ export default {
       `/teachers?${pgSize > 0 ? `_limit=${pgSize}&_page=${pgN}` : ''}`
     )
   },
-  getCourses(pgSize: number, pgN: number = 1): Promise<AxiosResponse<Course[]>> {
-    return apiClient.get<Course[]>(`/course?${pgSize > 0 ? `_limit=${pgSize}&_page=${pgN}` : ''}`)
-  },
   getStudent(id: number): Promise<AxiosResponse<Student>> {
-    return apiClient.get<Student>(`/student/${id}`)
+    return apiClient.get<Student>(`/students/${id}`)
   },
   getAdvisor(id: number): Promise<AxiosResponse<Advisor>> {
     return apiClient.get<Advisor>(`/teachers/${id}`)
@@ -33,14 +22,11 @@ export default {
   getAdvisorExpanded(id: number): Promise<AxiosResponse<Advisor>> {
     return apiClient.get<Advisor>(`/teachers/${id}?_embed=course&_embed=student`)
   },
-  getCourse(id: number): Promise<AxiosResponse<Course>> {
-    return apiClient.get<Course>(`/course/${id}`)
-  },
   updateStudent(id: number, student: Student): Promise<AxiosResponse<Student>> {
-    return apiClient.put<Student>(`/student/${id}`, student)
+    return apiClient.put<Student>(`/students/${id}`, student)
   },
   insertStudent(student: Student): Promise<AxiosResponse<Student>> {
-    return apiClient.post<Student>(`/student`, student)
+    return apiClient.post<Student>(`/students`, student)
   },
   insertAdvisor(teacher: Advisor): Promise<AxiosResponse<Advisor>> {
     return apiClient.post<Advisor>(`/teachers`, teacher)

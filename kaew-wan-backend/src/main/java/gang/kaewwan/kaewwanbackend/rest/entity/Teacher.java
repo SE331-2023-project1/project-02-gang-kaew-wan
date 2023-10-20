@@ -3,7 +3,6 @@ package gang.kaewwan.kaewwanbackend.rest.entity;
 import java.util.List;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,9 +21,6 @@ public class Teacher extends Person {
 
     @OneToMany(mappedBy = "teacher")
     List<Announcement> announcements;
-
-    @ManyToOne
-    Department department;
 
     @OneToMany(mappedBy = "teacher")
     List<Review> reviews;

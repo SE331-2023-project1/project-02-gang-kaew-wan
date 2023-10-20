@@ -13,5 +13,4 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class StudentStrippedDTO extends PersonDTO {
     String studentId;
-    DepartmentDTO department;
 }

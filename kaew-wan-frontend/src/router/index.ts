@@ -1,24 +1,21 @@
 import RegistryService from '@/services/RegistryService'
-import { useCourseStore } from '@/stores/course'
-import { useStudentStore } from '@/stores/student'
 import { useAdvisorStore } from '@/stores/advisor'
+import { useStudentStore } from '@/stores/student'
 import AddPersonLayoutVue from '@/views/AddPersonLayout.vue'
 import AdvisorDetailView from '@/views/AdvisorDetailView.vue'
-import AdvisorInformationView from '@/views/advisor/AdvisorInformationView.vue'
-import AdvisorCourseView from '@/views/advisor/AdvisorCourseView.vue'
-import AdvisorStudentView from '@/views/advisor/AdvisorStudentView.vue'
 import AdvisorListView from '@/views/AdvisorListView.vue'
-import CourseDetail from '@/views/CourseDetail.vue'
-import CourseListView from '@/views/CourseListView.vue'
+import LoginViewVue from '@/views/LoginView.vue'
 import NetworkErrorView from '@/views/NetworkErrorView.vue'
 import NotFoundErrorView from '@/views/NotFoundErrorView.vue'
 import StudentDetailView from '@/views/StudentDetailView.vue'
 import StudentListView from '@/views/StudentListView.vue'
+import AdvisorInformationView from '@/views/advisor/AdvisorInformationView.vue'
+import AdvisorStudentView from '@/views/advisor/AdvisorStudentView.vue'
 import StudentCommentView from '@/views/student/StudentCommentView.vue'
-import StudentCoursesView from '@/views/student/StudentCoursesView.vue'
 import StudentInformationView from '@/views/student/StudentInformationView.vue'
 import nProgress from 'nprogress'
 import { createRouter, createWebHistory } from 'vue-router'
+import RegisterViewVue from '@/views/RegisterView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -61,12 +58,6 @@ const router = createRouter({
           alias: 'information',
           name: 'advisor-information',
           component: AdvisorInformationView
-        },
-        {
-          path: 'courses',
-          alias: 'courses',
-          name: 'advisor-courses',
-          component: AdvisorCourseView
         },
         {
           path: 'advisor',
@@ -116,12 +107,6 @@ const router = createRouter({
           component: StudentInformationView
         },
         {
-          path: 'courses',
-          alias: 'courses',
-          name: 'student-courses',
-          component: StudentCoursesView
-        },
-        {
           path: 'comments',
           name: 'student-comments',
           component: StudentCommentView
@@ -129,42 +114,19 @@ const router = createRouter({
       ]
     },
     {
-      path: '/course',
-      name: 'course-list',
-      component: CourseListView,
-      props: (route) => ({ page: parseInt(route.query?.page as string) }),
-      beforeEnter: (to, _, next) => {
-        if (
-          !to.query?.page ||
-          parseInt(to.query?.page as string) < 1 ||
-          isNaN(parseInt(to.query?.page as string))
-        ) {
-          next({ name: 'course-list', query: { page: 1 } })
-        } else {
-          next()
-        }
-      }
-    },
-    {
-      path: '/course/:id(\\d+)',
-      name: 'course-detail',
-      component: CourseDetail,
-      props: true,
-      beforeEnter: async (to) => {
-        const id: number = parseInt(to.params.id as string)
-        const courseStore = useCourseStore()
-        courseStore.clear()
-        courseStore.setCourse(
-          await RegistryService.getCourse(id).then((res) => {
-            return res.data
-          })
-        )
-      }
-    },
-    {
       name: 'add-person',
       path: '/add',
       component: AddPersonLayoutVue
+    },
+    {
+      name: 'login',
+      path: '/login',
+      component: LoginViewVue
+    },
+    {
+      name: 'register',
+      path: '/register',
+      component: RegisterViewVue
     },
     {
       name: 'network-error',

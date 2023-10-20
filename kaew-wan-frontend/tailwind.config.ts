@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import forms from '@tailwindcss/forms'
 
 export default {
   content: ['./index.html', './src/**/*.vue'],
@@ -15,5 +16,5 @@ export default {
       }
     }
   },
-  plugins: []
+  plugins: [forms]
 } satisfies Config
