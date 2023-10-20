@@ -1,17 +1,16 @@
 package gang.kaewwan.kaewwanbackend.rest.dao;
 
-import gang.kaewwan.kaewwanbackend.rest.entity.Student;
-import gang.kaewwan.kaewwanbackend.rest.repository.StudentRepository;
-import gang.kaewwan.kaewwanbackend.rest.service.StudentService;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
+import gang.kaewwan.kaewwanbackend.rest.entity.Student;
 import gang.kaewwan.kaewwanbackend.rest.entity.Teacher;
+import gang.kaewwan.kaewwanbackend.rest.repository.StudentRepository;
 import gang.kaewwan.kaewwanbackend.rest.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
-
-import java.util.List;
 
 @Repository
 @RequiredArgsConstructor

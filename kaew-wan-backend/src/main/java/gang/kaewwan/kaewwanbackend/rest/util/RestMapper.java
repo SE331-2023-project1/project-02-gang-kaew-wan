@@ -2,9 +2,17 @@ package gang.kaewwan.kaewwanbackend.rest.util;
 
 import java.util.List;
 
-import gang.kaewwan.kaewwanbackend.rest.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
+import gang.kaewwan.kaewwanbackend.rest.entity.Announcement;
+import gang.kaewwan.kaewwanbackend.rest.entity.AnnouncementDTO;
+import gang.kaewwan.kaewwanbackend.rest.entity.Comment;
+import gang.kaewwan.kaewwanbackend.rest.entity.CommentDTO;
+import gang.kaewwan.kaewwanbackend.rest.entity.Student;
+import gang.kaewwan.kaewwanbackend.rest.entity.StudentDTO;
+import gang.kaewwan.kaewwanbackend.rest.entity.Teacher;
+import gang.kaewwan.kaewwanbackend.rest.entity.TeacherDTO;
 
 @Mapper
 public interface RestMapper {
