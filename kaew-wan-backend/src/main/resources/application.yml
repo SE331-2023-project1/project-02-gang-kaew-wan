@@ -1,28 +1,31 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://db.zrspwxwehpbzivgvieso.supabase.co:5432/postgres
-    username: postgres
-    password: 8UKdn4Gs6KNYjM6i
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        jdbc:
-          lob:
-            "[non_contextual_creation]": true
-    hibernate:
-      ddl-auto: update
+    datasource:
+        url: jdbc:postgresql://db.zrspwxwehpbzivgvieso.supabase.co:5432/postgres
+        username: postgres
+        password: 8UKdn4Gs6KNYjM6i
+    jpa:
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                jdbc:
+                    lob:
+                        "[non_contextual_creation]": true
+        hibernate:
+            ddl-auto: update
 
-  profiles:
-    active:
-      - db
-  servlet:
-    multipart:
-      max-file-size: 10MB
+    profiles:
+        active:
+            - db
+    servlet:
+        multipart:
+            max-file-size: 10MB
 application:
-  security:
-    jwt:
-      expiration: 86400000
-      refresh-token:
-        expiration: 604800000
-      secret-key: UcbGQCpxBsZ8aQLUeLFWLOodKEoznGKIC9+rXBdorE4=
+    security:
+        jwt:
+            expiration: 86400000
+            refresh-token:
+                expiration: 604800000
+            secret-key: UcbGQCpxBsZ8aQLUeLFWLOodKEoznGKIC9+rXBdorE4=
+    supabase:
+        url: https://zrspwxwehpbzivgvieso.supabase.co
+        anon-key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpyc3B3eHdlaHBieml2Z3ZpZXNvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5NzQ5ODE4NSwiZXhwIjoyMDEzMDc0MTg1fQ.eFOvTvPKR_CPRijxrxwpM3GWj3TDo3YZV_zMZwHZ5P0
