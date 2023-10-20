@@ -61,7 +61,11 @@ public class CommentDaoImpl implements CommentDao{
     public Comment replyComment(Long id, Comment comment){
         //Check Parent Exist
         if(commentRepository.existsById(id)){
-            comment.setParent(this.getCommentById(id));
+            Comment parent = this.getCommentById(id);
+            comment.setParent(parent);
+            comment.setEdited(false);
+            comment.setStudent(parent.getStudent());
+            comment.setTeacher(parent.getTeacher());
             return commentRepository.save(comment);
         }
         return null;

@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class PersonDTO {
     Long id;
-    PersonUserDTO user;
+//    PersonUserDTO user;
     String fname;
     String lname;
     String image;
