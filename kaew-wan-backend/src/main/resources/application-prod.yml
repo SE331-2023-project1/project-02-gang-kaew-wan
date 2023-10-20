@@ -12,10 +12,6 @@ spring:
                         "[non_contextual_creation]": true
         hibernate:
             ddl-auto: update
-
-    profiles:
-        active:
-            - db
     servlet:
         multipart:
             max-file-size: 10MB
