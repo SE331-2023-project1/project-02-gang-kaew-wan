@@ -29,8 +29,6 @@ function toggleMenuOpen() {
   menuOpened.value = !menuOpened.value
   console.log(menuOpened.value)
 }
-
-console.log(authStore.isTeacher)
 </script>
 
 <template>
@@ -44,9 +42,7 @@ console.log(authStore.isTeacher)
         }"
       >
         <div class="flex flex-col w-full items-center">
-          <RouterLink
-            :to="{ name: 'student-list', query: { page: 1 } }"
-            class="min-w-fit text-2xl font-bold"
+          <RouterLink :to="{ name: 'dashboard' }" class="min-w-fit text-2xl font-bold"
             >STUDENT<span
               class="bg-clip-text bg-gradient-to-r from-lime-400 via-emerald-400 to-sky-400 text-transparent"
               >CONNECT</span
@@ -62,7 +58,7 @@ console.log(authStore.isTeacher)
         <div class="flex flex-col w-full items-end">
           <div v-if="authStore.currentID" class="flex flex-col w-full items-end">
             <RouterLink
-              :to="{ name: 'profile', params: { id: authStore.currentID } }"
+              :to="{ name: 'profile-detail', params: { id: authStore.currentID } }"
               class="min-w-fit flex flex-row gap-2 items-center text-lg hover:brightness-75 w-full hover:text-emerald-400 [&.router-link-active]:text-white px-2 py-1 rounded-md"
             >
               <div class="flex flex-row gap-2 items-center">
