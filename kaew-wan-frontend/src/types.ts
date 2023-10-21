@@ -5,7 +5,7 @@ export interface Student extends Person {
 
 export interface Advisor extends Person {
   position: string
-  announcements: Announcements[]
+  announcements: Announcement[]
   students?: Student[]
 }
 
@@ -14,7 +14,7 @@ export interface Department {
   name: string
 }
 
-export interface Announcements extends Reactable {
+export interface Announcement extends Reactable {
   message: string
   file: string
 }
