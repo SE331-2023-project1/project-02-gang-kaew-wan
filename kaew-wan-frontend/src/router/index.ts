@@ -23,6 +23,8 @@ import AdvisorInformationView from '@/views/advisor/AdvisorInformationView.vue'
 import AdvisorAssignStudentView from '@/views/advisor/AdvisorAssignStudentView.vue'
 import ForbiddenView from '@/views/ForbiddenView.vue'
 import AddAdvisorView from '@/views/AddAdvisorView.vue'
+import EditProfileView from "@/views/profile/EditProfileView.vue";
+import ProfileLayoutView from "@/views/profile/ProfileLayoutView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -162,9 +164,10 @@ const router = createRouter({
       }
     },
     {
-      name: 'profile',
+      name: 'profile-layout',
       path: '/profile/:id',
-      component: ProfileView,
+      component: ProfileLayoutView,
+      props:true,
       beforeEnter: (to) => {
         const id = parseInt(to.params.id as string)
         const store = usePersonStore()
@@ -208,7 +211,23 @@ const router = createRouter({
               }
             })
         }
-      }
+      },
+      children: [
+        {
+          path: '',
+          alias: 'ProfileDetail',
+          name: 'profile-detail',
+          component: ProfileView,
+          props: true
+        },
+        {
+          path: 'edit',
+          alias: 'Edit Profile',
+          name: 'profile-edit',
+          component: EditProfileView,
+          props: true
+        }
+      ]
     },
     {
       name: 'network-error',
