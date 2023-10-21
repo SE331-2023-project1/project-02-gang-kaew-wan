@@ -1,7 +1,9 @@
 package gang.kaewwan.kaewwanbackend.rest.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
@@ -40,19 +42,27 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
+    @Transactional
     public Teacher assignStudent(Long id, List<Student> students) {
         if (teacherRepository.existsById(id)) {
             Teacher teacher = teacherRepository.findById(id).orElse(null);
+            teacher.getStudents().forEach( student -> {
+                student.setTeacher(null);
+//                studentRepository.save(student);
+            });
+            teacher.setStudents(new ArrayList<>());
+
             students.forEach( student -> {
                 if(studentRepository.existsById(student.getId())) {
                     Student studentData = studentRepository.findById(student.getId()).orElse(null);
                     studentData.setTeacher(teacher);
-                    studentRepository.save(studentData);
+//                    studentRepository.save(studentData);
                     teacher.getStudents().add(student);
                 }
             } );
             teacher.setId(id);
-            return teacherRepository.save(teacher);
+//            return teacherRepository.save(teacher);
+            return teacher;
         }
         return null;
     }
