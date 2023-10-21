@@ -22,7 +22,7 @@ import AdvisorDetailLayoutView from '@/views/advisor/AdvisorDetailLayoutView.vue
 import AdvisorInformationView from '@/views/advisor/AdvisorInformationView.vue'
 import AdvisorAssignStudentView from '@/views/advisor/AdvisorAssignStudentView.vue'
 import ForbiddenView from '@/views/ForbiddenView.vue'
-import AddAdvisorView from '@/views/AddAdvisorView.vue'
+import RegisterTeacherView from '@/views/RegisterTeacherView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -139,7 +139,7 @@ const router = createRouter({
     {
       name: 'add-advisor',
       path: '/add-advisor',
-      component: AddAdvisorView,
+      component: RegisterTeacherView,
       beforeEnter: (to, _, next) => {
         const authStore = useAuthStore()
         if (!authStore.isAdmin) {
