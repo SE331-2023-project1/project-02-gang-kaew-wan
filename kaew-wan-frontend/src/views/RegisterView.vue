@@ -54,13 +54,14 @@ const onSubmit = handleSubmit((values) => {
       router.push({ name: 'dashboard' })
     })
     .catch((err) => {
+      console.log(err)
       messageStore.flashMessage('Could not register, Student ID already exists.')
     })
 })
 
 const departmentOption = ref<Department[]>([])
 
-const departments = RegistryService.getDepartments().then((res) => {
+RegistryService.getDepartments().then((res) => {
   departmentOption.value = res.data
 })
 </script>

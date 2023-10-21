@@ -1,5 +1,5 @@
 import apiClient from '@/services/AxiosClient'
-import type { Department, User } from '@/types'
+import type { User } from '@/types'
 import axios from 'axios'
 import { defineStore } from 'pinia'
 

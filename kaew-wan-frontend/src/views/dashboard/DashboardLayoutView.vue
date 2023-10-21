@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth'
-import { storeToRefs } from 'pinia'
 import AdminDashboardView from '@/views/dashboard/AdminDashboardView.vue'
 import StudentDashboardVIew from '@/views/dashboard/StudentDashboardVIew.vue'
 import TeacherDashboardView from '@/views/dashboard/TeacherDashboardView.vue'

@@ -97,7 +97,7 @@ async function onFileUpload(e: Event) {
         </svg>
         <span v-if="uploading">Uploading</span>
         <span v-else-if="compressing">Compressing {{ compress_progress }}%</span>
-        <span v-else="compressing">Upload a file</span>
+        <span v-else>Upload a file</span>
       </div>
     </div>
     <ErrorMessage

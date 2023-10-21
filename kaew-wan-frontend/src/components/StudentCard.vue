@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import type { Student } from '@/types'
-import { type PropType, computed } from 'vue'
-const intl = new Intl.DisplayNames(['en'], { type: 'region' })
+import { type PropType } from 'vue'
 
-const props = defineProps({
+defineProps({
   student: {
     type: Object as PropType<Student>,
     required: true
