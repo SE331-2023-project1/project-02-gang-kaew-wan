@@ -12,7 +12,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <RouterLink :to="{ name: 'student-information', params: { id: student.studentId } }">
+  <RouterLink :to="{ name: 'student-information', params: { id: student.id } }">
     <div
       class="relative font-serif bg-stone-800 shadow-md flex flex-row gap-4 hover:border-l-4 hover:pl-[2px] transition-all border-emerald-400 duration-100 group"
     >

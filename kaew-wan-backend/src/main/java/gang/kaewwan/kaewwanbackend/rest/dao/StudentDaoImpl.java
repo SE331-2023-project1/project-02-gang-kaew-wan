@@ -33,6 +33,20 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
+    public Page<Student> getStudents(Integer pageSize, Integer page, Long advisorId) {
+        return studentRepository.findByTeacher_Id(advisorId, pageSize != null && page != null ? PageRequest.of(page - 1, pageSize)
+                : PageRequest.of(0, getStudentSize()));
+    }
+
+    @Override
+    public Page<Student> getStudents(Integer pageSize, Integer page, Long advisorId, String keyword) {
+        return studentRepository
+                .findByStudentIdContainingIgnoreCaseOrFnameContainingIgnoreCaseOrLnameContainingIgnoreCaseAndTeacher_Id(keyword,
+                        keyword, keyword, advisorId ,pageSize != null && page != null ? PageRequest.of(page - 1, pageSize)
+                                : PageRequest.of(0, getStudentSize()));
+    }
+
+    @Override
     public Student getStudent(Long id) {
         return studentRepository.findById(id).orElse(null);
     }

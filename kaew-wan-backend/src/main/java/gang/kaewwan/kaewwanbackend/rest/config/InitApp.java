@@ -23,6 +23,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     final ReactionRepository reactionRepository;
     final StudentRepository studentRepository;
     final TeacherRepository teacherRepository;
+    final PersonRepository personRepository;
     final CommentRepository commentRepository;
     final UserRepository userRepository;
     final PasswordEncoder passwordEncoder;
@@ -42,34 +43,54 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         departments.add(Department.builder().id(9L).name("Department of Economics").build());
         departments.add(Department.builder().id(10L).name("Department of Engineering").build());
         departments.forEach(dep -> departmentRepository.save(dep));
-        Teacher teacher = Teacher.builder().id(1L).position("Manager-san").department(departments.get(0))
+
+        Person adminP = Person.builder().id(1L)
+                .fname("Sarin")
+                .lname("Inwze007")
+                .image("https://i.pravatar.cc/300")
+                .build();
+        User adminU = User.builder().id(1L).email("test2@test2")
+                .username("admin")
+                .password(passwordEncoder.encode("password"))
+                .role(Role.ROLE_ADMIN)
+                .build();
+        userRepository.save(adminU);
+        adminP.setUser(adminU);
+        personRepository.save(adminP);
+
+
+        Teacher teacherP = Teacher.builder().id(2L).position("Manager-san").department(departments.get(0))
                         .fname("Chartchai")
                         .lname("Doungsa-ard").image("https://i1.rgstatic.net/ii/profile.image/280166027808778-1443808194990_Q512/Chartchai-Doungsa-Ard.jpg").build();
-        Student student = Student.builder().id(2L).studentId("642115003").department(departments.get(0))
-                        .fname("Kan")
-                        .lname("Katpark").image("https://media.discordapp.net/attachments/950106830892331088/1132700631036080229/image.png?ex=653e7eaa&is=652c09aa&hm=37eb90b218ef2f20cef945aa2c287dfe24d9ab4d2fb2033211bfe622af30caa2&=&width=505&height=673").teacher(teacher)
-                        .build();
-        User user1 = User.builder().id(1L).email("test@test")
-                        .username(student.getStudentId())
-                        .password(passwordEncoder.encode("test"))
-                        .role(Role.ROLE_STUDENT)
-                        .build();
-        User user2 = User.builder().id(2L).email("test2@test2")
-                        .username(teacher.getFname())
+        User teacherU = User.builder().id(2L).email("test2@test2")
+                        .username(teacherP.getFname())
                         .password(passwordEncoder.encode("test"))
                         .role(Role.ROLE_TEACHER)
                         .build();
-        userRepository.save(user1);
-        userRepository.save(user2);
-        student.setUser(user1);
-        teacher.setUser(user2);
-        teacherRepository.save(teacher);
-        studentRepository.save(student);
-        Comment comment1 = Comment.builder().id(1L).message("Hello").teacher(teacher).student(student).edited(false)
+        userRepository.save(teacherU);
+        teacherP.setUser(teacherU);
+        teacherRepository.save(teacherP);
+
+        Student studentP = Student.builder().id(3L).studentId("642115003").department(departments.get(0))
+                .fname("Kan")
+                .lname("Katpark").image("https://media.discordapp.net/attachments/950106830892331088/1132700631036080229/image.png?ex=653e7eaa&is=652c09aa&hm=37eb90b218ef2f20cef945aa2c287dfe24d9ab4d2fb2033211bfe622af30caa2&=&width=505&height=673")
+                .teacher(teacherP)
+                .build();
+        User studentU = User.builder().id(3L).email("test@test")
+                        .username(studentP.getStudentId())
+                        .password(passwordEncoder.encode("test"))
+                        .role(Role.ROLE_STUDENT)
+                        .build();
+        userRepository.save(studentU);
+        studentP.setUser(studentU);
+        studentRepository.save(studentP);
+
+
+        Comment comment1 = Comment.builder().id(1L).message("Hello").teacher(teacherP).student(studentP).edited(false)
                         .build();
         commentRepository.save(comment1);
-        Comment comment2 = Comment.builder().id(2L).message("Hello2").parent(comment1).teacher(teacher)
-                        .student(student)
+        Comment comment2 = Comment.builder().id(2L).message("Hello2").parent(comment1).teacher(teacherP)
+                        .student(studentP)
                         .edited(false).build();
         commentRepository.save(comment2);
         Reaction reaction = Reaction.builder().id(1L).emote("👍").reactable(comment2).build();

@@ -26,6 +26,15 @@ export const useAuthStore = defineStore('auth', {
     },
     hasPerson(): boolean {
       return this.user?.person ? true : false || false
+    },
+    isAdmin(): boolean {
+      return this.user?.role === 'ROLE_ADMIN'
+    },
+    isTeacher(): boolean {
+      return this.user?.role === 'ROLE_TEACHER'
+    },
+    isStudent(): boolean {
+      return this.user?.role === 'ROLE_STUDENT'
     }
   },
   actions: {
@@ -37,6 +46,7 @@ export const useAuthStore = defineStore('auth', {
         })
         .then((res) => {
           this.save(res.data.access_token, res.data.user)
+          console.log(this.token, this.user)
           return res
         })
     },

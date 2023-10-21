@@ -8,9 +8,9 @@ import ValidatedInput from '@/components/ValidatedInput.vue'
 import apiClient from '@/services/AxiosClient'
 import BaseSelect from '@/components/BaseSelect.vue'
 import ImageUpload from '@/components/ImageUpload.vue'
-import RegistryService from "@/services/RegistryService";
-import {ref} from "vue";
-import type {Department} from "@/types";
+import RegistryService from '@/services/RegistryService'
+import { ref } from 'vue'
+import type { Department } from '@/types'
 const authStore = useAuthStore()
 const router = useRouter()
 const messageStore = useMessageStore()
@@ -51,7 +51,7 @@ const onSubmit = handleSubmit((values) => {
     .then((res) => {
       authStore.save(res.data.access_token, res.data.user)
       messageStore.flashMessage('Successfully Registered.')
-      router.push({ name: 'student-list' })
+      router.push({ name: 'dashboard' })
     })
     .catch((err) => {
       messageStore.flashMessage('Could not register, Student ID already exists.')
@@ -60,10 +60,9 @@ const onSubmit = handleSubmit((values) => {
 
 const departmentOption = ref<Department[]>([])
 
-const departments = RegistryService.getDepartments()
-    .then( (res) => {
-      departmentOption.value = res.data
-    } )
+const departments = RegistryService.getDepartments().then((res) => {
+  departmentOption.value = res.data
+})
 </script>
 <template>
   <main class="w-full px-4 sm:p-0 sm:w-2/3 flex flex-col items-center">

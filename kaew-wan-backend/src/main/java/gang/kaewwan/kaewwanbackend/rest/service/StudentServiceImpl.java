@@ -30,6 +30,16 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public Page<Student> getStudentsByAdvisor(Integer pageSize, Integer page, Long advisorId) {
+        return studentDao.getStudents(pageSize, page, advisorId);
+    }
+
+    @Override
+    public Page<Student> getStudentsByAdvisor(Integer pageSize, Integer page, Long advisorId, String keyword) {
+        return studentDao.getStudents(pageSize, page, advisorId,keyword);
+    }
+
+    @Override
     public Student getStudent(Long id) {
         return studentDao.getStudent(id);
     }

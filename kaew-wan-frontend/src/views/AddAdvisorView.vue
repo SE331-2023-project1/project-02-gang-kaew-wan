@@ -3,7 +3,7 @@
 </script>
 
 <template>
-
+<h2>TBC</h2>
 </template>
 
 <style scoped>
