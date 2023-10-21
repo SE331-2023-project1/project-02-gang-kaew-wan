@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gang.kaewwan.kaewwanbackend.rest.entity.Student;
 import gang.kaewwan.kaewwanbackend.rest.entity.StudentDTO;
+import gang.kaewwan.kaewwanbackend.rest.entity.StudentLightweightDTO;
 import gang.kaewwan.kaewwanbackend.rest.service.StudentService;
 import gang.kaewwan.kaewwanbackend.rest.util.RestMapper;
 import lombok.RequiredArgsConstructor;
@@ -24,28 +25,25 @@ public class StudentController {
     final StudentService studentService;
 
     @GetMapping("students")
-    public List<StudentDTO> getStudentList(
+    public List<StudentLightweightDTO> getStudentList(
             @RequestParam(value = "_limit", required = false) Integer pageSize,
             @RequestParam(value = "_page", required = false) Integer page,
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "advisor", required = false) Long advisorId) {
         HttpHeaders responseHeader = new HttpHeaders();
         Page<Student> pageOut;
-        if(advisorId != null && keyword != null){
+        if (advisorId != null && keyword != null) {
             pageOut = studentService.getStudentsByAdvisor(pageSize, page, advisorId, keyword);
-        }
-        else if(advisorId != null) {
+        } else if (advisorId != null) {
             pageOut = studentService.getStudentsByAdvisor(pageSize, page, advisorId);
-        }
-        else if (keyword != null) {
+        } else if (keyword != null) {
             pageOut = studentService.getStudents(pageSize, page, keyword);
         } else {
             pageOut = studentService.getStudents(pageSize, page);
         }
         responseHeader.set("x-total-count", String.valueOf(pageOut.getTotalElements()));
-        return RestMapper.INSTANCE.getStudentDto(pageOut.getContent());
+        return RestMapper.INSTANCE.getStudentLightweightDTO(pageOut.getContent());
     }
-
 
     @GetMapping("students/{id}")
     public StudentDTO getStudent(@PathVariable("id") Long id) {

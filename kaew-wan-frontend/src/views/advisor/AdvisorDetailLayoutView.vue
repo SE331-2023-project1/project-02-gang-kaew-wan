@@ -16,14 +16,14 @@ const advisor = storeToRefs(advisorStore).advisor
         </span>
         <span class="text-2xl"> {{ advisor.fname }} {{ advisor.lname }} </span>
       </div>
-      <div class="flex flex-col shadow-lg">
+      <div class="flex flex-col shadow-lg font-sans">
         <RouterLink
-          class="bg-stone-800 [&.router-link-exact-active]:bg-stone-700 hover:brightness-125 w-full p-4"
+          class="bg-stone-800 [&.router-link-exact-active]:bg-stone-700 hover:brightness-125 w-full p-4 text-lg"
           :to="{ name: 'advisor-information' }"
           >Information</RouterLink
         >
         <RouterLink
-          class="bg-stone-800 [&.router-link-exact-active]:bg-stone-700 hover:brightness-125 w-full p-4"
+          class="bg-stone-800 [&.router-link-exact-active]:bg-stone-700 hover:brightness-125 w-full p-4 text-lg"
           :to="{ name: 'assign-student' }"
           >Assign Student</RouterLink
         >
