@@ -27,6 +27,7 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
     final CommentRepository commentRepository;
     final UserRepository userRepository;
     final PasswordEncoder passwordEncoder;
+    final AnnouncementRepository announcementRepository;
 
     @Override
     @Transactional
@@ -87,16 +88,27 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         studentP.setUser(studentU);
         studentRepository.save(studentP);
 
-        Comment comment1 = Comment.builder().id(1L).message("Hello").teacher(teacherP).student(studentP)
+        Comment comment1 = Comment.builder().id(1L).message("Hello").sender(teacherP).receiver(studentP)
                 .edited(false)
                 .build();
         commentRepository.save(comment1);
-        Comment comment2 = Comment.builder().id(2L).message("Hello2").parent(comment1).teacher(teacherP)
-                .student(studentP)
+        Comment comment2 = Comment.builder().id(2L).message("Hello2").parent(comment1).receiver(teacherP).sender(studentP)
                 .edited(false).build();
         commentRepository.save(comment2);
         Reaction reaction = Reaction.builder().id(1L).emote("👍").reactable(comment2).build();
         reactionRepository.save(reaction);
+        Announcement announcement = Announcement.builder().id(7L).message("Hello, students.")
+                .file("https://media.discordapp.net/attachments/879626635949772830/1165361663881523290/Ichihime-2.png?ex=654692a0&is=65341da0&hm=2113c8160e7e8e2dfd5505fb8e5004bb0391265fcea9dc5ca7753073ebc05377&=&width=215&height=215")
+                .teacher(teacherP)
+                .build();
+        Announcement announcement2 = Announcement.builder().id(8L).message("Hello, students, again.")
+                .file("https://images-ext-1.discordapp.net/external/rusWlfKIRVyxRy8zHYtz6ghjiCF7MZnJAE88MK7hohk/https/media.tenor.com/F00gTBeQRvkAAAPo/mariah-carey-mariah-carey-christmas.mp4")
+                .teacher(teacherP)
+                .build();
+        announcementRepository.save(announcement);
+        announcementRepository.save(announcement2);
+        Reaction reaction2 = Reaction.builder().id(1L).emote("💀").reactable(announcement).build();
+        reactionRepository.save(reaction2);
     }
 
 }

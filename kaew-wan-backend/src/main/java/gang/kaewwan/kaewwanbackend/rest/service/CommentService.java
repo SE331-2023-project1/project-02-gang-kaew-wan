@@ -6,8 +6,7 @@ import org.springframework.data.domain.Page;
 public interface CommentService {
     Page<Comment> getComments();
     Comment getCommentById(Long id);
-    Page<Comment> getCommentByStudentId(Long id);
-    Page<Comment> getCommentByTeacherId(Long id);
+    Page<Comment> getCommentByPersonId(Long id);
 
     Comment addComment(Comment id);
     Comment updateComment(Long id, Comment comment);

@@ -1,16 +1,32 @@
 export interface Student extends Person {
   studentId: string
+  teacher?: Advisor
 }
 
 export interface Advisor extends Person {
   position: string
-  // student?: Student[]
-  // course?: Course[]
+  announcements: Announcements[]
+  students?: Student[]
 }
 
 export interface Department {
   id: number
   name: string
+}
+
+export interface Announcements extends Reactable {
+  message: string
+  file: string
+}
+
+export interface Reactable {
+  id: number
+  reactions: Reaction[]
+}
+
+export interface Reaction {
+  id: number
+  emote: string
 }
 
 export interface User {
@@ -34,4 +50,24 @@ export interface Course {
   advisorId: number
   course_name: string
   course_desc: string
+}
+
+export interface Announcement {
+  id: number
+  reactions: Array<Reaction>
+  message: string
+  file: string
+}
+
+export interface Reaction {
+  id: number
+  emote: string
+}
+export interface Comment {
+  id: number
+  message: string
+  edited: boolean
+  parent?: Comment
+  student: Student
+  teacher: Advisor
 }

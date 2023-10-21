@@ -11,9 +11,7 @@ public interface CommentDao {
 
     Comment getCommentById(Long id);
 
-    Page<Comment> getCommentByStudentId(Long id);
-
-    Page<Comment> getCommentByTeacherId(Long id);
+    Page<Comment> getCommentByPersonId(Long id);
 
     Comment addComment(Comment comment);
     Comment updateComment(Long id, Comment comment);

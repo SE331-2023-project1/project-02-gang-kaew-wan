@@ -28,6 +28,5 @@ public class Teacher extends Person {
     @OneToMany(mappedBy = "teacher")
     List<Student> students;
 
-    @OneToMany(mappedBy = "teacher")
-    List<Comment> comments;
+
 }
