@@ -8,6 +8,9 @@ import ValidatedInput from '@/components/ValidatedInput.vue'
 import apiClient from '@/services/AxiosClient'
 import BaseSelect from '@/components/BaseSelect.vue'
 import ImageUpload from '@/components/ImageUpload.vue'
+import RegistryService from "@/services/RegistryService";
+import {ref} from "vue";
+import type {Department} from "@/types";
 const authStore = useAuthStore()
 const router = useRouter()
 const messageStore = useMessageStore()
@@ -54,6 +57,13 @@ const onSubmit = handleSubmit((values) => {
       messageStore.flashMessage('Could not register, Student ID already exists.')
     })
 })
+
+const departmentOption = ref<Department[]>([])
+
+const departments = RegistryService.getDepartments()
+    .then( (res) => {
+      departmentOption.value = res.data
+    } )
 </script>
 <template>
   <main class="w-full px-4 sm:p-0 sm:w-2/3 flex flex-col items-center">
@@ -97,20 +107,7 @@ const onSubmit = handleSubmit((values) => {
           :value-extractor="(x) => x.id"
           :text-extractor="(x) => x.name"
           :error="errors.departmentId"
-          :options="[
-            {
-              id: 1,
-              name: 'Department of One'
-            },
-            {
-              id: 2,
-              name: 'Department of Two'
-            },
-            {
-              id: 3,
-              name: 'Department of Three'
-            }
-          ]"
+          :options="departmentOption"
         ></BaseSelect>
         <ImageUpload class="col-span-2" v-model="image" :error="errors.image" />
         <button type="submit" class="bg-emerald-500 px-2 py-1 place-self-center col-span-2">
