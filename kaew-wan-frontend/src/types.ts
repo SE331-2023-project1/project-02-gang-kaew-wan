@@ -44,13 +44,6 @@ export interface Person {
   department: Department
 }
 
-export interface Course {
-  id?: number
-  advisorId: number
-  course_name: string
-  course_desc: string
-}
-
 export interface Comment {
   id: number
   message: string

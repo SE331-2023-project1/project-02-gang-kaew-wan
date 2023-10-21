@@ -88,7 +88,7 @@ RegistryService.getDepartments().then((res) => {
           :autocomplete="false"
         />
         <ValidatedInput class="col-span-5" label="Email" v-model="email" :error="errors.email" />
-        <p class="col-span-5">Student Information</p>
+        <p class="col-span-5">Teacher Information</p>
         <ValidatedInput
           class="col-span-1"
           label="Position"
