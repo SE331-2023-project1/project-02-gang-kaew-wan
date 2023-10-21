@@ -27,10 +27,17 @@ public class StudentController {
     public List<StudentDTO> getStudentList(
             @RequestParam(value = "_limit", required = false) Integer pageSize,
             @RequestParam(value = "_page", required = false) Integer page,
-            @RequestParam(value = "keyword", required = false) String keyword) {
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "advisor", required = false) Long advisorId) {
         HttpHeaders responseHeader = new HttpHeaders();
         Page<Student> pageOut;
-        if (keyword != null) {
+        if(advisorId != null && keyword != null){
+            pageOut = studentService.getStudentsByAdvisor(pageSize, page, advisorId, keyword);
+        }
+        else if(advisorId != null) {
+            pageOut = studentService.getStudentsByAdvisor(pageSize, page, advisorId);
+        }
+        else if (keyword != null) {
             pageOut = studentService.getStudents(pageSize, page, keyword);
         } else {
             pageOut = studentService.getStudents(pageSize, page);
@@ -38,6 +45,7 @@ public class StudentController {
         responseHeader.set("x-total-count", String.valueOf(pageOut.getTotalElements()));
         return RestMapper.INSTANCE.getStudentDto(pageOut.getContent());
     }
+
 
     @GetMapping("students/{id}")
     public StudentDTO getStudent(@PathVariable("id") Long id) {

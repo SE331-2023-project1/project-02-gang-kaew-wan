@@ -25,7 +25,7 @@ defineProps({
       <div class="px-6 py-4">
         <p class="text-xs opacity-50">#{{ advisor.id }}</p>
         <p class="text-lg group-hover:text-emerald-400 transition-colors text-ellipsis">
-          {{`(${advisor.position}) ${advisor.fname} ${advisor.lname}`}}
+          {{ `(${advisor.position}) ${advisor.fname} ${advisor.lname}` }}
         </p>
         <p class="text-sm font-light opacity-75">{{ advisor.department.name }}</p>
       </div>

@@ -9,18 +9,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 public class KaewWanBackendApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(KaewWanBackendApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(KaewWanBackendApplication.class, args);
+    }
 
-	@Bean
-	WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("*").exposedHeaders("x-total-count");
-			}
-		};
-	}
+    @Bean
+    WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("*")
+                        .exposedHeaders("x-total-count")
+                ;
+            }
+        };
+    }
 
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <h1>Hello</h1>
+  <h2>TODO: Implment assign page</h2>
 </template>
 
 <style scoped></style>

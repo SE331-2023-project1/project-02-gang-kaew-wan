@@ -1,5 +1,5 @@
 import apiClient from '@/services/AxiosClient'
-import type { Department, User } from '@/types'
+import type { User } from '@/types'
 import axios from 'axios'
 import { defineStore } from 'pinia'
 
@@ -24,8 +24,14 @@ export const useAuthStore = defineStore('auth', {
     currentImage(): string {
       return this.user?.person?.image || ''
     },
-    hasPerson(): boolean {
-      return this.user?.person ? true : false || false
+    isAdmin(): boolean {
+      return this.user?.role === 'ROLE_ADMIN'
+    },
+    isTeacher(): boolean {
+      return this.user?.role === 'ROLE_TEACHER'
+    },
+    isStudent(): boolean {
+      return this.user?.role === 'ROLE_STUDENT'
     }
   },
   actions: {
@@ -37,6 +43,7 @@ export const useAuthStore = defineStore('auth', {
         })
         .then((res) => {
           this.save(res.data.access_token, res.data.user)
+          console.log(this.token, this.user)
           return res
         })
     },

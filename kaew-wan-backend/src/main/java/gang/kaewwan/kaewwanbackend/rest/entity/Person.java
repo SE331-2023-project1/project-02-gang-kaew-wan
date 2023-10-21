@@ -14,7 +14,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Entity
 @NoArgsConstructor
-public abstract class Person {
+
+public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude

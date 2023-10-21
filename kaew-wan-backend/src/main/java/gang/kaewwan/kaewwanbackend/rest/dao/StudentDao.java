@@ -10,8 +10,10 @@ public interface StudentDao {
     Page<Student> getStudents(Integer pageSize, Integer page);
 
     Page<Student> getStudents(Integer pageSize, Integer page, String keyword);
-
+    Page<Student> getStudents(Integer pageSize, Integer page, Long advisorId);
+    Page<Student> getStudents(Integer pageSize, Integer page, Long advisorId, String keyword);
     Student getStudent(Long id);
 
     Student save(Student student);
+
 }

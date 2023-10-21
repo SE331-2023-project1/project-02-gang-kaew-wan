@@ -24,7 +24,7 @@ public class AuthenticationController {
     return service.register(request);
   }
 
-  @PostMapping("/addTeacher")
+  @PostMapping("/add-teacher")
   public AuthenticationResponse addTeacher(
       @RequestBody RegisterTeacherRequest request) {
     return service.addTeacher(request);

@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import type { Student } from '@/types'
-import { type PropType, computed } from 'vue'
-const intl = new Intl.DisplayNames(['en'], { type: 'region' })
+import { type PropType } from 'vue'
 
-const props = defineProps({
+defineProps({
   student: {
     type: Object as PropType<Student>,
     required: true
@@ -12,7 +11,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <RouterLink :to="{ name: 'student-information', params: { id: student.studentId } }">
+  <RouterLink :to="{ name: 'student-information', params: { id: student.id } }">
     <div
       class="relative font-serif bg-stone-800 shadow-md flex flex-row gap-4 hover:border-l-4 hover:pl-[2px] transition-all border-emerald-400 duration-100 group"
     >

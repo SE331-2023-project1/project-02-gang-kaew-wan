@@ -27,7 +27,10 @@ const { value: password } = useField<string>('password')
 const onSubmit = handleSubmit((values) => {
   authStore
     .login(values.username, values.password)
-    .then((_) => router.push({ name: 'student-list' }))
+    .then(() => {
+      messageStore.flashMessage('Hoorays! Successfully logged in')
+      router.push({ name: 'dashboard' })
+    })
     .catch(() => {
       messageStore.flashMessage('Could not login')
     })
