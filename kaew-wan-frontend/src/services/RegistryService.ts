@@ -1,4 +1,4 @@
-import type { Advisor, Course, Student } from '@/types'
+import type {Advisor, Course, Department, Student} from '@/types'
 import { type AxiosResponse } from 'axios'
 import apiClient from './AxiosClient'
 
@@ -30,5 +30,9 @@ export default {
   },
   insertAdvisor(teacher: Advisor): Promise<AxiosResponse<Advisor>> {
     return apiClient.post<Advisor>(`/teachers`, teacher)
+  },
+  getDepartments(): Promise<AxiosResponse<Department[]>> {
+    return apiClient.get<Department[]>(`/departments`)
   }
+
 }

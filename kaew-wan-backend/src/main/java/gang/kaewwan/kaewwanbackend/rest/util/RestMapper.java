@@ -29,4 +29,7 @@ public interface RestMapper {
     List<ReactionDTO> getReactionDTO(List<Reaction> reactions);
     ReactionDTO getReactionDTO(Reaction reaction);
 
+    List<DepartmentDTO> getDepartmentDTO(List<Department> departments);
+    DepartmentDTO getDepartmentDTO(Department department);
+
 }
