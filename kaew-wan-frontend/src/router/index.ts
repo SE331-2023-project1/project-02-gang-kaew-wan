@@ -236,12 +236,12 @@ const router = createRouter({
       path: '/my-comment',
       component: MyCommentView,
       props: true,
-      beforeEnter: (to) => {
+      beforeEnter: () => {
         const authStore = useAuthStore()
         const commentStore = useCommentStore()
         const id = authStore.currentID
 
-        return RegistryService.getStudentComments(id)
+        return RegistryService.getComments(id)
           .then((res) => {
             commentStore.setComments(res.data as Comment[])
           })

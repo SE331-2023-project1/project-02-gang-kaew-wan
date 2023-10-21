@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth'
 import { useMessageStore } from '@/stores/message'
 import { useField, useForm } from 'vee-validate'
 import { useRouter } from 'vue-router'
@@ -11,7 +10,6 @@ import ImageUpload from '@/components/ImageUpload.vue'
 import RegistryService from '@/services/RegistryService'
 import { ref } from 'vue'
 import type { Department } from '@/types'
-const authStore = useAuthStore()
 const router = useRouter()
 const messageStore = useMessageStore()
 const validationSchema = yup.object({

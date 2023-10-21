@@ -19,6 +19,14 @@ export interface Announcements extends Reactable {
   file: string
 }
 
+export interface Comment extends Reactable {
+  message: string
+  edited: boolean
+  parent?: Comment
+  sender: Person
+  receiver: Person
+}
+
 export interface Reactable {
   id: number
   reactions: Reaction[]
@@ -51,23 +59,7 @@ export interface Course {
   course_name: string
   course_desc: string
 }
-
-export interface Announcement {
-  id: number
-  reactions: Array<Reaction>
-  message: string
-  file: string
-}
-
 export interface Reaction {
   id: number
   emote: string
-}
-export interface Comment {
-  id: number
-  message: string
-  edited: boolean
-  parent?: Comment
-  student: Student
-  teacher: Advisor
 }
