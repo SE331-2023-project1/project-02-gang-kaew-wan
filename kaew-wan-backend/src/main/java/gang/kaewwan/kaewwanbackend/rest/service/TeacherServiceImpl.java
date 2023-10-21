@@ -40,9 +40,19 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Teacher updateTeacher(Long id, Teacher teacher) {
         if (teacherRepository.existsById(id)) {
+            Teacher teacherData = this.getTeacher(id);
+            if (teacher.getFname() == null) teacher.setFname(teacherData.getFname());
+            if (teacher.getLname() == null) teacher.setFname(teacherData.getLname());
+            if (teacher.getStudents() == null) teacher.setStudents(teacherData.getStudents());
+            if (teacher.getUser() == null) teacher.setUser(teacherData.getUser());
+            if (teacher.getAnnouncements() == null) teacher.setAnnouncements(teacherData.getAnnouncements());
+            if (teacher.getReviews() == null) teacher.setReviews(teacherData.getReviews());
+            if (teacher.getPosition() == null) teacher.setPosition(teacherData.getPosition());
+            if (teacher.getImage() == null) teacher.setImage(teacherData.getImage());
             teacher.setId(id);
             return teacherDao.save(teacher);
         }
+
         return null;
     }
 
