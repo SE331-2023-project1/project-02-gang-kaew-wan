@@ -4,13 +4,28 @@ export interface Student extends Person {
 
 export interface Advisor extends Person {
   position: string
-  // student?: Student[]
-  // course?: Course[]
+  announcements: Announcements[]
+  students?: Student[]
 }
 
 export interface Department {
   id: number
   name: string
+}
+
+export interface Announcements extends Reactable {
+  message: string
+  file: string
+}
+
+export interface Reactable {
+  id: number
+  reactions: Reaction[]
+}
+
+export interface Reaction {
+  id: number
+  emote: string
 }
 
 export interface User {
