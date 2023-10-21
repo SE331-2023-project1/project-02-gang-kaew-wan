@@ -96,9 +96,9 @@ const onSubmit = handleSubmit((values) => {
             class="p-1 border border-white border-opacity-25 hover:border-opacity-100 rounded-lg flex flex-row gap-1"
             @click="addReaction(announcement.id, reaction[0])"
           >
-              <div class="aspect-square w-6 h-6 font-bold">
-                <p>{{ reaction[0] }}</p>
-              </div>
+            <div class="aspect-square w-6 h-6 font-bold">
+              <p>{{ reaction[0] }}</p>
+            </div>
             <p>{{ reaction[1] }}</p>
           </button>
           <div class="relative flex justify-center items-center h-full" @click.stop="">

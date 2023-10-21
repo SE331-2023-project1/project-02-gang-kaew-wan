@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useAdvisorStore } from '@/stores/advisor'
-import HyperLinkVue from '@/components/HyperLink.vue'
 
 const advisorStore = useAdvisorStore()
 const advisor = storeToRefs(advisorStore).advisor
