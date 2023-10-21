@@ -9,4 +9,4 @@ COPY ${DEPENDENCY}/META-INF /app/META-INF
 COPY ${DEPENDENCY}/BOOT-INF/classes /app
 
 ENTRYPOINT  [ "java","-Dspring.profiles.active=${JAVA_PROFILE}",\
-    "-cp", "-Xms256m", "-Xmx4g", "app:app/lib/*", "gang.kaewwan.kaewwanbackend.KaewWanBackendApplication" ]
+    "-Xms256m", "-Xmx4g", "-cp", "app:app/lib/*", "gang.kaewwan.kaewwanbackend.KaewWanBackendApplication" ]
