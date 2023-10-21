@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  backend:
+    image: ${DOCKER_HUB_USERNAME}/student-connect-be:latest
+    ports:
+      - "8999:8080"
+    environment:
+      - JAVA_PROFILE=prod,db
+    restart: always
+  
+  frontend:
+    image: ${DOCKER_HUB_USERNAME}/student-connect-fe:latest
+    depends_on:
+      - backend
+    restart: always
+    ports:
+      - 8001:80
