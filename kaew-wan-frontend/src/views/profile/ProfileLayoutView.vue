@@ -7,7 +7,7 @@ const store = usePersonStore()
 const person = storeToRefs(store).person
 const authStore = useAuthStore()
 
-const isOwner = person.value.id == authStore.currentID
+const isOwner = person.value?.id == authStore.currentID
 
 console.log(person.value)
 </script>

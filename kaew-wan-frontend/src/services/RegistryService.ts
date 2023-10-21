@@ -1,4 +1,4 @@
-import type { Advisor, Announcement, Department, Student } from '@/types'
+import type { Advisor, Announcement, Comment, Department, Student } from '@/types'
 import { type AxiosResponse } from 'axios'
 import apiClient from './AxiosClient'
 

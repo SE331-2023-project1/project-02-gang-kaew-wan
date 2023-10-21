@@ -6,7 +6,7 @@ export const useCommentStore = defineStore('comment', {
     comments: null as Comment[] | null
   }),
   actions: {
-    setComments(comments: Comment) {
+    setComments(comments: Comment[]) {
       this.comments = comments
     },
     clear() {
