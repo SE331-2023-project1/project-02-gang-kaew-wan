@@ -29,8 +29,8 @@ public class Comment extends Reactable {
     List<Comment> children;
 
     @ManyToOne
-    Student student;
+    Person sender;
 
     @ManyToOne
-    Teacher teacher;
+    Person receiver;
 }

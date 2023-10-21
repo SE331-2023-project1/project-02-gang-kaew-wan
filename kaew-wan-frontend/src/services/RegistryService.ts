@@ -47,5 +47,11 @@ export default {
   },
   getDepartments(): Promise<AxiosResponse<Department[]>> {
     return apiClient.get<Department[]>(`/departments`)
+  },
+  getStudentComments(id: number): Promise<AxiosResponse<Comment[]>> {
+    return apiClient.get<Comment[]>(`/comments/${id}`)
+  },
+  getAllStudent(id: number): Promise<AxiosResponse<Comment[]>> {
+    return apiClient.get<Comment[]>(`/all-comments/${id}`)
   }
 }

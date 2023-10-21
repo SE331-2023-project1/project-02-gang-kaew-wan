@@ -24,11 +24,10 @@ public class CommentController {
 
     @GetMapping("comments/{personId}")
     public List<CommentDTO> getCommentByStudentID(@PathVariable("personId") Long id) {
-        Page<Comment> result = commentService.getCommentByStudentId(id);
+        Page<Comment> result = commentService.getCommentByPersonId(id);
         return RestMapper.INSTANCE.getCommentDto(result.getContent());
     }
 
-    //Get comment by Comment Id
     @GetMapping("comment/{id}")
     public CommentDTO getCommentByCommentId(@PathVariable("id") Long id) {
         return RestMapper.INSTANCE.getCommentDto(commentService.getCommentById(id));
