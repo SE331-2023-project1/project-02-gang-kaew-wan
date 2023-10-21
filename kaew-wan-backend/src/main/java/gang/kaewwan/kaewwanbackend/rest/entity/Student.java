@@ -20,9 +20,6 @@ import lombok.experimental.SuperBuilder;
 public class Student extends Person {
     String studentId;
 
-    @ManyToOne
-    Department department;
-
     @OneToMany(mappedBy = "student")
     List<Review> reviews;
 

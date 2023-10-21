@@ -19,6 +19,9 @@ spring:
     servlet:
         multipart:
             max-file-size: 10MB
+logging:
+    level:
+        root: INFO
 application:
     security:
         jwt:

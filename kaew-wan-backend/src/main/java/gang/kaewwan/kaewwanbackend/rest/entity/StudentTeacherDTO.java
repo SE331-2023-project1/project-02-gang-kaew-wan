@@ -18,7 +18,5 @@ public class StudentTeacherDTO extends PersonDTO {
 
     List<AnnouncementDTO> announcements;
 
-    DepartmentDTO department;
-
     List<ReviewDTO> reviews;
 }

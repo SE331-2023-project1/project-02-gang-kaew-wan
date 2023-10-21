@@ -1,25 +1,32 @@
-export interface Student {
-  id?: number
-  advisorId: number
-  address: string
-  nationality: string
-  birthday: number
-  first_name: string
-  last_name: string
-  image: string
-  courseId: Array<number>
-  comments: Array<string>
+export interface Student extends Person {
+  studentId: string
 }
 
-export interface Advisor {
-  id?: number
-  first_name: string
-  last_name: string
+export interface Advisor extends Person {
+  position: string
+  // student?: Student[]
+  // course?: Course[]
+}
+
+export interface Department {
+  id: number
+  name: string
+}
+
+export interface User {
+  id: number
+  username: string
+  email: string
+  role: string
+  person?: Student | Advisor
+}
+
+export interface Person {
+  id: number
+  fname: string
+  lname: string
   image: string
-  prefix: string
-  faculty: string
-  student?: Student[]
-  course?: Course[]
+  department: Department
 }
 
 export interface Course {

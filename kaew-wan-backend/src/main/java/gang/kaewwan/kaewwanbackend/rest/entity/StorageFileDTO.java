@@ -8,6 +8,5 @@ import lombok.Data;
 @Data
 @Builder
 public class StorageFileDTO {
-    String fileName;
     String url;
 }

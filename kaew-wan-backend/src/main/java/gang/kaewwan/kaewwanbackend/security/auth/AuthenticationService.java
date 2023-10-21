@@ -1,6 +1,5 @@
 package gang.kaewwan.kaewwanbackend.security.auth;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gang.kaewwan.kaewwanbackend.rest.entity.Department;
 import gang.kaewwan.kaewwanbackend.rest.entity.Student;
@@ -41,9 +40,7 @@ public class AuthenticationService {
     private final TeacherRepository teacherRepository;
 
     public AuthenticationResponse register(RegisterStudentRequest request) {
-
         Department department = departmentRepository.findById(request.getDepartmentId()).orElse(null);
-
         Student person = Student.builder()
                 .studentId(request.getStudentId())
                 .fname(request.getFname())
@@ -56,7 +53,7 @@ public class AuthenticationService {
         User user = User.builder()
                 .person(person)
                 .email(request.getEmail())
-                .username(request.getUsername())
+                .username(request.getStudentId())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.ROLE_STUDENT)
                 .build();
@@ -111,12 +108,10 @@ public class AuthenticationService {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
-                        request.getPassword()
-                )
-        );
+                        request.getPassword()));
         User user = repository.findByUsername(request.getUsername())
                 .orElseThrow();
-//        System.out.println(user);
+        // System.out.println(user);
 
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
@@ -153,8 +148,7 @@ public class AuthenticationService {
 
     public void refreshToken(
             HttpServletRequest request,
-            HttpServletResponse response
-    ) throws IOException {
+            HttpServletResponse response) throws IOException {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String refreshToken;
         final String userEmail;

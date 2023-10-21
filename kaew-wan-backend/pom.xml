@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.4</version>
+		<version>3.1.5</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>gang.kaewwan</groupId>
@@ -15,15 +15,13 @@
 	<name>kaew-wan-backend</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<kotlin.version>1.8.22</kotlin.version>
 		<java.version>17</java.version>
 		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
 	</properties>
 	<dependencies>
-
 		<dependency>
 			<groupId>io.ktor</groupId>
-			<artifactId>ktor-client-apache5-jvm</artifactId>
+			<artifactId>ktor-client-java-jvm</artifactId>
 			<version>2.3.5</version>
 		</dependency>
 		<dependency>
@@ -31,12 +29,6 @@
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>2.2.0</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
-			<version>2.1.0</version>
-		</dependency>
-
 		<dependency>
 			<groupId>io.github.jan-tennert.supabase</groupId>
 			<artifactId>serializer-jackson-jvm</artifactId>
