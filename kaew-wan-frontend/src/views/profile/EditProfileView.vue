@@ -8,11 +8,15 @@ import {useMessageStore} from "@/stores/message";
 import {useRouter} from "vue-router";
 import ValidatedInput from "@/components/ValidatedInput.vue";
 import ImageUpload from "@/components/ImageUpload.vue";
+import type {Person} from "@/types";
+import {useAuthStore} from "@/stores/auth";
 
 const store = usePersonStore()
 const person = storeToRefs(store).person
 const messageStore = useMessageStore()
 const router = useRouter()
+const personStore = usePersonStore()
+const authStore = useAuthStore()
 
 const validationSchema = yup.object({
   fname: yup.string().required('First name is required.'),
@@ -37,7 +41,9 @@ const onSubmit = handleSubmit((values) => {
   apiClient
       .put(`/students/${person.value?.id}`, values)
       .then(res => {
-        messageStore.flashMessage('Successfully Registered.')
+        messageStore.flashMessage('Successfully edited.')
+        personStore.setPerson(res.data as Person)
+        authStore.reload()
         router.push({name: 'profile-detail', params: {id: res.data.id}})
       })
       .catch((err) => {
@@ -49,8 +55,7 @@ const onSubmit = handleSubmit((values) => {
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit" class="grid grid-cols-2 gap-2 w-2/3">
-    <p class="col-span-2">Student Information</p>
+  <form @submit.prevent="onSubmit" class="grid grid-cols-2 gap-2 w-2/3 mx-auto">
     <ValidatedInput
         class="col-span-1"
         label="First name"

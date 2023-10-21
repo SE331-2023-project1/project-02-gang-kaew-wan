@@ -19,8 +19,8 @@ public class KaewWanBackendApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
+                        .allowedMethods("*")
                         .allowedOrigins("*")
-                        .allowedOrigins("http://localhost:5173")
                         .exposedHeaders("x-total-count")
                 ;
             }
