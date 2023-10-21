@@ -16,7 +16,6 @@ const person = storeToRefs(store).person
 const messageStore = useMessageStore()
 const router = useRouter()
 const personStore = usePersonStore()
-const authStore = useAuthStore()
 
 const validationSchema = yup.object({
   fname: yup.string().required('First name is required.'),
