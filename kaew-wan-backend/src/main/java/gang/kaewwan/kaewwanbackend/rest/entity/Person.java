@@ -1,14 +1,11 @@
 package gang.kaewwan.kaewwanbackend.rest.entity;
 
 import gang.kaewwan.kaewwanbackend.security.entity.User;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @Data
 @SuperBuilder
@@ -30,4 +27,10 @@ public class Person {
     String fname;
     String lname;
     String image;
+
+    @OneToMany(mappedBy = "sender")
+    List<Comment> sendComments;
+
+    @OneToMany(mappedBy = "receiver" )
+    List<Comment> receivedComments;
 }

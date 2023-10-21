@@ -4,6 +4,7 @@ import ErrorMessage from './ErrorMessage.vue'
 import UniqueID from '@/features/UniqueID'
 import apiClient from '@/services/AxiosClient'
 import imageCompression from 'browser-image-compression'
+import { useMessageStore } from '@/stores/message'
 const emit = defineEmits(['update:modelValue'])
 const props = defineProps<{
   modelValue: string
@@ -34,37 +35,43 @@ async function onFileUpload(e: Event) {
   if (files && files.length > 0) {
     image.value = ''
     compressing.value = true
-    const compressed_image: Blob = await imageCompression(files[0], {
-      maxSizeMB: 5,
-      alwaysKeepResolution: true,
-      useWebWorker: true,
-      fileType: 'image/jpeg',
-      onProgress: onProgress
-    })
-    compressing.value = false
-    console.log(compressed_image)
-    uploading.value = true
-    apiClient
-      .post(
-        '/uploadfile',
-        {
-          file: new File([compressed_image], compressed_image.name)
-        },
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data'
+    try {
+      const compressed_image = await imageCompression(files[0], {
+        maxSizeMB: 10,
+        alwaysKeepResolution: true,
+        useWebWorker: true,
+        onProgress: onProgress
+      })
+      compressing.value = false
+      console.log(compressed_image)
+      uploading.value = true
+      apiClient
+        .post(
+          '/uploadfile',
+          {
+            file: new File([compressed_image], compressed_image.name)
+          },
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
           }
-        }
-      )
-      .then((res) => {
-        image.value = res.data.url
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-      .finally(() => {
-        uploading.value = false
-      })
+        )
+        .then((res) => {
+          image.value = res.data.url
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+        .finally(() => {
+          uploading.value = false
+        })
+    } catch (error) {
+      console.error(error)
+      compressing.value = false
+      uploading.value = false
+      useMessageStore().flashMessage('File is not an image.')
+    }
   }
 }
 </script>
@@ -97,7 +104,7 @@ async function onFileUpload(e: Event) {
         </svg>
         <span v-if="uploading">Uploading</span>
         <span v-else-if="compressing">Compressing {{ compress_progress }}%</span>
-        <span v-else>Upload a file</span>
+        <span v-else>Upload an image</span>
       </div>
     </div>
     <ErrorMessage

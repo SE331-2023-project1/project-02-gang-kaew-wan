@@ -61,10 +61,10 @@ function toggleMenuOpen() {
               :to="{ name: 'profile-detail', params: { id: authStore.currentID } }"
               class="min-w-fit flex flex-row gap-2 items-center text-lg hover:brightness-75 w-full hover:text-emerald-400 [&.router-link-active]:text-white px-2 py-1 rounded-md"
             >
-              <div v-if="authStore.hasPerson" class="flex flex-row gap-2 items-center">
+              <div class="flex flex-row gap-2 items-center">
                 <img
                   class="w-12 h-12 object-cover rounded-full border-2 border-black border-opacity-40"
-                  :src="authStore.currentImage.toString()"
+                  :src="authStore.currentImage"
                 />
                 <div>
                   <p class="whitespace-nowrap">{{ authStore.currentName }}</p>
@@ -72,12 +72,6 @@ function toggleMenuOpen() {
                     {{ authStore.currentRole.split('_')[1] }} @{{ authStore.currentUsername }}
                   </p>
                 </div>
-              </div>
-              <div v-else>
-                <p class="whitespace-nowrap">{{ authStore.currentUsername }}</p>
-                <p class="whitespace-nowrap text-xs opacity-50">
-                  {{ authStore.currentRole.split('_')[1] }}
-                </p>
               </div>
             </RouterLink>
             <button class="flex gap-1 items-center hover:brightness-75" @click="logout()">
@@ -117,7 +111,7 @@ function toggleMenuOpen() {
                   d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
                 />
               </svg>
-              <span class="whitespace-nowrap"> Login </span>
+              <span class="whitespace-nowrap">Login</span>
             </RouterLink>
             <RouterLink
               :to="{ name: 'register' }"
@@ -138,7 +132,7 @@ function toggleMenuOpen() {
                 />
               </svg>
 
-              <span class="whitespace-nowrap"> Register </span>
+              <span class="whitespace-nowrap">Register</span>
             </RouterLink>
           </div>
           <hr class="border-0 border-b border-stone-50 w-full opacity-25 my-2" />

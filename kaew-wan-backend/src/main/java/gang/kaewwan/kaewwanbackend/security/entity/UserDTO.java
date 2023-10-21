@@ -16,5 +16,4 @@ public class UserDTO {
     String email;
     Role role;
     PersonDTO person;
-
 }

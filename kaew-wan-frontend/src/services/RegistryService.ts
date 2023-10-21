@@ -50,5 +50,11 @@ export default {
   },
   getAnnouncementsByPerson(id: number): Promise<AxiosResponse<Announcement[]>> {
     return apiClient.get<Announcement[]>(`/announcements/${id}`)
+  },
+  getStudentComments(id: number): Promise<AxiosResponse<Comment[]>> {
+    return apiClient.get<Comment[]>(`/comments/${id}`)
+  },
+  getAllStudent(id: number): Promise<AxiosResponse<Comment[]>> {
+    return apiClient.get<Comment[]>(`/all-comments/${id}`)
   }
 }
