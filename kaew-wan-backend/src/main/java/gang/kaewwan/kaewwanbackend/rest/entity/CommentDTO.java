@@ -15,6 +15,6 @@ public class CommentDTO extends ReactableDTO {
     String message;
     Boolean edited;
     CommentStrippedDTO parent;
-    StudentStrippedDTO student;
-    TeacherStrippedDTO teacher;
+    PersonDTO sender;
+    PersonDTO receiver;
 }

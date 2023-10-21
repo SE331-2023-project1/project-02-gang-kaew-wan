@@ -31,13 +31,8 @@ public class CommentDaoImpl implements CommentDao{
     }
 
     @Override
-    public Page<Comment> getCommentByStudentId(Long id) {
-        return commentRepository.findByStudent_Id(id, Pageable.unpaged());
-    }
-
-    @Override
-    public Page<Comment> getCommentByTeacherId(Long id) {
-        return commentRepository.findByTeacher_Id(id, Pageable.unpaged());
+    public Page<Comment> getCommentByPersonId(Long id) {
+        return commentRepository.findByReceiverIdOrSenderId(id,id, Pageable.unpaged());
     }
 
     @Override
@@ -64,8 +59,8 @@ public class CommentDaoImpl implements CommentDao{
             Comment parent = this.getCommentById(id);
             comment.setParent(parent);
             comment.setEdited(false);
-            comment.setStudent(parent.getStudent());
-            comment.setTeacher(parent.getTeacher());
+            comment.setSender(parent.getSender());
+            comment.setReceiver(parent.getReceiver());
             return commentRepository.save(comment);
         }
         return null;

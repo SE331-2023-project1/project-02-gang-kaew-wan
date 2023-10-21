@@ -22,5 +22,5 @@ public class TeacherDTO extends PersonDTO {
 
     List<TeacherStudentDTO> students;
 
-    List<TeacherCommentDTO> comments;
+
 }

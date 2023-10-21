@@ -87,12 +87,11 @@ public class InitApp implements ApplicationListener<ApplicationReadyEvent> {
         studentP.setUser(studentU);
         studentRepository.save(studentP);
 
-        Comment comment1 = Comment.builder().id(1L).message("Hello").teacher(teacherP).student(studentP)
+        Comment comment1 = Comment.builder().id(1L).message("Hello").sender(teacherP).receiver(studentP)
                 .edited(false)
                 .build();
         commentRepository.save(comment1);
-        Comment comment2 = Comment.builder().id(2L).message("Hello2").parent(comment1).teacher(teacherP)
-                .student(studentP)
+        Comment comment2 = Comment.builder().id(2L).message("Hello2").parent(comment1).receiver(teacherP).sender(studentP)
                 .edited(false).build();
         commentRepository.save(comment2);
         Reaction reaction = Reaction.builder().id(1L).emote("👍").reactable(comment2).build();

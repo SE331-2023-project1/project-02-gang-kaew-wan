@@ -35,3 +35,12 @@ export interface Course {
   course_name: string
   course_desc: string
 }
+
+export interface Comment {
+  id: number
+  message: string
+  edited: boolean
+  parent?: Comment
+  student: Student
+  teacher: Advisor
+}
