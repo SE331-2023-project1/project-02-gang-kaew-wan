@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import ErrorMessage from './ErrorMessage.vue'
 import UniqueID from '@/features/UniqueID'
 import apiClient from '@/services/AxiosClient'
@@ -18,45 +18,66 @@ const image = computed({
     emit('update:modelValue', value)
   }
 })
+const compressing = ref<boolean>(false)
+const uploading = ref<boolean>(false)
+const compress_progress = ref<number>(0)
 
 function openFileUpload() {
   document.getElementById('fileUpload')?.click()
 }
+function onProgress(progress: number) {
+  compress_progress.value = progress
+}
 async function onFileUpload(e: Event) {
   const files = (e.target as HTMLInputElement).files
+  console.log(files)
   if (files && files.length > 0) {
+    image.value = ''
+    compressing.value = true
     const compressed_image: Blob = await imageCompression(files[0], {
-      maxSizeMB: 1,
-      maxWidthOrHeight: 256,
+      maxSizeMB: 5,
+      alwaysKeepResolution: true,
       useWebWorker: true,
-      fileType: 'image/jpeg'
+      fileType: 'image/jpeg',
+      onProgress: onProgress
     })
+    compressing.value = false
     console.log(compressed_image)
-    const form = new FormData()
-    form.append('file', new File([compressed_image], compressed_image.name))
+    uploading.value = true
     apiClient
-      .post('/uploadfile', form, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      .post(
+        '/uploadfile',
+        {
+          file: new File([compressed_image], compressed_image.name)
+        },
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         }
-      })
+      )
       .then((res) => {
         image.value = res.data.url
       })
       .catch((err) => {
         console.error(err)
       })
+      .finally(() => {
+        uploading.value = false
+      })
   }
 }
 </script>
 <template>
-  <div class="flex flex-col items-center" @click="openFileUpload">
+  <div class="flex flex-col items-center">
     <div
       class="w-64 h-64 border rounded-lg flex justify-center group hover:border-blue-500 hover:bg-blue-500 hover:bg-opacity-20 transition-colors"
       :class="{
         'text-red-700 placeholder:text-red-400 border-red-600': error,
-        'border-stone-500': !error
+        'border-stone-500': !error,
+        'pointer-events-none': uploading || compressing
       }"
+      @click="openFileUpload"
     >
       <input hidden type="file" id="fileUpload" @change="onFileUpload" />
       <img v-if="modelValue" class="w-full h-full object-cover rounded-lg" :src="modelValue" />
@@ -74,7 +95,9 @@ async function onFileUpload(e: Event) {
         >
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
         </svg>
-        Upload a file
+        <span v-if="uploading">Uploading</span>
+        <span v-else-if="compressing">Compressing {{ compress_progress }}%</span>
+        <span v-else="compressing">Upload a file</span>
       </div>
     </div>
     <ErrorMessage

@@ -39,7 +39,7 @@ public class StorageHelper {
     public void init() {
         SupabaseClientBuilder builder = new SupabaseClientBuilder(url, anonKey);
         builder.setDefaultSerializer(new JacksonSerializer());
-        builder.install(Storage.Companion, (Object x) -> {
+        builder.install(Storage.Companion, (Storage.Config config) -> {
             return null;
         });
         supabaseClient = builder.build();
