@@ -35,7 +35,7 @@ async function onFileUpload(e: Event) {
     image.value = ''
     compressing.value = true
     const compressed_image: Blob = await imageCompression(files[0], {
-      maxSizeMB: 5,
+      maxSizeMB: 10,
       alwaysKeepResolution: true,
       useWebWorker: true,
       fileType: 'image/jpeg',

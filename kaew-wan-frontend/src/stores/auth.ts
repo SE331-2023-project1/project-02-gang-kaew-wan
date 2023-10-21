@@ -24,9 +24,6 @@ export const useAuthStore = defineStore('auth', {
     currentImage(): string {
       return this.user?.person?.image || ''
     },
-    hasPerson(): boolean {
-      return this.user?.person ? true : false || false
-    },
     isAdmin(): boolean {
       return this.user?.role === 'ROLE_ADMIN'
     },
