@@ -25,6 +25,8 @@ import ForbiddenView from '@/views/ForbiddenView.vue'
 import RegisterTeacherView from '@/views/RegisterTeacherView.vue'
 import MyCommentView from "@/views/MyCommentView.vue";
 import {useCommentStore} from "@/stores/comment";
+import ProfileLayoutView from "@/views/profile/ProfileLayoutView.vue";
+import EditProfileView from "@/views/profile/EditProfileView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -164,9 +166,10 @@ const router = createRouter({
             }
         },
         {
-            name: 'profile',
+            name: 'profile-layout',
             path: '/profile/:id',
-            component: ProfileView,
+            component: ProfileLayoutView,
+            props: true,
             beforeEnter: (to) => {
                 const id = parseInt(to.params.id as string)
                 const store = usePersonStore()
@@ -185,9 +188,9 @@ const router = createRouter({
                         .catch((err) => {
                             console.log(err)
                             if (err.response && err.response.status === 404) {
-                                router.push({name: '404-resource', params: {resource: 'event'}})
+                                router.push({ name: '404-resource', params: { resource: 'event' } })
                             } else {
-                                router.push({name: 'network-error'})
+                                router.push({ name: 'network-error' })
                             }
                         })
                 } else {
@@ -204,13 +207,29 @@ const router = createRouter({
                         .catch((err) => {
                             console.log(err)
                             if (err.response && err.response.status === 404) {
-                                router.push({name: '404-resource', params: {resource: 'event'}})
+                                router.push({ name: '404-resource', params: { resource: 'event' } })
                             } else {
-                                router.push({name: 'network-error'})
+                                router.push({ name: 'network-error' })
                             }
                         })
                 }
-            }
+            },
+            children: [
+                {
+                    path: '',
+                    alias: 'ProfileDetail',
+                    name: 'profile-detail',
+                    component: ProfileView,
+                    props: true
+                },
+                {
+                    path: 'edit',
+                    alias: 'Edit Profile',
+                    name: 'profile-edit',
+                    component: EditProfileView,
+                    props: true
+                }
+            ]
         },
         {
             name: 'my-comment',

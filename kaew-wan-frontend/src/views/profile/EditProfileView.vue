@@ -43,7 +43,6 @@ const onSubmit = handleSubmit((values) => {
     .then((res) => {
       messageStore.flashMessage('Successfully edited.')
       personStore.setPerson(res.data as Person)
-      authStore.reload()
       router.push({ name: 'profile-detail', params: { id: res.data.id } })
     })
     .catch((err) => {
