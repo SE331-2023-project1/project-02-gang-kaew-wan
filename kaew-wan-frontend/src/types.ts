@@ -1,5 +1,6 @@
 export interface Student extends Person {
   studentId: string
+  teacher?: Advisor
 }
 
 export interface Advisor extends Person {
@@ -34,4 +35,16 @@ export interface Course {
   advisorId: number
   course_name: string
   course_desc: string
+}
+
+export interface Announcement {
+  id: number
+  reactions: Array<Reaction>
+  message: string
+  file: string
+}
+
+export interface Reaction {
+  id: number
+  emote: string
 }

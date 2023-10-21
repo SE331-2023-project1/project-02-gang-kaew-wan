@@ -29,7 +29,6 @@ function toggleMenuOpen() {
   menuOpened.value = !menuOpened.value
   console.log(menuOpened.value)
 }
-
 </script>
 
 <template>
@@ -43,9 +42,7 @@ function toggleMenuOpen() {
         }"
       >
         <div class="flex flex-col w-full items-center">
-          <RouterLink
-            :to="{ name: 'dashboard' }"
-            class="min-w-fit text-2xl font-bold"
+          <RouterLink :to="{ name: 'dashboard' }" class="min-w-fit text-2xl font-bold"
             >STUDENT<span
               class="bg-clip-text bg-gradient-to-r from-lime-400 via-emerald-400 to-sky-400 text-transparent"
               >CONNECT</span

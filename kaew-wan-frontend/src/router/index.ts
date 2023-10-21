@@ -23,8 +23,8 @@ import AdvisorInformationView from '@/views/advisor/AdvisorInformationView.vue'
 import AdvisorAssignStudentView from '@/views/advisor/AdvisorAssignStudentView.vue'
 import ForbiddenView from '@/views/ForbiddenView.vue'
 import AddAdvisorView from '@/views/AddAdvisorView.vue'
-import EditProfileView from "@/views/profile/EditProfileView.vue";
-import ProfileLayoutView from "@/views/profile/ProfileLayoutView.vue";
+import EditProfileView from '@/views/profile/EditProfileView.vue'
+import ProfileLayoutView from '@/views/profile/ProfileLayoutView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -167,7 +167,7 @@ const router = createRouter({
       name: 'profile-layout',
       path: '/profile/:id',
       component: ProfileLayoutView,
-      props:true,
+      props: true,
       beforeEnter: (to) => {
         const id = parseInt(to.params.id as string)
         const store = usePersonStore()
