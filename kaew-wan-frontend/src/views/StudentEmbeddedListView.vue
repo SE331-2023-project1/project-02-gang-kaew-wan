@@ -45,8 +45,9 @@ function changePage(page: number) {
       students.value = res.data
       students_count.value = res.headers['x-total-count']
     })
-    .catch(() => {
-      router.push({ name: 'network-error' })
+    .catch((e) => {
+      students.value = []
+      console.error(e)
     })
 }
 </script>

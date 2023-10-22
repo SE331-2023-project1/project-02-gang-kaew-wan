@@ -27,6 +27,7 @@ import MyCommentView from '@/views/MyCommentView.vue'
 import { useCommentStore } from '@/stores/comment'
 import ProfileLayoutView from '@/views/profile/ProfileLayoutView.vue'
 import EditProfileView from '@/views/profile/EditProfileView.vue'
+import AdvisorUpdateDetailView from "@/views/advisor/AdvisorUpdateDetailView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -79,6 +80,12 @@ const router = createRouter({
           alias: 'assign-student',
           name: 'assign-student',
           component: AdvisorAssignStudentView
+        },
+        {
+          path: 'update',
+          alias: 'update-advisor',
+          name: 'update-advisor',
+          component: AdvisorUpdateDetailView
         }
       ]
     },
