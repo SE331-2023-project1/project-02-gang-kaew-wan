@@ -5,13 +5,11 @@ import apiClient from "@/services/AxiosClient";
 import {useMessageStore} from "@/stores/message";
 import {useRouter} from "vue-router";
 import RegistryService from "@/services/RegistryService";
-import ToggleBox from "@/components/ToggleBox.vue";
 import {ref} from "vue";
 import type {Advisor, Department} from "@/types";
 import ImageUpload from "@/components/ImageUpload.vue";
 import BaseSelect from "@/components/BaseSelect.vue";
 import ValidatedInput from "@/components/ValidatedInput.vue";
-import Collapse from "@/components/CollapseCard.vue";
 import CollapseCard from "@/components/CollapseCard.vue";
 
 const props = defineProps<{
