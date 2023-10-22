@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +27,7 @@ public class StudentController {
     final StudentService studentService;
 
     @GetMapping("students")
-    public List<StudentLightweightDTO> getStudentList(
+    public ResponseEntity<List<StudentLightweightDTO>> getStudentList(
             @RequestParam(value = "_limit", required = false) Integer pageSize,
             @RequestParam(value = "_page", required = false) Integer page,
             @RequestParam(value = "keyword", required = false) String keyword,
@@ -42,7 +44,9 @@ public class StudentController {
             pageOut = studentService.getStudents(pageSize, page);
         }
         responseHeader.set("x-total-count", String.valueOf(pageOut.getTotalElements()));
-        return RestMapper.INSTANCE.getStudentLightweightDTO(pageOut.getContent());
+        return new ResponseEntity<List<StudentLightweightDTO>>(
+                RestMapper.INSTANCE.getStudentLightweightDTO(pageOut.getContent()),
+                responseHeader, pageOut.getContent().size() == 0 ? HttpStatus.NOT_FOUND : HttpStatus.OK);
     }
 
     @GetMapping("students/{id}")

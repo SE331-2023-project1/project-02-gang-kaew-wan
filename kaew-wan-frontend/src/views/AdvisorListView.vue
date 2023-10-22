@@ -17,7 +17,7 @@ const advisors_count = ref<number>(0)
 const maxPage = computed(() => {
   return Math.ceil(advisors_count.value / 4)
 })
-
+const emit = defineEmits(['nextPage', 'prevPage'])
 const hasNextPage = computed(() => {
   return props.page.valueOf() < maxPage.value
 })
@@ -33,22 +33,22 @@ function changePage(page: number) {
       advisors_count.value = res.headers['x-total-count']
     })
     .catch(() => {
-      router.push({ name: 'NetworkError' })
+      router.push({ name: 'network-error' })
     })
 }
 </script>
 
 <template>
-  <main class="sm:w-2/3 w-full flex flex-col justify-center items-center gap-4">
+  <div class="w-full flex flex-col justify-center items-center gap-4">
     <div
-      class="flex flex-col items-stretch sm:grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 relative"
+      class="flex flex-col items-stretch sm:grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
     >
       <AdvisorCard :advisor="advisor" v-for="advisor in advisors" :key="advisor.id"></AdvisorCard>
     </div>
     <div class="flex justify-between w-full items-center">
-      <RouterLink
+      <button
         class="px-2 py-1 bg-emerald-400 text-black hover:shadow-md hover:brightness-75 flex group transition-all"
-        :to="{ name: 'advisor-list', query: { page: props.page - 1 } }"
+        @click="emit('prevPage')"
         rel="prev"
         :class="{ invisible: props.page <= 1 }"
       >
@@ -60,19 +60,16 @@ function changePage(page: number) {
           stroke="currentColor"
           class="w-6 h-6"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15.75 19.5L8.25 12l7.5-7.5"
-          /></svg
-        ><span
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+        <span
           class="group overflow-hidden whitespace-nowrap max-w-0 opacity-0 group-hover:max-w-[10rem] group-hover:opacity-100 group-hover:ml-1 transition-all duration-500"
-          >Previous Page</span
-        >
-      </RouterLink>
-      <RouterLink
+          >Previous Page
+        </span>
+      </button>
+      <button
         class="px-2 py-1 bg-emerald-400 text-black hover:shadow-md hover:brightness-75 flex group transition-all"
-        :to="{ name: 'advisor-list', query: { page: props.page + 1 } }"
+        @click="emit('nextPage')"
         rel="next"
         :class="{ invisible: !hasNextPage }"
       >
@@ -90,9 +87,7 @@ function changePage(page: number) {
         >
           <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
         </svg>
-      </RouterLink>
+      </button>
     </div>
-  </main>
+  </div>
 </template>
-
-<style scoped></style>

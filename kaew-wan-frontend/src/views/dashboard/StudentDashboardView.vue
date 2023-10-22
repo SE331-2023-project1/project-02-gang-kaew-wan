@@ -16,7 +16,6 @@ RegistryService.getStudent(id).then((res) => {
   if (res.data.teacher) {
     RegistryService.getAnnouncementsByPerson(res.data.teacher.id)
       .then((response) => {
-        // console.log(response.data)
         announcements.value = response.data as Announcement[]
       })
       .catch((err) => {
@@ -28,24 +27,28 @@ RegistryService.getStudent(id).then((res) => {
 </script>
 
 <template>
-  <h1 class="text-4xl text-amber-500 mb-4">
-    Your
-    <span
-      class="bg-clip-text bg-gradient-to-r from-lime-400 via-emerald-400 to-sky-400 text-transparent"
-      >Announcement</span
-    >
-  </h1>
-
-  <div v-if="announcements.length > 0">
-    <AnnouncementCard
-      v-for="announcement in announcements"
-      :key="announcement.id"
-      :announcement="announcement"
-    />
-  </div>
-  <div v-else>
-    <span class="text-green-300 text-lg mt-2"> Yippy! You have no announcement </span>
-  </div>
+  <main class="w-full max-w-7xl flex flex-col">
+    <div class="flex flex-col w-full">
+      <div class="flex flex-row items-center gap-4">
+        <p class="text-4xl text-white">Your Announcement</p>
+        <hr class="flex-1 border-0 border-b border-stone-700" />
+      </div>
+      <div v-if="announcements.length > 0" class="flex flex-col gap-4">
+        <AnnouncementCard
+          v-for="announcement in announcements"
+          :key="announcement.id"
+          :announcement="announcement"
+        />
+      </div>
+      <div v-else>
+        <p
+          class="text-lg mt-2 w-full border p-4 rounded-xl border-white border-dashed opacity-50 font-sans tracking-wide"
+        >
+          Yippie! You have no announcement.
+        </p>
+      </div>
+    </div>
+  </main>
 </template>
 
 <style scoped></style>

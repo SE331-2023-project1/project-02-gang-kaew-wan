@@ -20,11 +20,11 @@ if (authStore.isAdmin) {
 } else {
   teacherId = authStore.currentID
 }
-
+const emit = defineEmits(['nextPage', 'prevPage'])
 const students = ref<Student[]>()
 const students_count = ref<number>(0)
 const maxPage = computed(() => {
-  return Math.ceil(students_count.value / 10)
+  return Math.ceil(students_count.value / 6)
 })
 
 const hasNextPage = computed(() => {
@@ -36,7 +36,7 @@ watchEffect(() => {
 })
 
 function changePage(page: number) {
-  RegistryService.getStudents(10, page, '', teacherId)
+  RegistryService.getStudents(6, page, '')
     .then((res) => {
       res.data.sort((a, b) => {
         if (a.id && b.id) {
@@ -49,7 +49,7 @@ function changePage(page: number) {
       students_count.value = res.headers['x-total-count']
     })
     .catch(() => {
-      router.push({ name: 'NetworkError' })
+      router.push({ name: 'network-error' })
     })
 }
 </script>
@@ -57,7 +57,7 @@ function changePage(page: number) {
 <template>
   <main class="w-full max-w-7xl px-4 sm:p-0 flex flex-col items-center gap-4" v-if="students">
     <div
-      class="grid gap-4 w-full lg:grid-cols-2 grid-cols-1"
+      class="grid gap-4 w-full md:grid-cols-2 lg:grid-cols-3 grid-cols-1"
       v-if="students.length > 0"
     >
       <StudentCard :student="student" v-for="student in students" :key="student.id"></StudentCard>
@@ -65,9 +65,9 @@ function changePage(page: number) {
     <div v-else>Opsss, you have no student. Please contact the admin!</div>
 
     <div class="flex justify-between w-full items-center">
-      <RouterLink
+      <button
         class="px-2 py-1 bg-emerald-400 text-black hover:shadow-md hover:brightness-75 flex group transition-all"
-        :to="{ name: 'student-list', query: { page: props.page - 1 } }"
+        @click="emit('prevPage')"
         rel="prev"
         :class="{ invisible: props.page <= 1 }"
       >
@@ -85,10 +85,10 @@ function changePage(page: number) {
           class="group overflow-hidden whitespace-nowrap max-w-0 opacity-0 group-hover:max-w-[10rem] group-hover:opacity-100 group-hover:ml-1 transition-all duration-500"
           >Previous Page</span
         >
-      </RouterLink>
-      <RouterLink
+      </button>
+      <button
         class="px-2 py-1 bg-emerald-400 text-black hover:shadow-md hover:brightness-75 flex group transition-all"
-        :to="{ name: 'student-list', query: { page: props.page + 1 } }"
+        @click="emit('nextPage')"
         rel="next"
         :class="{ invisible: !hasNextPage }"
       >
@@ -107,7 +107,7 @@ function changePage(page: number) {
         >
           <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
         </svg>
-      </RouterLink>
+      </button>
     </div>
   </main>
 </template>
