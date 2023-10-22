@@ -140,6 +140,7 @@ function toggleMenuOpen() {
           <HyperLink :title="'Dashboard'" :name="'dashboard'" />
           <HyperLink v-if="authStore.isTeacher" :title="'My Student'" :name="'student-list'" />
           <HyperLink v-if="authStore.isStudent" :title="'My Comments'" :name="'my-comment'" />
+          <HyperLink v-if="authStore.isStudent" :title="'My Advisor'" :name="'my-advisor-detail'" />
           <!-- <HyperLink v-if="authStore.isAdmin" :title="'Add Teacher'" :name="'add-advisor'" />
           <HyperLink v-if="authStore.isAdmin" :title="'Teacher List'" :name="'advisor-list'" />
           <HyperLink v-if="authStore.isAdmin" :title="'Student List'" :name="'student-list'" /> -->
