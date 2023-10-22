@@ -49,6 +49,7 @@ public class TeacherServiceImpl implements TeacherService {
             if (teacher.getReviews() == null) teacher.setReviews(teacherData.getReviews());
             if (teacher.getPosition() == null) teacher.setPosition(teacherData.getPosition());
             if (teacher.getImage() == null) teacher.setImage(teacherData.getImage());
+            if (teacher.getDepartment() == null) teacher.setDepartment(teacherData.getDepartment());
             teacher.setId(id);
             return teacherDao.save(teacher);
         }

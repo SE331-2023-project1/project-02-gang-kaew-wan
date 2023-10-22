@@ -27,6 +27,11 @@ const advisor = storeToRefs(advisorStore).advisor
           :to="{ name: 'assign-student' }"
           >Assign Student</RouterLink
         >
+        <RouterLink
+          class="bg-stone-800 [&.router-link-exact-active]:bg-stone-700 hover:brightness-125 w-full p-4 text-lg"
+          :to="{ name: 'update-advisor' }"
+          >Update Profile</RouterLink
+        >
       </div>
     </div>
     <div class="w-full flex-1">
