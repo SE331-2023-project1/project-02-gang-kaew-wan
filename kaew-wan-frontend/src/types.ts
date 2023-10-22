@@ -20,6 +20,12 @@ export interface Announcement extends Reactable {
   teacher: Advisor
 }
 
+export interface OutgoingAnnouncement extends Partial<Reactable> {
+  message: string
+  file: string
+  teacher: Partial<Advisor>
+}
+
 export interface Comment extends Reactable {
   message: string
   edited: boolean

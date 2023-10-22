@@ -1,13 +1,25 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
+import { computed } from 'vue'
 import type { Announcement } from '@/types'
 import ReactionPanel from '@/components/ReactionPanel.vue'
+import VueMarkdown from 'vue-markdown-render'
 
-defineProps({
-  announcement: {
-    type: Object as PropType<Announcement>,
-    required: true
-  }
+const props = defineProps<{
+  announcement: Announcement
+}>()
+
+const fileName = computed(() => {
+  const list = props.announcement.file.split('/')
+  return list[list.length - 1].split('?')[0]
+})
+
+const isImage = computed(() => {
+  return (
+    fileName.value.endsWith('.png') ||
+    fileName.value.endsWith('.jpg') ||
+    fileName.value.endsWith('.jpeg') ||
+    fileName.value.endsWith('.gif')
+  )
 })
 </script>
 
@@ -18,10 +30,13 @@ defineProps({
     </div>
     <div class="bg-stone-800 p-4 shadow-lg flex flex-col font-sans flex-1 rounded-lg">
       <p class="font-bold">{{ `${announcement.teacher.fname} ${announcement.teacher.lname}` }}</p>
-      <p>{{ announcement.message }}</p>
+      <VueMarkdown :source="announcement.message" />
+      <img v-if="isImage" :src="announcement.file" class="max-w-xs border border-stone-700 m-2" />
       <a
+        v-else
         :href="announcement.file"
-        class="rounded-lg p-4 bg-stone-700 max-w-xs hover:brightness-125 flex flex-row items-center gap-4 my-2"
+        target="_blank"
+        class="rounded-lg p-4 bg-stone-700 max-w-sm hover:brightness-125 flex flex-row items-center gap-4 my-2"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -37,9 +52,9 @@ defineProps({
             d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
           />
         </svg>
-        Attached File
+        {{ fileName }}
       </a>
       <ReactionPanel :reactable="announcement" :key="announcement.id"></ReactionPanel>
     </div>
   </div>
-</template> 
+</template>

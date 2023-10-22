@@ -3,15 +3,12 @@ import StudentCard from '@/components/StudentCard.vue'
 import RegistryService from '@/services/RegistryService'
 import { computed, ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
-import { type Student } from '@/types'
+import { type Advisor, type Student } from '@/types'
 import { useAuthStore } from '@/stores/auth'
 
-const props = defineProps({
-  page: {
-    type: Number,
-    required: true
-  }
-})
+const props = defineProps<{
+  page: number
+}>()
 const router = useRouter()
 const authStore = useAuthStore()
 let teacherId: number
@@ -36,7 +33,7 @@ watchEffect(() => {
 })
 
 function changePage(page: number) {
-  RegistryService.getStudents(6, page, '')
+  RegistryService.getStudents(6, page, '', teacherId)
     .then((res) => {
       res.data.sort((a, b) => {
         if (a.id && b.id) {
