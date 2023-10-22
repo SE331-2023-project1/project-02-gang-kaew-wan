@@ -2,14 +2,12 @@
 import StudentCard from '@/components/StudentCard.vue'
 import RegistryService from '@/services/RegistryService'
 import { computed, ref, watchEffect } from 'vue'
-import { useRouter } from 'vue-router'
-import { type Advisor, type Student } from '@/types'
+import type { Student } from '@/types'
 import { useAuthStore } from '@/stores/auth'
 
 const props = defineProps<{
   page: number
 }>()
-const router = useRouter()
 const authStore = useAuthStore()
 let teacherId: number
 if (authStore.isAdmin) {

@@ -13,7 +13,7 @@ const props = defineProps<{
   comment: Comment
   comments: Comment[]
 }>()
-const hideReplies = ref<boolean>(props.comment.message === "This comment has been deleted")
+const hideReplies = ref<boolean>(props.comment.message === 'This comment has been deleted')
 const emit = defineEmits(['replied'])
 const outgoingComment = ref<OutgoingComment>({
   message: '',
@@ -58,8 +58,14 @@ function deleteComment() {
         :src="comment.sender.image"
         class="aspect-square w-8 h-8 rounded-full object-cover mt-2"
       />
-      <div class="h-full flex-grow flex justify-center w-full cursor-pointer group" @click="hideReplies = !hideReplies">
-        <div class="h-full border-l border-stone-600 group-hover:border-stone-400" :class="{'!border-blue-600': hideReplies}"/>
+      <div
+        class="h-full flex-grow flex justify-center w-full cursor-pointer group"
+        @click="hideReplies = !hideReplies"
+      >
+        <div
+          class="h-full border-l border-stone-600 group-hover:border-stone-400"
+          :class="{ '!border-blue-600': hideReplies }"
+        />
       </div>
     </div>
     <div class="flex flex-col w-full gap-2 font-sans">
@@ -115,11 +121,15 @@ function deleteComment() {
           </div>
         </div>
       </div>
-      <div class="flex flex-col w-full gap-4" v-if="subcomments && subcomments.length > 0 && !hideReplies">
+      <div
+        class="flex flex-col w-full gap-4"
+        v-if="subcomments && subcomments.length > 0 && !hideReplies"
+      >
         <CommentCard
           :comment="subcomment"
           :comments="comments"
           v-for="subcomment in subcomments"
+          :key="subcomment.id"
           @replied="emit('replied')"
         />
       </div>

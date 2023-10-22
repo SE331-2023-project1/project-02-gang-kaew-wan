@@ -53,5 +53,5 @@ export default {
   },
   getComments(id: number): Promise<AxiosResponse<Comment[]>> {
     return apiClient.get<Comment[]>(`/comments/${id}`)
-  },
+  }
 }

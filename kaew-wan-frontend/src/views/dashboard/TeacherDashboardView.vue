@@ -191,7 +191,10 @@ updateStudentList()
     </div>
 
     <div class="flex flex-col gap-2 flex-1">
-      <div class="flex flex-row gap-4 items-center group cursor-pointer" @click="openComments = !openComments">
+      <div
+        class="flex flex-row gap-4 items-center group cursor-pointer"
+        @click="openComments = !openComments"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

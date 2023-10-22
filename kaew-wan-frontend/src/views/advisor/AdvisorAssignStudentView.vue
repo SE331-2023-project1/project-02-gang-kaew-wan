@@ -38,9 +38,11 @@ watchEffect(() => {
 })
 
 function addStudent(id: number) {
+  // eslint-disable-next-line vue/no-mutating-props
   props.advisor.students?.push(students.value?.find((x) => x.id === id)!)
 }
 function removeStudent(id: number) {
+  // eslint-disable-next-line vue/no-mutating-props
   props.advisor.students = props.advisor.students?.filter((x) => x.id !== id)
 }
 function updateAssoc() {
@@ -73,6 +75,7 @@ function updateAssoc() {
     <div class="grid grid-cols-2 gap-4">
       <div
         v-for="student of props.advisor.students"
+        :key="student.id"
         class="cursor-pointer"
         @click.stop="removeStudent(student.id)"
       >
@@ -84,6 +87,7 @@ function updateAssoc() {
     <div class="grid grid-cols-2 gap-4">
       <div
         v-for="student of students_display.slice((other_pgn - 1) * 6, other_pgn * 6)"
+        :key="student.id"
         class="cursor-pointer"
         @click.stop="addStudent(student.id)"
       >
