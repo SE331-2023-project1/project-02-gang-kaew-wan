@@ -120,6 +120,7 @@ function deleteComment() {
           :comment="subcomment"
           :comments="comments"
           v-for="subcomment in subcomments"
+          :key="subcomment.id"
           @replied="emit('replied')"
         />
       </div>

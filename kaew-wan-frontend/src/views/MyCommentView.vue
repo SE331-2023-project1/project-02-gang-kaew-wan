@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { useCommentStore } from '@/stores/comment'
-import { storeToRefs } from 'pinia'
+
 import CommentCard from '@/components/CommentCard.vue'
 import { useAuthStore } from '@/stores/auth'
 import RegistryService from '@/services/RegistryService'

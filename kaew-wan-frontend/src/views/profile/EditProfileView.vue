@@ -9,7 +9,6 @@ import { useRouter } from 'vue-router'
 import ValidatedInput from '@/components/ValidatedInput.vue'
 import ImageUpload from '@/components/ImageUpload.vue'
 import type { Person } from '@/types'
-import { useAuthStore } from '@/stores/auth'
 
 const store = usePersonStore()
 const person = storeToRefs(store).person

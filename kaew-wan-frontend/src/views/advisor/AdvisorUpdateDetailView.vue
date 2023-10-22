@@ -15,7 +15,6 @@ import CollapseCard from "@/components/CollapseCard.vue";
 const props = defineProps<{
   advisor: Advisor
 }>()
-const advancedMode = ref(false)
 const messageStore = useMessageStore()
 const router = useRouter()
 

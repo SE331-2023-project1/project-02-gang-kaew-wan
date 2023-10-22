@@ -10,8 +10,8 @@ defineProps<{
 
 <template>
   <div>
-    <div v-for="comment in comments.filter((x) => x.parent === null)">
-      <CommentCard :comment="comment" :comments="comments" @replied="emit('updateComment')" />
+    <div :key="comment.id" v-for="comment in comments.filter((x) => x.parent === null)">
+      <CommentCard  :comment="comment" :comments="comments" @replied="emit('updateComment')" />
     </div>
   </div>
 </template>
