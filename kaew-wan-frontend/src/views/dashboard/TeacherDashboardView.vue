@@ -5,14 +5,16 @@ import apiClient from '@/services/AxiosClient'
 import RegistryService from '@/services/RegistryService'
 import { useAuthStore } from '@/stores/auth'
 import { useMessageStore } from '@/stores/message'
-import type { Announcement, OutgoingAnnouncement } from '@/types'
+import type { Announcement, Comment, OutgoingAnnouncement } from '@/types'
 import { ref, type VNodeRef } from 'vue'
 import VueMarkdown from 'vue-markdown-render'
 import StudentEmbeddedListView from '../StudentEmbeddedListView.vue'
+import CommentView from '../CommentView.vue'
 
 const student_pgn = ref<number>(1)
 const authStore = useAuthStore()
 const announcements = ref<Announcement[]>([])
+const comments = ref<Comment[]>([])
 const openPreview = ref<boolean>(false)
 const announcementBody = ref<OutgoingAnnouncement>({
   message: '',
@@ -26,6 +28,13 @@ function updateAnnouncements() {
   if (authStore.currentPersonID) {
     RegistryService.getAnnouncementsByPerson(authStore.currentPersonID).then((res) => {
       announcements.value = res.data as Announcement[]
+    })
+  }
+}
+function updateComments() {
+  if (authStore.currentPersonID) {
+    RegistryService.getComments(authStore.currentPersonID).then((res) => {
+      comments.value = (res.data as Comment[]).sort((a, b) => a.id - b.id)
     })
   }
 }
@@ -48,6 +57,7 @@ function sendAnnouncement() {
     })
 }
 updateAnnouncements()
+updateComments()
 </script>
 
 <template>
@@ -127,6 +137,13 @@ updateAnnouncements()
           </svg>
         </button>
       </div>
+    </div>
+    <div class="flex flex-col gap-2 flex-1">
+      <div class="flex flex-row gap-4 items-center">
+        <p class="text-2xl">My Conversations</p>
+        <hr class="px-2 flex-1 border-0 border-b border-stone-700" />
+      </div>
+      <CommentView @update-comment="updateComments()" :comments="comments" />
     </div>
   </main>
 </template>

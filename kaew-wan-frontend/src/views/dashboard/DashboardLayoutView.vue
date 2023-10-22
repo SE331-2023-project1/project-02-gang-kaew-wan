@@ -8,11 +8,11 @@ const authStore = useAuthStore()
 </script>
 
 <template>
-  <div v-if="authStore.user !== null">
+  <main v-if="authStore.user !== null">
     <AdminDashboardView v-if="authStore.currentRole === 'ROLE_ADMIN'" />
     <StudentDashboardVIew v-if="authStore.currentRole === 'ROLE_STUDENT'" />
     <TeacherDashboardView v-if="authStore.currentRole === 'ROLE_TEACHER'" />
-  </div>
+  </main>
 </template>
 
 <style scoped></style>

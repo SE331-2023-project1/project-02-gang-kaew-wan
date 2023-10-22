@@ -26,14 +26,14 @@ const isImage = computed(() => {
 <template>
   <div class="flex flex-row gap-4">
     <div class="py-2">
-      <img :src="announcement.teacher.image" class="aspect-square w-16 rounded-full" />
+      <img :src="announcement.teacher.image" class="aspect-square w-16 rounded-full object-cover" />
     </div>
     <div class="bg-stone-800 p-4 shadow-lg flex flex-col font-sans flex-1 rounded-lg">
       <p class="font-bold">{{ `${announcement.teacher.fname} ${announcement.teacher.lname}` }}</p>
       <VueMarkdown :source="announcement.message" />
       <img v-if="isImage" :src="announcement.file" class="max-w-xs border border-stone-700 m-2" />
       <a
-        v-else
+        v-else-if="announcement.file"
         :href="announcement.file"
         target="_blank"
         class="rounded-lg p-4 bg-stone-700 max-w-sm hover:brightness-125 flex flex-row items-center gap-4 my-2"
