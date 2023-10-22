@@ -2,10 +2,7 @@ package gang.kaewwan.kaewwanbackend.security.auth;
 
 import java.io.IOException;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,6 +25,13 @@ public class AuthenticationController {
   public AuthenticationResponse addTeacher(
       @RequestBody RegisterTeacherRequest request) {
     return service.addTeacher(request);
+  }
+
+  @PutMapping("/update-teacher/{id}")
+  public AuthenticationResponse updateTeacher(
+          @PathVariable Long id,
+          @RequestBody RegisterTeacherRequest request) {
+    return service.updateTeacher(id, request);
   }
 
   @PostMapping("/authenticate")

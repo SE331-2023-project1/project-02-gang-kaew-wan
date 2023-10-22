@@ -80,13 +80,13 @@ const onSubmit = handleSubmit((values) => {
           return prev
         }, new Map<string, number>())
         .entries()"
-      class="p-1 border border-white border-opacity-25 hover:border-opacity-100 rounded-lg flex flex-row gap-1"
+      class="p-1 border border-white border-opacity-25 hover:border-opacity-100 rounded-full flex flex-row"
       @click="addReaction(reactable.id, reaction[0])"
     >
       <div class="aspect-square w-6 h-6 font-bold">
         <p>{{ reaction[0] }}</p>
       </div>
-      <p>{{ reaction[1] }}</p>
+      <p class="px-1">{{ reaction[1] }}</p>
     </button>
     <div class="relative flex justify-center items-center h-full" @click.stop="">
       <button

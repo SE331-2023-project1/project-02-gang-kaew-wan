@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss'
 import forms from '@tailwindcss/forms'
+import tailwind_scrollbar from 'tailwind-scrollbar'
 
 export default {
   content: ['./index.html', './src/**/*.vue'],
@@ -16,5 +17,5 @@ export default {
       }
     }
   },
-  plugins: [forms]
+  plugins: [forms, tailwind_scrollbar({ nocompatible: true })]
 } satisfies Config

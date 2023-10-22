@@ -2,6 +2,7 @@ package gang.kaewwan.kaewwanbackend.rest.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +23,6 @@ public abstract class Reactable {
     @EqualsAndHashCode.Exclude
     Long id;
 
-    @OneToMany(mappedBy = "reactable")
+    @OneToMany(mappedBy = "reactable", cascade = CascadeType.ALL)
     List<Reaction> reactions;
 }

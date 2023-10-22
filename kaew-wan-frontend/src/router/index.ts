@@ -27,6 +27,9 @@ import MyCommentView from '@/views/MyCommentView.vue'
 import { useCommentStore } from '@/stores/comment'
 import ProfileLayoutView from '@/views/profile/ProfileLayoutView.vue'
 import EditProfileView from '@/views/profile/EditProfileView.vue'
+import AdvisorUpdateDetailView from "@/views/advisor/AdvisorUpdateDetailView.vue";
+import MyAdvisorLayoutView from "@/views/myadvisor/MyAdvisorLayoutView.vue";
+import MyAdvisorDetail from "@/views/myadvisor/MyAdvisorDetail.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -79,6 +82,12 @@ const router = createRouter({
           alias: 'assign-student',
           name: 'assign-student',
           component: AdvisorAssignStudentView
+        },
+        {
+          path: 'update',
+          alias: 'update-advisor',
+          name: 'update-advisor',
+          component: AdvisorUpdateDetailView
         }
       ]
     },
@@ -254,6 +263,32 @@ const router = createRouter({
             }
           })
       }
+    },
+    {
+      name: 'my-advisor',
+      path: '/my-advisor',
+      component: MyAdvisorLayoutView,
+      props: true,
+      beforeEnter: () => {
+        const authStore = useAuthStore()
+
+        const studentStore = useStudentStore()
+        RegistryService.getStudent(authStore.currentID)
+            .then( res => {
+              studentStore.setStudent(res.data as Student)
+
+              const advisorStore = useAdvisorStore()
+              advisorStore.setAdvisor(res.data.teacher!)
+            })
+      },
+      children: [
+          {
+            name: 'my-advisor-detail',
+            path: '',
+            props: true,
+            component: MyAdvisorDetail
+          }
+      ]
     },
     {
       name: 'network-error',

@@ -21,16 +21,16 @@ public class Person {
     @ManyToOne
     Department department;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     User user;
 
     String fname;
     String lname;
     String image;
 
-    @OneToMany(mappedBy = "sender")
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
     List<Comment> sendComments;
 
-    @OneToMany(mappedBy = "receiver" )
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     List<Comment> receivedComments;
 }

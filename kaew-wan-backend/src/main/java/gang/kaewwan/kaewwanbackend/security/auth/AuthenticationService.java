@@ -17,6 +17,7 @@ import gang.kaewwan.kaewwanbackend.security.token.TokenType;
 import gang.kaewwan.kaewwanbackend.security.util.SecurityMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,6 +39,41 @@ public class AuthenticationService {
     private final StudentRepository studentRepository;
     private final DepartmentRepository departmentRepository;
     private final TeacherRepository teacherRepository;
+
+    @Transactional
+    public AuthenticationResponse updateTeacher(Long id, RegisterTeacherRequest request) {
+
+        if(teacherRepository.existsById(id) && repository.existsById(id) ){
+            Teacher teacherP = teacherRepository.findById(id).orElse(null);
+            User teacherU = repository.findById(id).orElse(null);
+
+            if(request.getDepartmentId() != null){
+                Department department = departmentRepository.findById(request.getDepartmentId()).orElse(null);
+                teacherP.setDepartment(department);
+            }
+            if(request.getFname() != null) teacherP.setFname(request.getFname());
+            if (request.getLname() != null) teacherP.setLname(request.getLname());
+            if (request.getImage() != null) teacherP.setImage(request.getImage());
+            if (request.getPosition() != null) teacherP.setPosition(request.getPosition());
+
+
+            if(request.getEmail() != null) teacherU.setEmail(request.getEmail());
+            if(request.getUsername() != null) teacherU.setUsername(request.getUsername());
+            if(request.getPassword() != null) teacherU.setPassword(passwordEncoder.encode(request.getPassword()));
+
+
+            var jwtToken = jwtService.generateToken(teacherU);
+            var refreshToken = jwtService.generateRefreshToken(teacherU);
+            saveUserToken(teacherU, jwtToken);
+
+            return AuthenticationResponse.builder()
+                    .accessToken(jwtToken)
+                    .refreshToken(refreshToken)
+                    .user(SecurityMapper.INSTANCE.getUserDto(teacherU))
+                    .build();
+        }
+        return null;
+    }
 
     public AuthenticationResponse register(RegisterStudentRequest request) {
         Department department = departmentRepository.findById(request.getDepartmentId()).orElse(null);

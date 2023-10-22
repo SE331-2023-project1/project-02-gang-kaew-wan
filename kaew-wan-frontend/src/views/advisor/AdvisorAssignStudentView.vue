@@ -30,8 +30,9 @@ watchEffect(() => {
         (ss.fname.toLowerCase().includes(other_kw.value.toLowerCase()) ||
           ss.lname.toLowerCase().includes(other_kw.value.toLowerCase()))
     )
-    if ((other_pgn.value - 1) * 6 >= students_display.value.length) {
-      other_pgn.value = Math.floor(students_display.value.length / 6)
+    console.log(students_display.value.length)
+    if ((other_pgn.value - 1) * 6 >= students_display.value.length || other_pgn.value < 1) {
+      other_pgn.value = Math.ceil(students_display.value.length / 6)
     }
   }
 })

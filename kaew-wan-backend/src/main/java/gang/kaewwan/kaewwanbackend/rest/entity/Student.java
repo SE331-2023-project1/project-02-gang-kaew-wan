@@ -2,6 +2,7 @@ package gang.kaewwan.kaewwanbackend.rest.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -20,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 public class Student extends Person {
     String studentId;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     List<Review> reviews;
 
     @ManyToOne

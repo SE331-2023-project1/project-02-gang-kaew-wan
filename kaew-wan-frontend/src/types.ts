@@ -17,6 +17,13 @@ export interface Department {
 export interface Announcement extends Reactable {
   message: string
   file: string
+  teacher: Advisor
+}
+
+export interface OutgoingAnnouncement extends Partial<Reactable> {
+  message: string
+  file: string
+  teacher: Partial<Advisor>
 }
 
 export interface Comment extends Reactable {
