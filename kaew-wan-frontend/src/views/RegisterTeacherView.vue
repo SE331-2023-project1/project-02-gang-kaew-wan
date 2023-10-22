@@ -55,7 +55,7 @@ const onSubmit = handleSubmit((values) => {
     })
     .catch((err) => {
       console.log(err)
-      messageStore.flashMessage('Could not register, Student ID already exists.')
+      messageStore.flashMessage('Could not register, Username already exists.')
     })
 })
 

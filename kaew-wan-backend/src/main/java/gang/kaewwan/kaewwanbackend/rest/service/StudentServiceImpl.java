@@ -60,6 +60,7 @@ public class StudentServiceImpl implements StudentService {
             if(student.getTeacher() == null ) student.setTeacher(studentData.getTeacher());
             if(student.getReviews() == null) student.setReviews(studentData.getReviews());
             if(student.getUser() == null) student.setUser(studentData.getUser());
+            if(student.getStudentId() == null) student.setStudentId(studentData.getStudentId());
             student.setId(id);
             return studentDao.save(student);
         }
