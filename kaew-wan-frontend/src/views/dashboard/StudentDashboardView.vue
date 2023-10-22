@@ -33,7 +33,10 @@ RegistryService.getStudent(id).then((res) => {
         <p class="text-4xl text-white">Your Announcement</p>
         <hr class="flex-1 border-0 border-b border-stone-700" />
       </div>
-      <div v-if="announcements.length > 0" class="flex flex-col gap-4 h-96 overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-stone-700 hover:scrollbar-thumb-stone-500 scrollbar-thumb-rounded-full">
+      <div
+        v-if="announcements.length > 0"
+        class="flex flex-col gap-4 h-96 overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-stone-700 hover:scrollbar-thumb-stone-500 scrollbar-thumb-rounded-full"
+      >
         <AnnouncementCard
           v-for="announcement in announcements"
           :key="announcement.id"

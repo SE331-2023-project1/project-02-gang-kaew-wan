@@ -18,6 +18,9 @@ export const useAuthStore = defineStore('auth', {
     currentID(): number {
       return this.user?.id || 0
     },
+    currentPersonID(): number {
+      return this.user?.person?.id || 0
+    },
     currentRole(): string {
       return this.user?.role || ''
     },
