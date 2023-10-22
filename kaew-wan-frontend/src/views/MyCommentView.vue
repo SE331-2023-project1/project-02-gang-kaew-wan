@@ -1,16 +1,35 @@
 <script setup lang="ts">
 import { useCommentStore } from '@/stores/comment'
 import { storeToRefs } from 'pinia'
-import CommentCard from "@/components/CommentCard.vue";
+import CommentCard from '@/components/CommentCard.vue'
+import { useAuthStore } from '@/stores/auth'
+import RegistryService from '@/services/RegistryService'
+import { ref } from 'vue'
+import type { Comment } from '@/types'
 
-const commentStore = useCommentStore()
-const comments = storeToRefs(commentStore).comments
+const authStore = useAuthStore()
+const comments = ref<Comment[]>([])
+function updateComments() {
+  if (authStore.currentPersonID) {
+    RegistryService.getComments(authStore.currentPersonID).then((res) => {
+      comments.value = (res.data as Comment[]).sort((a, b) => a.id - b.id)
+    })
+  }
+}
+updateComments()
 </script>
 
 <template>
-
-<CommentCard v-for="comment in comments" :comment="comment" :key="comment.id"/>
-
+  <main class="w-full max-w-7xl flex flex-col gap-2">
+    <div class="text-2xl">Comments</div>
+    <CommentCard
+      @replied="updateComments()"
+      v-for="comment in comments?.filter((comment2) => comment2.parent === null)"
+      :comment="comment"
+      :comments="comments!"
+      :key="comment.id"
+    />
+  </main>
 </template>
 
 <style scoped></style>

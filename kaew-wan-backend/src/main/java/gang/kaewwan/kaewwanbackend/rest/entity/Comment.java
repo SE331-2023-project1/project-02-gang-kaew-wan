@@ -3,6 +3,7 @@ package gang.kaewwan.kaewwanbackend.rest.entity;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -20,6 +21,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 public class Comment extends Reactable {
 
+    @Column(columnDefinition = "TEXT")
     String message;
     Boolean edited;
 

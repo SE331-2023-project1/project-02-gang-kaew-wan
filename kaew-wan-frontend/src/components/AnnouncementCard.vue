@@ -33,7 +33,7 @@ const isImage = computed(() => {
       <VueMarkdown :source="announcement.message" />
       <img v-if="isImage" :src="announcement.file" class="max-w-xs border border-stone-700 m-2" />
       <a
-        v-else
+        v-else-if="announcement.file"
         :href="announcement.file"
         target="_blank"
         class="rounded-lg p-4 bg-stone-700 max-w-sm hover:brightness-125 flex flex-row items-center gap-4 my-2"
