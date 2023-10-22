@@ -138,7 +138,7 @@ function toggleMenuOpen() {
           <hr class="border-0 border-b border-stone-50 w-full opacity-25 my-2" />
 
           <HyperLink :title="'Dashboard'" :name="'dashboard'" />
-          <HyperLink :title="'My Comment'" :name="'my-comment'" />
+          <HyperLink v-if="authStore.isStudent" :title="'My Comment'" :name="'my-comment'" />
         </div>
       </nav>
       <div class="absolute w-full top-full sm:top-4 sm:w-fit sm:left-full flex justify-center z-20">
@@ -188,7 +188,7 @@ function toggleMenuOpen() {
       class="flex-1 font-serif text-white flex flex-row justify-center items-start relative p-4 sm:p-8"
     >
       <div
-        class="fixed top-0 w-full text-center transition-all bg-red-500 opacity-0 -z-10 shadow-lg"
+        class="fixed top-0 w-full text-center transition-all bg-red-500 opacity-0 z-0 shadow-lg"
         :class="{ '-translate-y-full': !message, 'animate-flashMessage': message }"
       >
         &nbsp;{{ message }}
