@@ -30,7 +30,9 @@ const isImage = computed(() => {
     </div>
     <div class="bg-stone-800 p-4 shadow-lg flex flex-col font-sans flex-1 rounded-lg">
       <p class="font-bold">{{ `${announcement.teacher.fname} ${announcement.teacher.lname}` }}</p>
-      <VueMarkdown :source="announcement.message" />
+      <div class="overflow-y-scroll scrollbar-thin w-full">
+        <VueMarkdown :source="announcement.message" />
+      </div>
       <img v-if="isImage" :src="announcement.file" class="max-w-xs border border-stone-700 m-2" />
       <a
         v-else-if="announcement.file"
