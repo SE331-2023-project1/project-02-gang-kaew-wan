@@ -2,6 +2,7 @@ package gang.kaewwan.kaewwanbackend.rest.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -25,7 +26,7 @@ public class Comment extends Reactable {
     @ManyToOne
     Comment parent;
 
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     List<Comment> children;
 
     @ManyToOne
