@@ -23,6 +23,6 @@ public abstract class Reactable {
     @EqualsAndHashCode.Exclude
     Long id;
 
-    @OneToMany(mappedBy = "reactable", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "reactable", cascade = CascadeType.ALL)
     List<Reaction> reactions;
 }

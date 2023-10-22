@@ -22,10 +22,10 @@ import lombok.experimental.SuperBuilder;
 public class Teacher extends Person {
     String position;
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     List<Announcement> announcements;
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     List<Review> reviews;
 
     @OneToMany(mappedBy = "teacher")

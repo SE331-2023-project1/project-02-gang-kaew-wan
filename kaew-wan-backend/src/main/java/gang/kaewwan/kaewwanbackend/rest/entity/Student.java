@@ -21,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 public class Student extends Person {
     String studentId;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     List<Review> reviews;
 
     @ManyToOne
