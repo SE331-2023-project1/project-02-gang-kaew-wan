@@ -25,6 +25,8 @@ const students = ref<Student[]>([])
 const comments = ref<Comment[]>([])
 const openPreview = ref<boolean>(false)
 const openCommentPreview = ref<boolean>(false)
+const openComments = ref<boolean>(true)
+const openAnnouncements = ref<boolean>(true)
 const announcementBody = ref<OutgoingAnnouncement>({
   message: '',
   file: '',
@@ -111,11 +113,25 @@ updateStudentList()
         @prev-page="student_pgn = student_pgn - 1"
       />
     </div>
-    <div class="flex flex-row items-center gap-4">
+    <div
+      class="flex flex-row items-center gap-4 group cursor-pointer"
+      @click="openAnnouncements = !openAnnouncements"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6 text-stone-700 group-hover:text-stone-100 transition-transform"
+        :class="{ 'rotate-180': openAnnouncements }"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+      </svg>
       <p class="text-2xl text-white">My Announcements</p>
       <hr class="flex-1 border-0 border-b border-stone-700" />
     </div>
-    <div class="bg-stone-800 rounded-lg pt-2 pb-1 font-sans flex flex-col">
+    <div v-if="openAnnouncements" class="bg-stone-800 rounded-lg pt-2 pb-1 font-sans flex flex-col">
       <div class="flex flex-row gap-4 items-baseline px-4">
         <p
           @click="openPreview = false"
@@ -166,10 +182,7 @@ updateStudentList()
         </button>
       </div>
     </div>
-    <div
-      v-if="announcements.length > 0"
-      class="flex flex-col gap-4 h-96 overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-stone-700 hover:scrollbar-thumb-stone-500 scrollbar-thumb-rounded-full"
-    >
+    <div v-if="announcements.length > 0 && openAnnouncements" class="flex flex-col gap-4">
       <AnnouncementCard
         v-for="announcement in announcements"
         :key="announcement.id"
@@ -178,28 +191,39 @@ updateStudentList()
     </div>
 
     <div class="flex flex-col gap-2 flex-1">
-      <div class="flex flex-row gap-4 items-center">
+      <div class="flex flex-row gap-4 items-center group cursor-pointer" @click="openComments = !openComments">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6 text-stone-700 group-hover:text-stone-100 transition-transform"
+          :class="{ 'rotate-180': openComments }"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+        </svg>
         <p class="text-2xl">My Conversations</p>
         <hr class="px-2 flex-1 border-0 border-b border-stone-700" />
       </div>
-      <div class="bg-stone-800 rounded-lg pt-2 pb-1 font-sans flex flex-col">
+      <div class="bg-stone-800 rounded-lg pt-2 pb-1 font-sans flex flex-col" v-if="openComments">
         <div class="flex flex-row gap-4 items-baseline px-4">
           <p
-            @click="openPreview = false"
+            @click="openCommentPreview = false"
             class="w-fit cursor-pointer p-1"
-            :class="{ 'border-b-2 border-green-500  font-bold': !openPreview }"
+            :class="{ 'border-b-2 border-green-500  font-bold': !openCommentPreview }"
           >
             Compose
           </p>
           <p
-            @click="openPreview = true"
+            @click="openCommentPreview = true"
             class="w-fit cursor-pointer p-1"
-            :class="{ 'border-b-2 border-green-500  font-bold': openPreview }"
+            :class="{ 'border-b-2 border-green-500  font-bold': openCommentPreview }"
           >
             Preview
           </p>
         </div>
-        <div v-if="!openPreview" class="w-full min-h-fit">
+        <div v-if="!openCommentPreview" class="w-full min-h-fit">
           <textarea
             class="h-32 form-textarea bg-stone-700 resize-none border-0 w-full focus:ring-0 focus:border-b-2 placeholder:text-stone-400"
             v-model="commentBody.message"
@@ -241,7 +265,9 @@ updateStudentList()
           </button>
         </div>
       </div>
-      <CommentView @update-comment="updateComments()" :comments="comments" />
+      <div v-if="openComments">
+        <CommentView @update-comment="updateComments()" :comments="comments" />
+      </div>
     </div>
   </main>
 </template>
