@@ -16,7 +16,7 @@ RegistryService.getStudent(id).then((res) => {
   if (res.data.teacher) {
     RegistryService.getAnnouncementsByPerson(res.data.teacher.id)
       .then((response) => {
-        announcements.value = response.data as Announcement[]
+        announcements.value = (response.data as Announcement[]).sort((a, b) => b.id - a.id)
       })
       .catch((err) => {
         console.log(err)
