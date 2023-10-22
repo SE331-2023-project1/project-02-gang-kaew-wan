@@ -111,7 +111,6 @@ public class AuthenticationService {
                         request.getPassword()));
         User user = repository.findByUsername(request.getUsername())
                 .orElseThrow();
-        // System.out.println(user);
 
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);

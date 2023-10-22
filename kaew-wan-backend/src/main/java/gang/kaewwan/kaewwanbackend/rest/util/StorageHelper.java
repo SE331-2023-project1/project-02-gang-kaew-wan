@@ -61,7 +61,7 @@ public class StorageHelper {
         log.info(String.format("Starting Upload. %d bytes", byteArrayOutputStream.toByteArray().length));
         String upload = BuildersKt.runBlocking(EmptyCoroutineContext.INSTANCE, (scope, continuation) -> {
             return bucket.upload(fileName, byteArrayOutputStream.toByteArray(), true,
-                    (Continuation<String>) continuation);
+                    (Continuation<? super String>) continuation);
         });
         log.info(String.format("Finished Uploading to %s", upload));
         return bucket.publicUrl(fileName);
