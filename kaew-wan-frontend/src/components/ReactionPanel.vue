@@ -35,7 +35,7 @@ const { value: emote } = useField<string>('emote')
 function addReaction(id: number, emote: string) {
   console.log(id, emote)
   // eslint-disable-next-line vue/no-mutating-props
-  props.reactable?.reactions.push( {
+  props.reactable?.reactions.push({
     id: props.reactable?.id || 0,
     emote: emote
   })
@@ -61,14 +61,14 @@ function openPane(id: number) {
 }
 
 const onSubmit = handleSubmit((values) => {
-  console.log("submit emote")
+  console.log('submit emote')
   openPane(inputPane.value)
   addReaction(props.reactable?.id || 0, values.emote)
 })
 </script>
 
 <template>
-  <div class="flex flex-row relative items-center h-8 gap-2">
+  <div class="flex relative items-center h-fit gap-2" v-if="reactable.reactions">
     <button
       v-for="reaction of reactable.reactions
         .reduce((prev, curr) => {
@@ -80,13 +80,16 @@ const onSubmit = handleSubmit((values) => {
           return prev
         }, new Map<string, number>())
         .entries()"
-      class="p-1 border border-white border-opacity-25 hover:border-opacity-100 rounded-full flex flex-row"
+      class="py-0.5 px-1.5 gap-1.5 border border-white border-opacity-25 hover:border-opacity-100 rounded-md flex flex-row items-center"
       @click="addReaction(reactable.id, reaction[0])"
     >
-      <div class="aspect-square w-6 h-6 font-bold">
+      <div
+        class="h-5 w-5 font-bold flex justify-center items-center"
+        :class="{ 'bg-teal-700': reaction[0].length === 1 }"
+      >
         <p>{{ reaction[0] }}</p>
       </div>
-      <p class="px-1">{{ reaction[1] }}</p>
+      <p class="">{{ reaction[1] }}</p>
     </button>
     <div class="relative flex justify-center items-center h-full" @click.stop="">
       <button

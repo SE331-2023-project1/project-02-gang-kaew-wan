@@ -138,11 +138,6 @@ function toggleMenuOpen() {
           <hr class="border-0 border-b border-stone-50 w-full opacity-25 my-2" />
 
           <HyperLink :title="'Dashboard'" :name="'dashboard'" />
-          <HyperLink v-if="authStore.isTeacher" :title="'My Student'" :name="'student-list'" />
-          <HyperLink v-if="authStore.isStudent" :title="'My Comments'" :name="'my-comment'" />
-          <!-- <HyperLink v-if="authStore.isAdmin" :title="'Add Teacher'" :name="'add-advisor'" />
-          <HyperLink v-if="authStore.isAdmin" :title="'Teacher List'" :name="'advisor-list'" />
-          <HyperLink v-if="authStore.isAdmin" :title="'Student List'" :name="'student-list'" /> -->
         </div>
       </nav>
       <div class="absolute w-full top-full sm:top-4 sm:w-fit sm:left-full flex justify-center z-20">
