@@ -1,18 +1,21 @@
 <script setup lang="ts">
 
-import {boolean, string} from "yup";
 import {computed, ref} from "vue";
 import {Collapse} from "vue-collapsed";
 
 const props = defineProps({
-  title: string,
+  title: {
+    type: String,
+    required: false
+  },
   active: {
-    type: boolean
+    type: Boolean,
+    required: false
   }
 })
 
 const isExpanded = ref<boolean>(false)
-isExpanded.value = <boolean>props.active || false
+isExpanded.value = props.active || false
 
 function handleCollapse() {
   isExpanded.value = !isExpanded.value
