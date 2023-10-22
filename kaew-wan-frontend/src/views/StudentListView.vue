@@ -56,10 +56,7 @@ function changePage(page: number) {
 
 <template>
   <main class="w-full max-w-7xl px-4 sm:p-0 flex flex-col items-center gap-4" v-if="students">
-    <div
-      class="grid gap-4 w-full lg:grid-cols-2 grid-cols-1"
-      v-if="students.length > 0"
-    >
+    <div class="grid gap-4 w-full lg:grid-cols-2 grid-cols-1" v-if="students.length > 0">
       <StudentCard :student="student" v-for="student in students" :key="student.id"></StudentCard>
     </div>
     <div v-else>Opsss, you have no student. Please contact the admin!</div>

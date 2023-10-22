@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import CommentCard from '@/components/CommentCard.vue'
 import { useAuthStore } from '@/stores/auth'
 import RegistryService from '@/services/RegistryService'

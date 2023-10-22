@@ -59,8 +59,8 @@ function toggleMenuOpen() {
           <div v-if="authStore.currentID" class="flex flex-col w-full items-end">
             <RouterLink
               :to="{ name: 'profile-detail', params: { id: authStore.currentID } }"
-              class="min-w-fit flex  flex-row gap-2 items-center text-lg hover:brightness-75 w-full hover:text-emerald-400 [&.router-link-active]:text-white px-2 py-1 rounded-md"
-              :class=" { 'pointer-events-none': authStore.isAdmin } "
+              class="min-w-fit flex flex-row gap-2 items-center text-lg hover:brightness-75 w-full hover:text-emerald-400 [&.router-link-active]:text-white px-2 py-1 rounded-md"
+              :class="{ 'pointer-events-none': authStore.isAdmin }"
             >
               <div class="flex flex-row gap-2 items-center">
                 <img

@@ -1,13 +1,9 @@
 <script setup lang="ts">
-
-
-
-import type {Advisor} from "@/types";
+import type { Advisor } from '@/types'
 
 defineProps<{
   advisor: Advisor
 }>()
-
 </script>
 
 <template>
