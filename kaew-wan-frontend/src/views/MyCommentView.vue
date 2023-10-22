@@ -12,7 +12,7 @@ const comments = ref<Comment[]>([])
 function updateComments() {
   if (authStore.currentPersonID) {
     RegistryService.getComments(authStore.currentPersonID).then((res) => {
-      comments.value = (res.data as Comment[]).sort((a, b) => a.id - b.id)
+      comments.value = (res.data as Comment[]).sort((a, b) => b.id - a.id)
     })
   }
 }

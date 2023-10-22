@@ -30,8 +30,12 @@ export interface OutgoingComment extends Partial<Reactable> {
   message: string
   edited?: boolean
   parent?: Comment
-  sender: Partial<Person>
-  receiver: Partial<Person>
+  sender: Partial<Person> & WithID
+  receiver: Partial<Person> & WithID
+}
+
+export interface WithID {
+  id: number
 }
 
 export interface Comment extends Reactable {
