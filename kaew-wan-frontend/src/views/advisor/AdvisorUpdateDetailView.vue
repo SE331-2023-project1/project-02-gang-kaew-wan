@@ -81,7 +81,7 @@ RegistryService.getDepartments().then((res) => {
 
   <div class="mx-auto mt-4">
     <form @submit.prevent="onSubmit">
-      <CollapseCard title="Teacher Information" :active="true">
+      <CollapseCard :title="'Teacher Information'" :active="true">
         <ValidatedInput
             class="col-span-1"
             label="Position"
@@ -113,7 +113,7 @@ RegistryService.getDepartments().then((res) => {
         <ImageUpload class="col-span-5" v-model="image" :error="errors.image"/>
       </CollapseCard>
 
-      <CollapseCard class="my-3" title="Security Config" >
+      <CollapseCard class="my-3" :title="'Security Config'" >
         <ValidatedInput
             class="col-span-5"
             label="Username"
