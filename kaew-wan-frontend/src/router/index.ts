@@ -15,7 +15,6 @@ import DashboardLayout from '@/views/dashboard/DashboardLayoutView.vue'
 import { useAuthStore } from '@/stores/auth'
 import ProfileView from '@/views/profile/ProfileView.vue'
 import { usePersonStore } from '@/stores/person'
-import StudentCommentView from '@/views/student/StudentCommentView.vue'
 import StudentInformationView from '@/views/student/StudentInformationView.vue'
 import type { Comment, Student } from '@/types'
 import AdvisorDetailLayoutView from '@/views/advisor/AdvisorDetailLayoutView.vue'
@@ -131,11 +130,6 @@ const router = createRouter({
           alias: 'information',
           name: 'student-information',
           component: StudentInformationView
-        },
-        {
-          path: 'comment',
-          alias: 'comment',
-          component: StudentCommentView
         }
       ]
     },

@@ -1,5 +1,6 @@
 package gang.kaewwan.kaewwanbackend.rest.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class Announcement extends Reactable {
+    @Column(columnDefinition = "TEXT")
     String message;
     String file;
 
