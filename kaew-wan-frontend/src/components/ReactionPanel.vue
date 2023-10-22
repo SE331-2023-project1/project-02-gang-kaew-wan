@@ -7,9 +7,6 @@ import { useMessageStore } from '@/stores/message'
 import * as yup from 'yup'
 import { useField, useForm } from 'vee-validate'
 import { ref } from 'vue'
-import UUID from "@/features/UniqueID";
-
-const uuid = UUID()
 
 const props = defineProps({
   reactable: {
@@ -85,7 +82,7 @@ const onSubmit = handleSubmit((values) => {
         .entries()"
       class="py-0.5 px-1.5 gap-1.5 border border-white border-opacity-25 hover:border-opacity-100 rounded-md flex flex-row items-center"
       @click="addReaction(reactable.id, reaction[0])"
-      :key="uuid.getID()"
+      :key="`${reactable.id}-${reaction[0]}-${reaction[1]}`"
     >
       <div
         class="h-5 w-5 font-bold flex justify-center items-center"
