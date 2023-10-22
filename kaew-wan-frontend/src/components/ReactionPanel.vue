@@ -35,12 +35,17 @@ const { value: emote } = useField<string>('emote')
 function addReaction(id: number, emote: string) {
   console.log(id, emote)
   // eslint-disable-next-line vue/no-mutating-props
-  console.log(
-    props.reactable?.reactions.push({
-      id: props.reactable?.id || 0,
-      emote: emote
-    })
-  )
+  props.reactable?.reactions.push( {
+    id: props.reactable?.id || 0,
+    emote: emote
+  })
+
+  // console.log(
+  //   props.reactable?.reactions.push({
+  //     id: props.reactable?.id || 0,
+  //     emote: emote
+  //   })
+  // )
 
   apiClient
     .post(`/reactions/${id}`, {
@@ -56,6 +61,7 @@ function openPane(id: number) {
 }
 
 const onSubmit = handleSubmit((values) => {
+  console.log("submit emote")
   openPane(inputPane.value)
   addReaction(props.reactable?.id || 0, values.emote)
 })
