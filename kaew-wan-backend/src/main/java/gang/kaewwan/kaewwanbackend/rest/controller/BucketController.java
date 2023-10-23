@@ -18,12 +18,6 @@ public class BucketController {
     @Autowired
     private StorageHelper storageHelper;
 
-    @PostConstruct
-    private void init() {
-        System.out.println("BucketController --------------------");
-        System.out.println(storageHelper);
-    }
-
     @PostMapping(value = "uploadfile")
     public StorageFileDTO uploadFile(@RequestPart(value = "file") MultipartFile file)
             throws IOException, InterruptedException, ExecutionException {
