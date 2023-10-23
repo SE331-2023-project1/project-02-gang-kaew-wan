@@ -285,7 +285,7 @@ const router = createRouter({
       ]
     },
     {
-      name: 'add-advisor',
+      name: 'add-admin',
       path: '/add-admin',
       props: true,
       component: AddAdminView,
