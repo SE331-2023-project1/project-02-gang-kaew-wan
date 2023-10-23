@@ -108,6 +108,7 @@ updateStudentList()
         <hr class="px-2 flex-1 border-0 border-b border-stone-700" />
       </div>
       <StudentEmbeddedListView
+        keyword=""
         :page="student_pgn"
         @next-page="student_pgn = student_pgn + 1"
         @prev-page="student_pgn = student_pgn - 1"
@@ -161,7 +162,8 @@ updateStudentList()
       <div class="flex flex-row justify-between px-1 items-center">
         <ImageUpload v-model="announcementBody.file" :image-upload="false" />
         <button
-          class="flex flex-row rounded-full transition-colors items-center text-stone-400 border border-stone-400 hover:bg-green-600 hover:border-transparent hover:text-white px-2 py-1"
+          class="flex flex-row rounded-full transition-colors items-center text-stone-500 border border-stone-500 hover:bg-green-600 hover:border-transparent hover:text-white px-2 py-1"
+          :class="{ 'pointer-events-none': announcementBody.message.trim().length === 0 }"
           @click="sendAnnouncement()"
         >
           <p class="px-1">Send</p>
@@ -246,8 +248,11 @@ updateStudentList()
             :text-extractor="(x) => `${x.fname} ${x.lname}`"
           />
           <button
-            class="flex flex-row rounded-full transition-colors items-center text-stone-400 border border-stone-400 hover:bg-green-600 hover:border-transparent hover:text-white px-2 py-1"
-            :class="{ 'pointer-events-none': commentBody.receiver.id === 0 }"
+            class="flex flex-row rounded-full transition-colors items-center text-stone-500 border border-stone-500 hover:bg-green-600 hover:border-transparent hover:text-white px-2 py-1"
+            :class="{
+              'pointer-events-none':
+                commentBody.receiver.id === 0 || commentBody.message.trim().length === 0
+            }"
             @click="submitComment()"
           >
             <p class="px-1">Send</p>

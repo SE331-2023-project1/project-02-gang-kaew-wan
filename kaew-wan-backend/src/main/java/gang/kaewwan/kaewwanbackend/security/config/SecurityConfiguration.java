@@ -36,8 +36,10 @@ public class SecurityConfiguration {
         });
         http.csrf((crsf) -> crsf.disable())
                 .authorizeHttpRequests((authorize) -> {
-                    authorize.requestMatchers("/**").permitAll()
-                            .anyRequest().authenticated();
+
+                    authorize
+                            .requestMatchers("/api/v1/auth/**").permitAll()
+                            .anyRequest().hasAuthority("ROLE_ADMIN");
                 })
 
                 .sessionManagement((session) -> {

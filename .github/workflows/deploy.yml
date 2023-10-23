@@ -1,20 +1,20 @@
 name: Deployment to aws
-on: 
+on:
     push:
         branches:
             - main
             - deploy
 
 
-jobs: 
+jobs:
     build-frontend:
         name: build-frontend
-        runs-on: ubuntu-latest   
+        runs-on: ubuntu-latest
         steps:
             -
                 name: checkout
                 uses: actions/checkout@v3
-                
+
             -
                 name: Set up QEMU
                 uses: docker/setup-qemu-action@v2
@@ -34,7 +34,7 @@ jobs:
                     push: true
                     tags: ${{ secrets.DOCKER_HUB_USERNAME }}/student-connect-fe:latest
                     context: ./kaew-wan-frontend
-    
+
     build-backend:
         name: build-backend
         runs-on: ubuntu-latest
@@ -51,16 +51,18 @@ jobs:
             -
               name: run Maven
               run: |
+                echo "${{ secrets.JWT_PRIVATE_KEY }}" | tr -d '\r' > src/main/resources/jwt.pem
+                echo "${{ secrets.JWT_PUBLIC_KEY }}" | tr -d '\r' > src/main/resources/jwt.pub.pem
                 mvn clean install -DskipTests -B
                 mkdir -p target/dependency && (cd target/dependency; unzip ../*.jar)
               working-directory: ./kaew-wan-backend
-            - 
+            -
               name: Set up QEMU
               uses: docker/setup-qemu-action@v2
             -
               name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v2
-            - 
+            -
               name: Login to DockerHub
               uses: docker/login-action@v2
               with:
@@ -78,7 +80,7 @@ jobs:
     deploy-to-aws:
         needs: [build-frontend,build-backend]
         runs-on: ubuntu-latest
-        env: 
+        env:
             DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
         steps:
             -
@@ -95,7 +97,7 @@ jobs:
                     source: "docker-compose.yml"
                     target: "/home/ubuntu/kaew-wan"
             -
-                name: docker compose 
+                name: docker compose
                 uses: appleboy/ssh-action@v0.1.10
                 with:
                     host: ${{ secrets.HOST_SERVER }}

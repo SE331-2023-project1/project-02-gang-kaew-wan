@@ -38,5 +38,8 @@ public interface RestMapper {
 
     DepartmentDTO getDepartmentDTO(Department department);
 
+    List<ReviewDTO> getReviewDTO(List<Review> review);
+    ReviewDTO getReviewDTO(Review review);
+
 
 }

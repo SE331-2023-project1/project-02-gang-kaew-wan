@@ -1,29 +1,39 @@
 package gang.kaewwan.kaewwanbackend.security.config;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
-
-import java.security.Key;
+import java.io.IOException;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.security.converter.RsaKeyConverters;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import jakarta.annotation.PostConstruct;
+
 @Service
 public class JwtService {
+  private RSAPrivateKey rsaPrivateKey;
+  private RSAPublicKey rsaPublicKey;
 
-  @Value("${application.security.jwt.secret-key}")
-  private String secretKey;
   @Value("${application.security.jwt.expiration}")
   private long jwtExpiration;
   @Value("${application.security.jwt.refresh-token.expiration}")
   private long refreshExpiration;
+
+  @PostConstruct
+  public void init() throws IOException {
+    rsaPublicKey = RsaKeyConverters.x509().convert(new ClassPathResource("jwt.pub.pem").getInputStream());
+    rsaPrivateKey = RsaKeyConverters.pkcs8().convert(new ClassPathResource("jwt.pem").getInputStream());
+  }
 
   public String extractUsername(String token) {
     return extractClaim(token, Claims::getSubject);
@@ -40,30 +50,26 @@ public class JwtService {
 
   public String generateToken(
       Map<String, Object> extraClaims,
-      UserDetails userDetails
-  ) {
+      UserDetails userDetails) {
     return buildToken(extraClaims, userDetails, jwtExpiration);
   }
 
   public String generateRefreshToken(
-      UserDetails userDetails
-  ) {
+      UserDetails userDetails) {
     return buildToken(new HashMap<>(), userDetails, refreshExpiration);
   }
 
   private String buildToken(
-          Map<String, Object> extraClaims,
-          UserDetails userDetails,
-          long expiration
-  ) {
-    return Jwts
-            .builder()
-            .setClaims(extraClaims)
-            .setSubject(userDetails.getUsername())
-            .setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis() + expiration))
-            .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-            .compact();
+      Map<String, Object> extraClaims,
+      UserDetails userDetails,
+      long expiration) {
+    return Jwts.builder()
+        .claims(extraClaims)
+        .subject(userDetails.getUsername())
+        .issuedAt(new Date(System.currentTimeMillis()))
+        .expiration(new Date(System.currentTimeMillis() + expiration))
+        .signWith(getRsaPrivateKey())
+        .compact();
   }
 
   public boolean isTokenValid(String token, UserDetails userDetails) {
@@ -81,15 +87,15 @@ public class JwtService {
 
   private Claims extractAllClaims(String token) {
     return Jwts
-        .parserBuilder()
-        .setSigningKey(getSignInKey())
-        .build()
-        .parseClaimsJws(token)
-        .getBody();
+        .parser().verifyWith(getRsaPublicKey())
+        .build().parse(token).accept(Jws.CLAIMS).getPayload();
   }
 
-  private Key getSignInKey() {
-    byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-    return Keys.hmacShaKeyFor(keyBytes);
+  public RSAPrivateKey getRsaPrivateKey() {
+    return rsaPrivateKey;
+  }
+
+  public RSAPublicKey getRsaPublicKey() {
+    return rsaPublicKey;
   }
 }

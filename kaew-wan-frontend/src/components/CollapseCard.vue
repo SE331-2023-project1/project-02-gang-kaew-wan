@@ -43,18 +43,22 @@ const collapseAttrs = {
         v-bind="toggleAttrs"
         @click="handleCollapse"
         @click.prevent
-        :class="['Panel', { Active: isExpanded }]"
-        class="flex items-center bg-stone-800 justify-between w-full p-5 font-medium text-left border border-b-0 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 border-gray-700 text-gray-400 hover:bg-gray-800"
+        :class="[
+          'Panel',
+          { 'Active bg-stone-700 hover:bg-stone-600': isExpanded },
+          { 'rounded-b-lg bg-stone-800 hover:bg-stone-700': !isExpanded }
+        ]"
+        class="flex items-center justify-between w-full p-5 font-medium text-left border-0 rounded-t-lg transition-all"
       >
         <span class="text-xl font-semibold">{{ title }}</span>
         <svg
-          v-if="!isExpanded"
+          :class="{ 'rotate-180': isExpanded }"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-6 h-6"
+          class="w-6 h-6 transition-transform"
         >
           <path
             stroke-linecap="round"
@@ -62,32 +66,15 @@ const collapseAttrs = {
             d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5"
           />
         </svg>
-
-        <svg
-          v-else
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M4.5 12.75l7.5-7.5 7.5 7.5m-15 6l7.5-7.5 7.5 7.5"
-          />
-        </svg>
       </button>
       <Collapse
         v-bind="collapseAttrs"
         :when="isExpanded"
-        class="p-5 border border-b-0 border-gray-700 bg-stone-800"
+        :class="{ 'opacity-0': !isExpanded }"
+        class="rounded-b-lg bg-stone-800 transition-all duration-500"
       >
-        <slot class="CollapseContent"> </slot>
+        <slot />
       </Collapse>
     </div>
   </article>
 </template>
-
-<style scoped></style>

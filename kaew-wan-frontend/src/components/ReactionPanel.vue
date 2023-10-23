@@ -6,7 +6,8 @@ import apiClient from '@/services/AxiosClient'
 import { useMessageStore } from '@/stores/message'
 import * as yup from 'yup'
 import { useField, useForm } from 'vee-validate'
-import { ref } from 'vue'
+import { useStateStore } from '@/stores/state'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps({
   reactable: {
@@ -14,8 +15,8 @@ const props = defineProps({
     required: true
   }
 })
-
-const inputPane = ref<number>(0)
+const stateStore = useStateStore()
+const { emotePaneId } = storeToRefs(stateStore)
 const validationSchema = yup.object({
   emote: yup
     .string()
@@ -33,19 +34,11 @@ const { errors, handleSubmit } = useForm({
 const { value: emote } = useField<string>('emote')
 
 function addReaction(id: number, emote: string) {
-  console.log(id, emote)
   // eslint-disable-next-line vue/no-mutating-props
   props.reactable?.reactions.push({
     id: props.reactable?.id || 0,
     emote: emote
   })
-
-  // console.log(
-  //   props.reactable?.reactions.push({
-  //     id: props.reactable?.id || 0,
-  //     emote: emote
-  //   })
-  // )
 
   apiClient
     .post(`/reactions/${id}`, {
@@ -57,12 +50,12 @@ function addReaction(id: number, emote: string) {
 }
 
 function openPane(id: number) {
-  inputPane.value = inputPane.value === id ? 0 : id
+  stateStore.setEmotePane(id)
 }
 
 const onSubmit = handleSubmit((values) => {
   console.log('submit emote')
-  openPane(inputPane.value)
+  openPane(0)
   addReaction(props.reactable?.id || 0, values.emote)
 })
 </script>
@@ -109,8 +102,8 @@ const onSubmit = handleSubmit((values) => {
         </svg>
       </button>
       <form
-        class="absolute flex flex-col items-end bg-stone-800 -top-32 border border-white border-opacity-25 p-2 rounded-lg"
-        :class="{ hidden: !(inputPane === reactable.id) }"
+        class="absolute flex flex-col items-end bg-stone-800 -bottom-28 z-10 border border-white border-opacity-25 p-2 rounded-lg"
+        :class="{ hidden: !(emotePaneId === reactable.id) }"
         @submit.prevent="onSubmit"
       >
         <ValidatedInput label="Emote" v-model="emote" :error="errors.emote" />

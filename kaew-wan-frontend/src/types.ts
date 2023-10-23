@@ -7,6 +7,7 @@ export interface Advisor extends Person {
   position: string
   announcements: Announcement[]
   students?: Student[]
+  reviews?: Review[]
 }
 
 export interface Department {
@@ -81,4 +82,10 @@ export interface Course {
 export interface Reaction {
   id: number
   emote: string
+}
+export interface Review {
+  id?: number
+  rating: number
+  student?: Partial<Student> & WithID
+  teacher?: Partial<Advisor> & WithID
 }

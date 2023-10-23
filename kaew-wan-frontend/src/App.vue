@@ -5,12 +5,14 @@ import { RouterLink, RouterView, useRouter } from 'vue-router'
 import { useAuthStore } from './stores/auth'
 import { useMessageStore } from './stores/message'
 import HyperLink from '@/components/HyperLink.vue'
+import { useStateStore } from './stores/state'
 
 const menuOpened = ref<boolean>(true)
 const store = useMessageStore()
 const { message } = storeToRefs(store)
 const authStore = useAuthStore()
 const router = useRouter()
+const stateStore = useStateStore()
 
 function logout() {
   authStore.logout()
@@ -32,7 +34,11 @@ function toggleMenuOpen() {
 </script>
 
 <template>
-  <div class="flex flex-col sm:flex-row sm:min-h-screen">
+  <div
+    class="flex flex-col sm:flex-row sm:min-h-screen"
+    @click.propagate="stateStore.setEmotePane(0)"
+    @keydown.escape="stateStore.setEmotePane(0)"
+  >
     <div class="flex flex-col sm:flex-row sticky top-0 z-10 max-h-screen">
       <nav
         class="z-50 flex flex-col font-sans gap-4 text-white items-center bg-stone-800 p-4 overflow-hidden transition-all duration-300"
@@ -139,7 +145,8 @@ function toggleMenuOpen() {
           <hr class="border-0 border-b border-stone-50 w-full opacity-25 my-2" />
 
           <HyperLink :title="'Dashboard'" :name="'dashboard'" />
-          <HyperLink v-if="authStore.isStudent" :title="'My Comment'" :name="'my-comment'" />
+          <HyperLink v-if="authStore.isStudent" title="My Comments" name="my-comment" />
+          <HyperLink v-if="authStore.isStudent" title="My Advisor" name="my-advisor-detail" />
         </div>
       </nav>
       <div class="absolute w-full top-full sm:top-4 sm:w-fit sm:left-full flex justify-center z-20">
@@ -194,7 +201,7 @@ function toggleMenuOpen() {
       >
         &nbsp;{{ message }}
       </div>
-      <RouterView class="w-full flex justify-center relative" />
+      <RouterView class="w-full flex justify-center relative overflow-visible" />
     </div>
   </div>
 </template>
