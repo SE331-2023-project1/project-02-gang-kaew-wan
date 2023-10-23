@@ -58,7 +58,7 @@ public class StudentServiceImpl implements StudentService {
             if(student.getImage() == null) student.setImage(studentData.getImage());
             if(student.getDepartment() == null) student.setDepartment(studentData.getDepartment());
             if(student.getTeacher() == null ) student.setTeacher(studentData.getTeacher());
-            if(student.getReviews() == null) student.setReviews(studentData.getReviews());
+            if(student.getReview() == null) student.setReview(studentData.getReview());
             if(student.getUser() == null) student.setUser(studentData.getUser());
             if(student.getStudentId() == null) student.setStudentId(studentData.getStudentId());
             student.setId(id);
