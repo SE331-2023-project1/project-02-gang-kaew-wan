@@ -35,6 +35,7 @@ public class SecurityConfiguration {
             "/swagger-resources/**",
             "/api/v1/auth/**",
             "/departments/**",
+            "/uploadfile/**"
     };
     final String[] AUTHENTICATED_AREA = {
             "/comments",
