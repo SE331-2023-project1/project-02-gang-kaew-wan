@@ -71,9 +71,9 @@ RegistryService.getDepartments().then((res) => {
 </script>
 
 <template>
-  <div class="mx-auto mt-4">
-    <form @submit.prevent="onSubmit">
-      <CollapseCard :title="'Teacher Information'" :active="true">
+  <form @submit.prevent="onSubmit" class="flex flex-col gap-4">
+    <CollapseCard :title="'Teacher Information'" :active="true">
+      <div class="p-4 grid grid-cols-5 gap-4 items-center">
         <ValidatedInput
           class="col-span-1"
           label="Position"
@@ -103,9 +103,11 @@ RegistryService.getDepartments().then((res) => {
           :options="departmentOption"
         ></BaseSelect>
         <ImageUpload class="col-span-5" v-model="image" :error="errors.image" />
-      </CollapseCard>
+      </div>
+    </CollapseCard>
 
-      <CollapseCard class="my-3" :title="'Security Config'">
+    <CollapseCard :title="'Security Config'">
+      <div class="p-4 grid grid-cols-5 gap-4 items-center">
         <ValidatedInput
           class="col-span-5"
           label="Username"
@@ -122,13 +124,13 @@ RegistryService.getDepartments().then((res) => {
           :autocomplete="false"
         />
         <ValidatedInput class="col-span-5" label="Email" v-model="email" :error="errors.email" />
-      </CollapseCard>
+      </div>
+    </CollapseCard>
 
-      <button type="submit" class="bg-emerald-500 px-2 py-1 place-self-center col-span-2 mt-5">
-        Submit
-      </button>
-    </form>
-  </div>
+    <button type="submit" class="bg-emerald-500 px-2 py-1 place-self-center col-span-2 mt-5">
+      Submit
+    </button>
+  </form>
 </template>
 
 <style scoped></style>

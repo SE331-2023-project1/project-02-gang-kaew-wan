@@ -9,12 +9,15 @@ import { useRouter } from 'vue-router'
 import ValidatedInput from '@/components/ValidatedInput.vue'
 import ImageUpload from '@/components/ImageUpload.vue'
 import type { Person } from '@/types'
+import CollapseCard from '@/components/CollapseCard.vue'
+import { useAuthStore } from '@/stores/auth'
 
 const store = usePersonStore()
 const person = storeToRefs(store).person
 const messageStore = useMessageStore()
 const router = useRouter()
 const personStore = usePersonStore()
+const authStore = useAuthStore()
 
 const validationSchema = yup.object({
   fname: yup.string().required('First name is required.'),
@@ -41,6 +44,7 @@ const onSubmit = handleSubmit((values) => {
     .then((res) => {
       messageStore.flashMessage('Successfully edited.')
       personStore.setPerson(res.data as Person)
+      authStore.updatePerson(res.data as Person)
       router.push({ name: 'profile-detail', params: { id: res.data.id } })
     })
     .catch((err) => {
@@ -51,11 +55,25 @@ const onSubmit = handleSubmit((values) => {
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit" class="grid grid-cols-2 gap-2 w-2/3 mx-auto">
-    <ValidatedInput class="col-span-1" label="First name" v-model="fname" :error="errors.fname" />
-    <ValidatedInput class="col-span-1" label="Last name" v-model="lname" :error="errors.lname" />
+  <form @submit.prevent="onSubmit" class="flex flex-col gap-4">
+    <CollapseCard :title="'Basic Information'" :active="true">
+      <div class="p-4 grid grid-cols-4 gap-4 items-center">
+        <ValidatedInput
+          class="col-span-2"
+          label="First name"
+          v-model="fname"
+          :error="errors.fname"
+        />
+        <ValidatedInput
+          class="col-span-2"
+          label="Last name"
+          v-model="lname"
+          :error="errors.lname"
+        />
 
-    <ImageUpload class="col-span-2" v-model="image" :error="errors.image" />
+        <ImageUpload class="col-span-4" v-model="image" :error="errors.image" />
+      </div>
+    </CollapseCard>
     <button type="submit" class="bg-emerald-500 px-2 py-1 place-self-center col-span-2">
       Submit
     </button>

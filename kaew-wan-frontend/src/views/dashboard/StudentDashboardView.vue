@@ -11,12 +11,14 @@ const router = useRouter()
 
 const id = authStore.currentID
 const announcements = ref<Announcement[]>([])
+const loading = ref<boolean>(true)
 
 RegistryService.getStudent(id).then((res) => {
   if (res.data.teacher) {
     RegistryService.getAnnouncementsByPerson(res.data.teacher.id)
       .then((response) => {
         announcements.value = (response.data as Announcement[]).sort((a, b) => b.id - a.id)
+        loading.value = false
       })
       .catch((err) => {
         console.log(err)
@@ -38,6 +40,16 @@ RegistryService.getStudent(id).then((res) => {
           :key="announcement.id"
           :announcement="announcement"
         />
+      </div>
+      <div
+        v-else-if="loading"
+        class="flex flex-col gap-4 overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-stone-700 hover:scrollbar-thumb-stone-500 scrollbar-thumb-rounded-full"
+      >
+        <p
+          class="text-lg mt-2 w-full border p-4 rounded-xl border-white border-dashed opacity-50 font-sans tracking-wide"
+        >
+          Loading data, wait a second!
+        </p>
       </div>
       <div v-else>
         <p

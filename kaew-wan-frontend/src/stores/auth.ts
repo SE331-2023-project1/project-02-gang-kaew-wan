@@ -1,5 +1,5 @@
 import apiClient from '@/services/AxiosClient'
-import type { User } from '@/types'
+import type { User, Person } from '@/types'
 import axios from 'axios'
 import { defineStore } from 'pinia'
 
@@ -38,6 +38,12 @@ export const useAuthStore = defineStore('auth', {
     }
   },
   actions: {
+    updatePerson(person: Person) {
+      if (this.user && this.user.person) {
+        this.user.person = { ...this.user.person, ...person }
+        localStorage.setItem('user', JSON.stringify(this.user))
+      }
+    },
     login(username: string, password: string) {
       return apiClient
         .post('/api/v1/auth/authenticate', {
