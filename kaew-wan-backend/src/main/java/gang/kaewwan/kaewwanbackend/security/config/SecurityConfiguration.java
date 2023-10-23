@@ -2,8 +2,10 @@ package gang.kaewwan.kaewwanbackend.security.config;
 
 import java.util.Arrays;
 
+import gang.kaewwan.kaewwanbackend.security.entity.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,15 +30,46 @@ public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
 
+
+    final String[] FREE_AREA = {
+            "/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/api/v1/auth/register",
+            "/api/v1/auth/authenticate"
+
+    };
+
+    final String[] AUTHENTICATED_AREA = {
+            "/comments/**",
+            "/announcements/**",
+            "/reviews/**",
+            "/reactions/**",
+            "/announcements/**",
+            "/announcement/**",
+            "/teachers/**",
+            "/students/**"
+    };
+
+    final String[] ADMIN_AREA = {
+            "/**"
+    };
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http.headers((headers) -> {
             headers.frameOptions((frameOptions) -> frameOptions.disable());
         });
         http.csrf((crsf) -> crsf.disable())
                 .authorizeHttpRequests((authorize) -> {
-                    authorize.requestMatchers("/**").permitAll()
+                    authorize
+                            .requestMatchers("/**").permitAll()
+//                            .requestMatchers(FREE_AREA).permitAll()
+//                            .requestMatchers(AUTHENTICATED_AREA).hasAnyAuthority("STUDENT","TEACHER")
+//                            .requestMatchers(ADMIN_AREA).hasAuthority("ADMIN")
                             .anyRequest().authenticated();
                 })
 
