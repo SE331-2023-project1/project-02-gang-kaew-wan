@@ -1,63 +1,54 @@
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { useStudentStore } from "@/stores/student";
-import { computed } from "vue";
+import { useStudentStore } from '@/stores/student'
+import { storeToRefs } from 'pinia'
 
-const store = useStudentStore()
-const { student, advisor } = storeToRefs(store)
-const intl = new Intl.DisplayNames(['en'], { type: 'region' })
-const nationality = computed(() => {
-  if (student.value?.nationality) {
-    try {
-      return intl.of(student.value.nationality)
-    } catch {
-      return student.value?.nationality
-    }
-  }
-  return student.value?.nationality
-})
-
+const studentStore = useStudentStore()
+const student = storeToRefs(studentStore).student
 </script>
 
 <template>
-  <main class="flex flex-col gap-4" v-if="student && advisor">
-    <div class="flex flex-col">
-      <p class="text-sm opacity-50">Advisor</p>
-      <div class="flex flex-col lg:flex-row p-4 bg-stone-700 shadow-md gap-4 border-emerald-400">
-        <img :src="advisor.image" class="w-32 aspect-square object-cover shadow-lg" />
-        <div class="flex flex-col justify-between">
-          <RouterLink :to="{ name: 'advisor-information', params: { id: advisor.id } }" class="group">
-            <p class="text-3xl group-hover:text-emerald-400 transition-colors">{{ advisor.prefix ?
-              advisor.prefix + ' ' : '' }}{{ advisor.first_name }} {{
-    advisor.last_name }}</p>
-            <p class="font-light opacity-75 group-hover:text-emerald-400 transition-colors">{{ advisor.faculty }}</p>
-          </RouterLink>
-          <div class="flex flex-row">
-            <p class="text-md">Contact Advisor:</p>
-            <a :href="`mailto:${advisor.first_name.toLowerCase()}.${advisor.last_name.toLowerCase()[0]}@cmu.ac.th`"
-              class="text-emerald-400 hover:brightness-75 underline ml-2">{{
-                `${advisor.first_name.toLowerCase()}.${advisor.last_name.toLowerCase()[0]}@cmu.ac.th` }} </a>
-          </div>
+  <!--<h1>This is profile view</h1>-->
+  <div v-if="student" class="w-full">
+    <div class="flow-root">
+      <dl class="text-sm divide-y divide-stone-900 flex flex-col">
+        <div class="grid grid-cols-1 gap-1 sm:grid-cols-5 sm:gap-4 bg-stone-800">
+          <dt class="text-white font-semibold p-2 bg-stone-700 h-full">First name</dt>
+          <dd class="text-gray-100 sm:col-span-4 py-2">
+            {{ student.fname }}
+          </dd>
         </div>
-      </div>
+
+        <div class="grid grid-cols-1 gap-1 sm:grid-cols-5 sm:gap-4 bg-stone-800">
+          <dt class="text-white font-semibold p-2 bg-stone-700 h-full">Last name</dt>
+          <dd class="text-gray-100 sm:col-span-4 py-2">
+            {{ student.lname }}
+          </dd>
+        </div>
+
+        <div class="grid grid-cols-1 gap-1 sm:grid-cols-5 sm:gap-4 bg-stone-800">
+          <dt class="text-white font-semibold p-2 bg-stone-700 h-full">Department</dt>
+          <dd class="text-gray-100 sm:col-span-4 py-2">
+            {{ student.department.name }}
+          </dd>
+        </div>
+
+        <div class="grid grid-cols-1 gap-1 sm:grid-cols-5 sm:gap-4 bg-stone-800">
+          <dt class="text-white font-semibold p-2 bg-stone-700 h-full">Bio</dt>
+          <dd class="text-gray-100 sm:col-span-4 py-2">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et facilis debitis explicabo
+            doloremque impedit nesciunt dolorem facere, dolor quasi veritatis quia fugit aperiam
+            aspernatur neque molestiae labore aliquam soluta architecto?
+          </dd>
+        </div>
+        <div class="grid grid-cols-1 gap-1 sm:grid-cols-5 sm:gap-4 mt-4 bg-stone-800" v-if="student.teacher">
+          <dt class="text-white font-semibold p-2 bg-stone-700 h-full">Advisor</dt>
+          <dd class="text-gray-100 sm:col-span-4 py-2">
+            ({{ student.teacher.position }}) {{ student.teacher.fname }} {{ student.teacher.lname }}
+          </dd>
+        </div>
+      </dl>
     </div>
-    <div class="flex flex-col">
-      <p class="text-sm opacity-50">Address</p>
-      <p class="text-xl">{{ student.address }}</p>
-    </div>
-    <div class="flex flex-col">
-      <p class="text-sm opacity-50">Birthday</p>
-      <p class="text-xl">{{ new Date(student.birthday / 1).toLocaleDateString() }}</p>
-    </div>
-    <div class="flex flex-col">
-      <p class="text-sm opacity-50">Nationality</p>
-      <p class="text-xl">{{ nationality }}</p>
-    </div>
-  </main>
-  <main v-else>
-    <img src="/svg/loading.svg" class="w-16">
-  </main>
+  </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

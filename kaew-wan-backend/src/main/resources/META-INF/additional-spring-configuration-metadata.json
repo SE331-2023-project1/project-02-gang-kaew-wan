@@ -1,0 +1,27 @@
+{"properties": [
+  {
+    "name": "application.security.jwt.expiration",
+    "type": "java.lang.Long",
+    "description": "JWT expiration Timespan"
+  },
+  {
+    "name": "application.security.jwt.refresh-token.expiration",
+    "type": "java.lang.Long",
+    "description": "JWT refreshed token expiration Timespan"
+  },
+  {
+    "name": "application.supabase.url",
+    "type": "java.lang.String",
+    "description": "Supabase API Url"
+  },
+  {
+    "name": "application.supabase.anon-key",
+    "type": "java.lang.String",
+    "description": "Supabase API Anon Key"
+  },
+  {
+    "name": "application.security.jwt.secret-key",
+    "type": "java.lang.String",
+    "description": "JWT Secret Key"
+  }
+]}

@@ -1,34 +1,49 @@
 import RegistryService from '@/services/RegistryService'
-import { useCourseStore } from '@/stores/course'
-import { useStudentStore } from '@/stores/student'
 import { useAdvisorStore } from '@/stores/advisor'
-import AddPersonLayoutVue from '@/views/AddPersonLayout.vue'
-import AdvisorDetailView from '@/views/AdvisorDetailView.vue'
-import AdvisorInformationView from '@/views/advisor/AdvisorInformationView.vue'
-import AdvisorCourseView from '@/views/advisor/AdvisorCourseView.vue'
-import AdvisorStudentView from '@/views/advisor/AdvisorStudentView.vue'
+import { useStudentStore } from '@/stores/student'
 import AdvisorListView from '@/views/AdvisorListView.vue'
-import CourseDetail from '@/views/CourseDetail.vue'
-import CourseListView from '@/views/CourseListView.vue'
+import LoginViewVue from '@/views/LoginView.vue'
 import NetworkErrorView from '@/views/NetworkErrorView.vue'
 import NotFoundErrorView from '@/views/NotFoundErrorView.vue'
-import StudentDetailView from '@/views/StudentDetailView.vue'
+import StudentDetailView from '@/views/student/StudentDetailLayoutView.vue'
 import StudentListView from '@/views/StudentListView.vue'
-import StudentCommentView from '@/views/student/StudentCommentView.vue'
-import StudentCoursesView from '@/views/student/StudentCoursesView.vue'
-import StudentInformationView from '@/views/student/StudentInformationView.vue'
+
 import nProgress from 'nprogress'
 import { createRouter, createWebHistory } from 'vue-router'
+import RegisterViewVue from '@/views/RegisterView.vue'
+import DashboardLayout from '@/views/dashboard/DashboardLayoutView.vue'
+import { useAuthStore } from '@/stores/auth'
+import ProfileView from '@/views/profile/ProfileView.vue'
+import { usePersonStore } from '@/stores/person'
+import StudentInformationView from '@/views/student/StudentInformationView.vue'
+import type { Comment, Student } from '@/types'
+import AdvisorDetailLayoutView from '@/views/advisor/AdvisorDetailLayoutView.vue'
+import AdvisorInformationView from '@/views/advisor/AdvisorInformationView.vue'
+import AdvisorAssignStudentView from '@/views/advisor/AdvisorAssignStudentView.vue'
+import ForbiddenView from '@/views/ForbiddenView.vue'
+import RegisterTeacherView from '@/views/RegisterTeacherView.vue'
+import MyCommentView from '@/views/MyCommentView.vue'
+import { useCommentStore } from '@/stores/comment'
+import ProfileLayoutView from '@/views/profile/ProfileLayoutView.vue'
+import EditProfileView from '@/views/profile/EditProfileView.vue'
+import AdvisorUpdateDetailView from '@/views/advisor/AdvisorUpdateDetailView.vue'
+import MyAdvisorLayoutView from '@/views/myadvisor/MyAdvisorLayoutView.vue'
+import MyAdvisorDetail from '@/views/myadvisor/MyAdvisorDetail.vue'
+import AddAdminView from "@/views/AddAdminView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/advisor',
+      path: '/advisors',
       name: 'advisor-list',
       component: AdvisorListView,
       props: (route) => ({ page: parseInt(route.query?.page as string) }),
       beforeEnter: (to, _, next) => {
+        const authStore = useAuthStore()
+        if (!authStore.isAdmin) {
+          next({ name: 'forbidden-page' })
+        }
         if (
           !to.query?.page ||
           parseInt(to.query?.page as string) < 1 ||
@@ -43,7 +58,7 @@ const router = createRouter({
     {
       path: '/advisor/:id(\\d+)',
       name: 'advisor-detail',
-      component: AdvisorDetailView,
+      component: AdvisorDetailLayoutView,
       props: true,
       beforeEnter: async (to) => {
         const id: number = parseInt(to.params.id as string)
@@ -63,25 +78,29 @@ const router = createRouter({
           component: AdvisorInformationView
         },
         {
-          path: 'courses',
-          alias: 'courses',
-          name: 'advisor-courses',
-          component: AdvisorCourseView
+          path: 'assign',
+          alias: 'assign-student',
+          name: 'assign-student',
+          component: AdvisorAssignStudentView
         },
         {
-          path: 'advisor',
-          alias: 'advisor',
-          name: 'advisor-student',
-          component: AdvisorStudentView
+          path: 'update',
+          alias: 'update-advisor',
+          name: 'update-advisor',
+          component: AdvisorUpdateDetailView
         }
       ]
     },
     {
-      path: '/',
+      path: '/students',
       name: 'student-list',
       component: StudentListView,
       props: (route) => ({ page: parseInt(route.query?.page as string) }),
       beforeEnter: (to, _, next) => {
+        const authStore = useAuthStore()
+        if (authStore.isStudent) {
+          next({ name: 'forbidden-page' })
+        }
         if (
           !to.query?.page ||
           parseInt(to.query?.page as string) < 1 ||
@@ -98,15 +117,13 @@ const router = createRouter({
       name: 'student-detail',
       component: StudentDetailView,
       props: true,
-      beforeEnter: async (to) => {
+      beforeEnter: (to) => {
         const id: number = parseInt(to.params.id as string)
         const studentStore = useStudentStore()
         studentStore.clear()
-        studentStore.setStudent(
-          await RegistryService.getStudent(id).then((res) => {
-            return res.data
-          })
-        )
+        return RegistryService.getStudent(id).then((res) => {
+          studentStore.setStudent(res.data as Student)
+        })
       },
       children: [
         {
@@ -114,57 +131,171 @@ const router = createRouter({
           alias: 'information',
           name: 'student-information',
           component: StudentInformationView
-        },
-        {
-          path: 'courses',
-          alias: 'courses',
-          name: 'student-courses',
-          component: StudentCoursesView
-        },
-        {
-          path: 'comments',
-          name: 'student-comments',
-          component: StudentCommentView
         }
       ]
     },
     {
-      path: '/course',
-      name: 'course-list',
-      component: CourseListView,
-      props: (route) => ({ page: parseInt(route.query?.page as string) }),
+      name: 'login',
+      path: '/login',
+      component: LoginViewVue
+    },
+    {
+      name: 'register',
+      path: '/register',
+      component: RegisterViewVue
+    },
+    {
+      name: 'add-advisor',
+      path: '/add-advisor',
+      component: RegisterTeacherView,
       beforeEnter: (to, _, next) => {
-        if (
-          !to.query?.page ||
-          parseInt(to.query?.page as string) < 1 ||
-          isNaN(parseInt(to.query?.page as string))
-        ) {
-          next({ name: 'course-list', query: { page: 1 } })
-        } else {
+        const authStore = useAuthStore()
+        if (!authStore.isAdmin) {
+          next({ name: 'forbidden-page' })
+        }
+        next()
+      }
+    },
+    {
+      name: 'dashboard',
+      path: '/',
+      component: DashboardLayout,
+      beforeEnter: (to, from, next) => {
+        const authStore = useAuthStore()
+        if (authStore.user !== null) {
           next()
+        } else {
+          next({ name: 'login' })
         }
       }
     },
     {
-      path: '/course/:id(\\d+)',
-      name: 'course-detail',
-      component: CourseDetail,
+      name: 'profile-layout',
+      path: '/profile/:id',
+      component: ProfileLayoutView,
       props: true,
-      beforeEnter: async (to) => {
-        const id: number = parseInt(to.params.id as string)
-        const courseStore = useCourseStore()
-        courseStore.clear()
-        courseStore.setCourse(
-          await RegistryService.getCourse(id).then((res) => {
-            return res.data
+      beforeEnter: (to) => {
+        const id = parseInt(to.params.id as string)
+        const store = usePersonStore()
+        const authStore = useAuthStore()
+        if (authStore.currentRole === 'ROLE_STUDENT') {
+          return RegistryService.getStudent(id)
+            .then((res) => {
+              store.setPerson({
+                id: res.data.id,
+                fname: res.data.fname,
+                lname: res.data.lname,
+                image: res.data.image,
+                department: res.data.department
+              })
+            })
+            .catch((err) => {
+              console.log(err)
+              if (err.response && err.response.status === 404) {
+                router.push({ name: '404-resource', params: { resource: 'event' } })
+              } else {
+                router.push({ name: 'network-error' })
+              }
+            })
+        } else {
+          return RegistryService.getAdvisor(id)
+            .then((res) => {
+              store.setPerson({
+                id: res.data.id,
+                fname: res.data.fname,
+                lname: res.data.lname,
+                image: res.data.image,
+                department: res.data.department
+              })
+            })
+            .catch((err) => {
+              console.log(err)
+              if (err.response && err.response.status === 404) {
+                router.push({ name: '404-resource', params: { resource: 'event' } })
+              } else {
+                router.push({ name: 'network-error' })
+              }
+            })
+        }
+      },
+      children: [
+        {
+          path: '',
+          alias: 'ProfileDetail',
+          name: 'profile-detail',
+          component: ProfileView,
+          props: true
+        },
+        {
+          path: 'edit',
+          alias: 'Edit Profile',
+          name: 'profile-edit',
+          component: EditProfileView,
+          props: true
+        }
+      ]
+    },
+    {
+      name: 'my-comment',
+      path: '/my-comment',
+      component: MyCommentView,
+      props: true,
+      beforeEnter: () => {
+        const authStore = useAuthStore()
+        const commentStore = useCommentStore()
+        const id = authStore.currentID
+
+        return RegistryService.getComments(id)
+          .then((res) => {
+            commentStore.setComments(res.data as Comment[])
           })
-        )
+          .catch((err) => {
+            console.log(err)
+            if (err.response && err.response.status === 404) {
+              router.push({ name: '404-resource', params: { resource: 'comment' } })
+            } else {
+              router.push({ name: 'network-error' })
+            }
+          })
       }
     },
     {
-      name: 'add-person',
-      path: '/add',
-      component: AddPersonLayoutVue
+      name: 'my-advisor',
+      path: '/my-advisor',
+      component: MyAdvisorLayoutView,
+      props: true,
+      beforeEnter: () => {
+        const authStore = useAuthStore()
+
+        const studentStore = useStudentStore()
+        RegistryService.getStudent(authStore.currentID).then((res) => {
+          studentStore.setStudent(res.data as Student)
+
+          const advisorStore = useAdvisorStore()
+          advisorStore.setAdvisor(res.data.teacher!)
+        })
+      },
+      children: [
+        {
+          name: 'my-advisor-detail',
+          path: '',
+          props: true,
+          component: MyAdvisorDetail
+        }
+      ]
+    },
+    {
+      name: 'add-admin',
+      path: '/add-admin',
+      props: true,
+      component: AddAdminView,
+      beforeEnter: (to, _, next) => {
+        const authStore = useAuthStore()
+        if (!authStore.isAdmin) {
+          next({ name: 'forbidden-page' })
+        }
+        next()
+      }
     },
     {
       name: 'network-error',
@@ -175,6 +306,11 @@ const router = createRouter({
       path: '/404',
       name: '404-resource',
       component: NotFoundErrorView
+    },
+    {
+      path: '/403',
+      name: 'forbidden-page',
+      component: ForbiddenView
     },
     {
       path: '/:catchAll(.*)',

@@ -1,27 +1,22 @@
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { useAdvisorStore } from "@/stores/advisor";
+import type { Advisor } from '@/types'
+import AnnouncementCard from '@/components/AnnouncementCard.vue'
 
-const store = useAdvisorStore()
-const { advisor } = storeToRefs(store)
-
+defineProps<{
+  advisor: Advisor
+}>()
 </script>
 
 <template>
-  <main class="flex flex-col gap-4" v-if="advisor">
-    <div class="flex flex-col">
-      <p class="text-sm opacity-50">Faculty</p>
-      <p class="text-xl">{{ advisor.faculty }}</p>
+  <div class="w-full p-8 flex flex-col gap-4">
+    <p class="text-3xl font-bold">Announcements ({{ advisor.announcements.length }})</p>
+    <hr class="border-0 border-b border-stone-700" />
+    <div class="flex flex-col gap-4">
+      <AnnouncementCard
+        v-for="announcement in advisor.announcements"
+        :announcement="announcement"
+        :key="announcement.id"
+      />
     </div>
-    <div class="flex flex-col">
-      <p class="text-sm opacity-50">Email</p>
-      <p class="text-xl">{{ `${advisor.first_name.toLowerCase()}.${advisor.last_name.toLowerCase()[0]}@cmu.ac.th` }}</p>
-    </div>
-  </main>
-  <main v-else>
-    <img src="/svg/loading.svg" class="w-16">
-  </main>
+  </div>
 </template>
-
-<style scoped>
-</style>

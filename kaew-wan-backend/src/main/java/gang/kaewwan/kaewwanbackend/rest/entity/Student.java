@@ -1,36 +1,27 @@
 package gang.kaewwan.kaewwanbackend.rest.entity;
 
-import java.util.List;
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class Student extends Person {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Exclude
-    Long id;
-    
     String studentId;
 
-    @ManyToOne
-    Department department;
+    @OneToOne
+    Review review;
 
-    @OneToMany(mappedBy = "review")
-    List<Review> reviews;
+    @ManyToOne
+    Teacher teacher;
+
 }

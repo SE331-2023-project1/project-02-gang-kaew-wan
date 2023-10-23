@@ -3,5 +3,22 @@
 @tailwind utilities;
 
 .webkit-box {
-    display: -webkit-box;
+  display: -webkit-box;
+}
+
+@layer base {
+  h1 {
+    @apply text-2xl;
+  }
+  h2 {
+    @apply text-xl;
+  }
+  h3 {
+    @apply text-lg;
+  }
+  ol,
+  ul {
+    list-style: circle;
+    margin: 0 0 0 1.25em;
+  }
 }

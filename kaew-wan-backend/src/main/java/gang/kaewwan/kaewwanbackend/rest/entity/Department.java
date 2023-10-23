@@ -7,6 +7,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PreRemove;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,9 +28,16 @@ public class Department {
 
     String name;
 
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "department")
     List<Teacher> teachers;
-    
-    @OneToMany(mappedBy = "student")
+
+    @OneToMany(mappedBy = "department")
     List<Student> students;
+
+    @PreRemove
+    @Transactional
+    private void preRemove() {
+        teachers.forEach(teacher -> teacher.setDepartment(null));
+        students.forEach(student -> student.setDepartment(null));
+    }
 }

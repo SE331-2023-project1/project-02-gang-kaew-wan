@@ -1,48 +1,57 @@
-import type { Student, Advisor, Course } from '@/types'
-import axios, { type AxiosResponse } from 'axios'
-
-const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL,
-  withCredentials: false,
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json'
-  }
-})
+import type { Advisor, Announcement, Comment, Department, Student } from '@/types'
+import { type AxiosResponse } from 'axios'
+import apiClient from './AxiosClient'
 
 export default {
-  getStudents(pgSize: number, pgN: number = 1): Promise<AxiosResponse<Student[]>> {
-    return apiClient.get<Student[]>(
-      `/student?${pgSize > 0 ? `_limit=${pgSize}&_page=${pgN}` : ''}`
-    )
+  getStudents(
+    pgSize: number,
+    pgN: number = 1,
+    keyword?: string,
+    advisorId?: number
+  ): Promise<AxiosResponse<Student[]>> {
+    let queryParams = '?'
+    if (pgSize > 0) {
+      queryParams += `_limit=${pgSize}&_page=${pgN}&`
+    }
+    if (keyword && keyword !== '') {
+      queryParams += `keyword=${keyword}&`
+    }
+    if (advisorId && advisorId >= 0) {
+      queryParams += `advisor=${advisorId}&`
+    }
+
+    return apiClient.get<Student[]>(`/students${queryParams}`)
   },
   getAdvisors(pgSize: number, pgN: number = 1): Promise<AxiosResponse<Advisor[]>> {
     return apiClient.get<Advisor[]>(
-      `/advisor?${pgSize > 0 ? `_limit=${pgSize}&_page=${pgN}` : ''}`
+      `/teachers?${pgSize > 0 ? `_limit=${pgSize}&_page=${pgN}` : ''}`
     )
   },
-  getCourses(pgSize: number, pgN: number = 1): Promise<AxiosResponse<Course[]>> {
-    return apiClient.get<Course[]>(`/course?${pgSize > 0 ? `_limit=${pgSize}&_page=${pgN}` : ''}`)
-  },
   getStudent(id: number): Promise<AxiosResponse<Student>> {
-    return apiClient.get<Student>(`/student/${id}`)
+    return apiClient.get<Student>(`/students/${id}`)
   },
   getAdvisor(id: number): Promise<AxiosResponse<Advisor>> {
-    return apiClient.get<Advisor>(`/advisor/${id}`)
+    return apiClient.get<Advisor>(`/teachers/${id}`)
   },
   getAdvisorExpanded(id: number): Promise<AxiosResponse<Advisor>> {
-    return apiClient.get<Advisor>(`/advisor/${id}?_embed=course&_embed=student`)
-  },
-  getCourse(id: number): Promise<AxiosResponse<Course>> {
-    return apiClient.get<Course>(`/course/${id}`)
+    return apiClient.get<Advisor>(`/teachers/${id}?_embed=course&_embed=student`)
   },
   updateStudent(id: number, student: Student): Promise<AxiosResponse<Student>> {
-    return apiClient.put<Student>(`/student/${id}`, student)
+    return apiClient.put<Student>(`/students/${id}`, student)
   },
   insertStudent(student: Student): Promise<AxiosResponse<Student>> {
-    return apiClient.post<Student>(`/student`, student)
+    return apiClient.post<Student>(`/students`, student)
   },
-  insertAdvisor(advisor: Advisor): Promise<AxiosResponse<Advisor>> {
-    return apiClient.post<Advisor>(`/advisor`, advisor)
+  insertAdvisor(teacher: Advisor): Promise<AxiosResponse<Advisor>> {
+    return apiClient.post<Advisor>(`/teachers`, teacher)
+  },
+  getDepartments(): Promise<AxiosResponse<Department[]>> {
+    return apiClient.get<Department[]>(`/departments`)
+  },
+  getAnnouncementsByPerson(id: number): Promise<AxiosResponse<Announcement[]>> {
+    return apiClient.get<Announcement[]>(`/announcements/${id}`)
+  },
+  getComments(id: number): Promise<AxiosResponse<Comment[]>> {
+    return apiClient.get<Comment[]>(`/comments/${id}`)
   }
 }

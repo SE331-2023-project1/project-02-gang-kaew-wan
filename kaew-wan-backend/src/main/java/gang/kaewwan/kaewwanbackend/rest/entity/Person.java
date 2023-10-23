@@ -1,10 +1,36 @@
 package gang.kaewwan.kaewwanbackend.rest.entity;
 
-import lombok.Data;
+import gang.kaewwan.kaewwanbackend.security.entity.User;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @Data
-public abstract class Person {
+@SuperBuilder
+@Entity
+@NoArgsConstructor
+
+public class Person {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Exclude
+    Long id;
+
+    @ManyToOne
+    Department department;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    User user;
+
     String fname;
     String lname;
     String image;
+
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    List<Comment> sendComments;
+
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    List<Comment> receivedComments;
 }
