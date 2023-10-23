@@ -40,10 +40,10 @@ const student = storeToRefs(studentStore).student
             aspernatur neque molestiae labore aliquam soluta architecto?
           </dd>
         </div>
-        <div class="grid grid-cols-1 gap-1 sm:grid-cols-5 sm:gap-4 mt-4 bg-stone-800">
+        <div class="grid grid-cols-1 gap-1 sm:grid-cols-5 sm:gap-4 mt-4 bg-stone-800" v-if="student.teacher">
           <dt class="text-white font-semibold p-2 bg-stone-700 h-full">Advisor</dt>
           <dd class="text-gray-100 sm:col-span-4 py-2">
-            ({{ student.teacher?.position }}) {{ student.teacher?.fname }} {{ student.teacher?.lname }}
+            ({{ student.teacher.position }}) {{ student.teacher.fname }} {{ student.teacher.lname }}
           </dd>
         </div>
       </dl>
