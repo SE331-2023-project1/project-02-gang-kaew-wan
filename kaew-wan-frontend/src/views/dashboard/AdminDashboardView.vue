@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import ValidatedInput from '@/components/ValidatedInput.vue';
 import AdvisorListView from '@/views/AdvisorListView.vue'
 import StudentEmbeddedListView from '@/views/StudentEmbeddedListView.vue'
 import { ref } from 'vue'
 const teacher_pgn = ref<number>(1)
 const student_pgn = ref<number>(1)
+const keyword = ref<string>('')
 </script>
 
 <template>
@@ -39,8 +41,10 @@ const student_pgn = ref<number>(1)
         <p class="text-2xl">Students</p>
         <hr class="px-2 flex-1 border-0 border-b border-stone-700" />
       </div>
+      <ValidatedInput v-model="keyword" label="Search" />
       <StudentEmbeddedListView
         :page="student_pgn"
+        :keyword="keyword"
         @next-page="student_pgn = student_pgn + 1"
         @prev-page="student_pgn = student_pgn - 1"
       />

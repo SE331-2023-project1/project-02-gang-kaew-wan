@@ -7,6 +7,7 @@ import { useAuthStore } from '@/stores/auth'
 
 const props = defineProps<{
   page: number
+  keyword: string
 }>()
 const authStore = useAuthStore()
 let teacherId: number
@@ -27,11 +28,11 @@ const hasNextPage = computed(() => {
 })
 
 watchEffect(() => {
-  changePage(props.page)
+  changePage(props.page, props.keyword)
 })
 
-function changePage(page: number) {
-  RegistryService.getStudents(6, page, '', teacherId)
+function changePage(page: number, keyword: string) {
+  RegistryService.getStudents(6, page, keyword, teacherId)
     .then((res) => {
       res.data.sort((a, b) => {
         if (a.id && b.id) {
@@ -58,7 +59,7 @@ function changePage(page: number) {
     >
       <StudentCard :student="student" v-for="student in students" :key="student.id"></StudentCard>
     </div>
-    <div v-else>Opsss, you have no student. Please contact the admin!</div>
+    <div v-else>Oops, no students found!</div>
 
     <div class="flex justify-between w-full items-center">
       <button
