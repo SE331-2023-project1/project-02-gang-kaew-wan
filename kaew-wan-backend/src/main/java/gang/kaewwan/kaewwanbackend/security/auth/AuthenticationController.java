@@ -27,6 +27,11 @@ public class AuthenticationController {
     return service.addTeacher(request);
   }
 
+  @PostMapping("/add-admin")
+  public AuthenticationResponse addAdmin( @RequestBody RegisterAdminRequest request) {
+    return service.addAdmin(request);
+  }
+
   @PutMapping("/update-teacher/{id}")
   public AuthenticationResponse updateTeacher(
           @PathVariable Long id,

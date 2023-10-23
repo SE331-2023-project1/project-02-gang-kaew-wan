@@ -147,6 +147,7 @@ function toggleMenuOpen() {
           <HyperLink :title="'Dashboard'" :name="'dashboard'" />
           <HyperLink v-if="authStore.isStudent" title="My Comments" name="my-comment" />
           <HyperLink v-if="authStore.isStudent" title="My Advisor" name="my-advisor-detail" />
+          <HyperLink v-if="authStore.isAdmin" title="Add Admin" name="add-admin" />
         </div>
       </nav>
       <div class="absolute w-full top-full sm:top-4 sm:w-fit sm:left-full flex justify-center z-20">
