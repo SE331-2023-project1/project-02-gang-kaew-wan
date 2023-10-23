@@ -33,8 +33,7 @@ public class SecurityConfiguration {
             "/swagger-ui.html",
             "/swagger-resources",
             "/swagger-resources/**",
-            "/api/v1/auth/register",
-            "/api/v1/auth/authenticate"
+            "/api/v1/auth/**",
     };
     final String[] AUTHENTICATED_AREA = {
             "/comments/**",
@@ -62,8 +61,7 @@ public class SecurityConfiguration {
                     authorize
                             .requestMatchers(FREE_AREA).permitAll()
                             .requestMatchers(AUTHENTICATED_AREA).hasAnyRole("STUDENT", "TEACHER", "ADMIN")
-                            .requestMatchers(ADMIN_AREA).hasRole("ADMIN")
-                            .anyRequest().fullyAuthenticated();
+                            .requestMatchers("**").hasRole("ADMIN");
                 })
 
                 .sessionManagement((session) -> {
