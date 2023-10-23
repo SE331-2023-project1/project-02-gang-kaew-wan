@@ -7,7 +7,7 @@ const advisor = storeToRefs(advisorStore).advisor
 </script>
 
 <template>
-  <main v-if="advisor" class="flex flex-row w-full max-w-6xl gap-8">
+  <main v-if="advisor" class="flex flex-row w-full max-w-7xl gap-8">
     <div class="flex flex-col gap-2 flex-1 max-w-[16rem]">
       <img :src="advisor.image" class="w-64 aspect-square object-cover shadow-lg" />
       <div class="flex flex-col">

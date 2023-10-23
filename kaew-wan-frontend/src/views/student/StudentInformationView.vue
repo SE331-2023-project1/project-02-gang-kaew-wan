@@ -8,40 +8,42 @@ const student = storeToRefs(studentStore).student
 
 <template>
   <!--<h1>This is profile view</h1>-->
-  <div v-if="student" class="mx-5 my-5">
-    <div class="flow-root w-5/6 mx-auto">
-      <div class="mb-5 h-64 w-64 mx-auto">
-        <img :src="student.image" class="p-2 h-64 w-64" />
-      </div>
-
-      <dl class="-my-3 divide-y divide-gray-100 text-sm">
-        <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
-          <dt class="text-white font-medium text-gray-900">First name</dt>
-          <dd class="text-gray-100 sm:col-span-2">
+  <div v-if="student" class="w-full">
+    <div class="flow-root">
+      <dl class="text-sm divide-y divide-stone-900 flex flex-col">
+        <div class="grid grid-cols-1 gap-1 sm:grid-cols-5 sm:gap-4 bg-stone-800">
+          <dt class="text-white font-semibold p-2 bg-stone-700 h-full">First name</dt>
+          <dd class="text-gray-100 sm:col-span-4 py-2">
             {{ student.fname }}
           </dd>
         </div>
 
-        <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
-          <dt class="text-white font-medium text-gray-900">Last name</dt>
-          <dd class="text-gray-100 sm:col-span-2">
+        <div class="grid grid-cols-1 gap-1 sm:grid-cols-5 sm:gap-4 bg-stone-800">
+          <dt class="text-white font-semibold p-2 bg-stone-700 h-full">Last name</dt>
+          <dd class="text-gray-100 sm:col-span-4 py-2">
             {{ student.lname }}
           </dd>
         </div>
 
-        <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
-          <dt class="text-white font-medium text-gray-900">Department</dt>
-          <dd class="text-gray-100 sm:col-span-2">
+        <div class="grid grid-cols-1 gap-1 sm:grid-cols-5 sm:gap-4 bg-stone-800">
+          <dt class="text-white font-semibold p-2 bg-stone-700 h-full">Department</dt>
+          <dd class="text-gray-100 sm:col-span-4 py-2">
             {{ student.department.name }}
           </dd>
         </div>
 
-        <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
-          <dt class="text-white font-medium text-gray-900">Bio</dt>
-          <dd class="text-gray-100 sm:col-span-2">
+        <div class="grid grid-cols-1 gap-1 sm:grid-cols-5 sm:gap-4 bg-stone-800">
+          <dt class="text-white font-semibold p-2 bg-stone-700 h-full">Bio</dt>
+          <dd class="text-gray-100 sm:col-span-4 py-2">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et facilis debitis explicabo
             doloremque impedit nesciunt dolorem facere, dolor quasi veritatis quia fugit aperiam
             aspernatur neque molestiae labore aliquam soluta architecto?
+          </dd>
+        </div>
+        <div class="grid grid-cols-1 gap-1 sm:grid-cols-5 sm:gap-4 mt-4 bg-stone-800">
+          <dt class="text-white font-semibold p-2 bg-stone-700 h-full">Advisor</dt>
+          <dd class="text-gray-100 sm:col-span-4 py-2">
+            ({{ student.teacher?.position }}) {{ student.teacher?.fname }} {{ student.teacher?.lname }}
           </dd>
         </div>
       </dl>
