@@ -42,7 +42,8 @@ public class SecurityConfiguration {
             "/announcements/**",
             "/announcement/**",
             "/teachers/**",
-            "/students/**"
+            "/students/**",
+            "/departments/**"
     };
     final String[] ADMIN_AREA = {
             "/**"
