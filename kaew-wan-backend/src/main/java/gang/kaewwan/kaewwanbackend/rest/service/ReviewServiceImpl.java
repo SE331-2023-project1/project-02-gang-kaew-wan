@@ -1,18 +1,20 @@
 package gang.kaewwan.kaewwanbackend.rest.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import gang.kaewwan.kaewwanbackend.rest.dao.ReviewDao;
 import gang.kaewwan.kaewwanbackend.rest.entity.Review;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ReviewServiceImpl implements ReviewService{
+public class ReviewServiceImpl implements ReviewService {
     final ReviewDao reviewDao;
 
     @Override
-    public Page<Review> getReviews() {
+    public List<Review> getReviews() {
         return reviewDao.getReviews();
     }
 
@@ -24,5 +26,10 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public Review addReview(Review review) {
         return reviewDao.addReview(review);
+    }
+
+    @Override
+    public List<Review> getReviewsByTeacherId(Long id) {
+        return reviewDao.getReviewsByTeacherId(id);
     }
 }

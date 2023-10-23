@@ -1,10 +1,13 @@
 package gang.kaewwan.kaewwanbackend.rest.service;
 
+import java.util.List;
+
 import gang.kaewwan.kaewwanbackend.rest.entity.Review;
-import org.springframework.data.domain.Page;
 
 public interface ReviewService {
-    Page<Review> getReviews();
+    List<Review> getReviews();
+
+    List<Review> getReviewsByTeacherId(Long id);
 
     Review getReviewById(Long id);
 
