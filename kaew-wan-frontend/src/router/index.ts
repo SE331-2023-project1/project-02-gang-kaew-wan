@@ -29,6 +29,7 @@ import EditProfileView from '@/views/profile/EditProfileView.vue'
 import AdvisorUpdateDetailView from '@/views/advisor/AdvisorUpdateDetailView.vue'
 import MyAdvisorLayoutView from '@/views/myadvisor/MyAdvisorLayoutView.vue'
 import MyAdvisorDetail from '@/views/myadvisor/MyAdvisorDetail.vue'
+import AddAdminView from "@/views/AddAdminView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -282,6 +283,19 @@ const router = createRouter({
           component: MyAdvisorDetail
         }
       ]
+    },
+    {
+      name: 'add-advisor',
+      path: '/add-admin',
+      props: true,
+      component: AddAdminView,
+      beforeEnter: (to, _, next) => {
+        const authStore = useAuthStore()
+        if (!authStore.isAdmin) {
+          next({ name: 'forbidden-page' })
+        }
+        next()
+      }
     },
     {
       name: 'network-error',

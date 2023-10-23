@@ -27,6 +27,27 @@ public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
+    final String[] FREE_AREA = {
+            "/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/api/v1/auth/register",
+            "/api/v1/auth/authenticate"
+    };
+    final String[] AUTHENTICATED_AREA = {
+            "/comments/**",
+            "/reviews/**",
+            "/reactions/**",
+            "/announcements/**",
+            "/announcement/**",
+            "/teachers/**",
+            "/students/**"
+    };
+    final String[] ADMIN_AREA = {
+            "/**"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,16 +57,18 @@ public class SecurityConfiguration {
         });
         http.csrf((crsf) -> crsf.disable())
                 .authorizeHttpRequests((authorize) -> {
-
+                    // authorize
+                    // .anyRequest().permitAll();
                     authorize
-                            .requestMatchers("/api/v1/auth/**").permitAll()
-                            .anyRequest().hasAuthority("ROLE_ADMIN");
+                            .requestMatchers(FREE_AREA).permitAll()
+                            .requestMatchers(AUTHENTICATED_AREA).hasAnyRole("STUDENT", "TEACHER", "ADMIN")
+                            .requestMatchers(ADMIN_AREA).hasRole("ADMIN")
+                            .anyRequest().fullyAuthenticated();
                 })
 
                 .sessionManagement((session) -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
-
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout((logout) -> {

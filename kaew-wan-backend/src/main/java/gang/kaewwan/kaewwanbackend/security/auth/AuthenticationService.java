@@ -2,9 +2,11 @@ package gang.kaewwan.kaewwanbackend.security.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gang.kaewwan.kaewwanbackend.rest.entity.Department;
+import gang.kaewwan.kaewwanbackend.rest.entity.Person;
 import gang.kaewwan.kaewwanbackend.rest.entity.Student;
 import gang.kaewwan.kaewwanbackend.rest.entity.Teacher;
 import gang.kaewwan.kaewwanbackend.rest.repository.DepartmentRepository;
+import gang.kaewwan.kaewwanbackend.rest.repository.PersonRepository;
 import gang.kaewwan.kaewwanbackend.rest.repository.StudentRepository;
 import gang.kaewwan.kaewwanbackend.rest.repository.TeacherRepository;
 import gang.kaewwan.kaewwanbackend.security.config.JwtService;
@@ -39,6 +41,7 @@ public class AuthenticationService {
     private final StudentRepository studentRepository;
     private final DepartmentRepository departmentRepository;
     private final TeacherRepository teacherRepository;
+    private final PersonRepository personRepository;
 
     @Transactional
     public AuthenticationResponse updateTeacher(Long id, RegisterTeacherRequest request) {
@@ -129,6 +132,36 @@ public class AuthenticationService {
         var savedUser = repository.save(user);
         person.setUser(savedUser);
         teacherRepository.save(person);
+
+        var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        saveUserToken(savedUser, jwtToken);
+        return AuthenticationResponse.builder()
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .user(SecurityMapper.INSTANCE.getUserDto(user))
+                .build();
+    }
+
+    public AuthenticationResponse addAdmin(RegisterAdminRequest request) {
+
+        Person person = Person.builder()
+                .fname(request.getFname())
+                .lname(request.getLname())
+                .image(request.getImage())
+                .build();
+        personRepository.save(person);
+
+        User user = User.builder()
+                .person(person)
+                .email(request.getEmail())
+                .username(request.getUsername())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.ROLE_ADMIN)
+                .build();
+        var savedUser = repository.save(user);
+        person.setUser(savedUser);
+        personRepository.save(person);
 
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
