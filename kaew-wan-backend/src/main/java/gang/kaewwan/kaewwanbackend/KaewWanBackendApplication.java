@@ -21,8 +21,7 @@ public class KaewWanBackendApplication {
                 registry.addMapping("/**")
                         .allowedMethods("*")
                         .allowedOrigins("*")
-                        .exposedHeaders("x-total-count")
-                ;
+                        .exposedHeaders("*");
             }
         };
     }
