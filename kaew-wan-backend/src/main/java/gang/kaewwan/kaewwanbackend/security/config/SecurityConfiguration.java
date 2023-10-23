@@ -34,8 +34,10 @@ public class SecurityConfiguration {
             "/swagger-resources",
             "/swagger-resources/**",
             "/api/v1/auth/**",
+            "/departments/**",
     };
     final String[] AUTHENTICATED_AREA = {
+            "/comments",
             "/comments/**",
             "/reviews/**",
             "/reactions/**",
@@ -43,7 +45,6 @@ public class SecurityConfiguration {
             "/announcement/**",
             "/teachers/**",
             "/students/**",
-            "/departments/**"
     };
     final String[] ADMIN_AREA = {
             "/**"
