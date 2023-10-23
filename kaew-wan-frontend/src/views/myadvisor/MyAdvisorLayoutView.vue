@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useAdvisorStore } from '@/stores/advisor'
-import { computed, ref } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import apiClient from '@/services/AxiosClient'
 import type { Review } from '@/types'
 import { useAuthStore } from '@/stores/auth'
 import { useMessageStore } from '@/stores/message'
-import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
 const advisorStore = useAdvisorStore()
@@ -14,11 +13,13 @@ const advisor = storeToRefs(advisorStore).advisor
 const ratingTemp = ref<number>(0)
 const ratingAvg = computed(() => {
   if (advisor.value?.reviews) {
-    return advisor.value.reviews
-      .map((x) => x.rating)
-      .reduce((prev, curr) => {
-        return prev + curr
-      }, 0) / advisor.value.reviews.length
+    return (
+      advisor.value.reviews
+        .map((x) => x.rating)
+        .reduce((prev, curr) => {
+          return prev + curr
+        }, 0) / advisor.value.reviews.length
+    )
   } else {
     return 0
   }
@@ -58,7 +59,7 @@ function rate(n: number) {
               class="w-6 h-6"
               :class="{
                 'text-stone-600': ratingAvg < n,
-                'text-blue-400': ratingTemp >= n,
+                '!text-blue-400': ratingTemp >= n,
                 'text-yellow-400': ratingAvg >= n
               }"
               :key="`${n}-star`"

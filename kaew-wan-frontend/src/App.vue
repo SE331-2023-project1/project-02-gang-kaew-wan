@@ -36,10 +36,10 @@ function toggleMenuOpen() {
 <template>
   <div
     class="flex flex-col sm:flex-row sm:min-h-screen"
-    @click.propagate="stateStore.setEmotePane(0)"
+    @click.passive="stateStore.setEmotePane(0)"
     @keydown.escape="stateStore.setEmotePane(0)"
   >
-    <div class="flex flex-col sm:flex-row sticky top-0 z-10 max-h-screen">
+    <div class="flex flex-col sm:flex-row sticky top-0 z-20 max-h-screen">
       <nav
         class="z-50 flex flex-col font-sans gap-4 text-white items-center bg-stone-800 p-4 overflow-hidden transition-all duration-300"
         :class="{
@@ -197,7 +197,7 @@ function toggleMenuOpen() {
       class="flex-1 font-serif text-white flex flex-row justify-center items-start relative p-4 sm:p-8"
     >
       <div
-        class="fixed top-0 w-full text-center transition-all bg-red-500 opacity-0 z-0 shadow-lg"
+        class="fixed top-0 w-full text-center transition-all bg-red-500 opacity-0 z-10 shadow-lg"
         :class="{ '-translate-y-full': !message, 'animate-flashMessage': message }"
       >
         &nbsp;{{ message }}
