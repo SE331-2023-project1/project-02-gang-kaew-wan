@@ -48,8 +48,7 @@ const onSubmit = handleSubmit((values) => {
       router.push({ name: 'profile-detail', params: { id: res.data.id } })
     })
     .catch((err) => {
-      console.log(err)
-      messageStore.flashMessage('Could not register, Student ID already exists.')
+      messageStore.flashMessage('Could not register.')
     })
 })
 </script>
