@@ -116,7 +116,7 @@ RegistryService.getDepartments().then((res) => {
           :options="departmentOption"
         ></BaseSelect>
         <ImageUpload class="col-span-5" v-model="image" :error="errors.image" />
-        <button type="submit" class="bg-emerald-500 px-2 py-1 place-self-center col-span-2">
+        <button type="submit" class="bg-emerald-500 px-2 py-1 place-self-center col-span-5">
           Submit
         </button>
       </form>
